@@ -12,6 +12,7 @@
 ## 常用指令
 
 ### 必需指令（不这样配置，自己都上不去）
+
 	# 以下规则表示默认策略是ACCEPT
 	:INPUT ACCEPT [0:0]
 	:FORWARD ACCEPT [0:0]
@@ -25,10 +26,13 @@
 	# 允许本地环回接口在INPUT表的所有数据通信
 	-A INPUT -i lo -j ACCEPT	
 
-### 开放端口：21 FTP, 22 SSH, 80 Web, 3500 Nodejs, 3306 MySQL, 11211 Memcache
+### 开放端口
+
+	# 21 FTP, 22 SSH, 80 HTTP, 80 HTTPS, 3500 Nodejs, 3306 MySQL, 11211 Memcache
 	-A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
 	-A INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
 	-A INPUT -p tcp -m state --state NEW -m tcp --dport 88 -j ACCEPT
+	-A INPUT -p tcp -m state --state NEW -m tcp --dport 443 -j ACCEPT
 	-A INPUT -p tcp -m state --state NEW -m tcp --dport 2121 -j ACCEPT
 	-A INPUT -p tcp -m state --state NEW -m tcp --dport 3636 -j ACCEPT
 
@@ -36,7 +40,7 @@
 ### 允许指定端口段
 	-A INPUT -p tcp -m state --state NEW -m tcp --dport 40000:41000 -j ACCEPT
 
-### 禁用端口
+### 禁用指定端口
 	-A PREROUTING -p tcp --dport 88 -j DROP
 
 ### 禁用某一IP的某一端口
@@ -82,14 +86,14 @@
 	systemctl stop firewalld
 	systemctl mask firewalld
 
-### 最后重启防火墙使配置生效
-	systemctl restart iptables.service
+### 重启防火墙
+	systemctl restart iptables
 
-### 设置防火墙开机启动
-	systemctl enable iptables.service
+### 开机启动防火墙
+	systemctl enable iptables
 
-### 设置防火墙关闭
-	systemctl stop iptables.service
+### 关闭防火墙
+	systemctl stop iptables
 
 ## CentOS 6.x
 

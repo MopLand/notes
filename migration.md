@@ -309,7 +309,8 @@
 ### remove
 
 	<i class="glyphicon glyphicon-plus-sign"></i> 
-	
+	<i class="glyphicon glyphicon-trash"></i> 
+	<i class="glyphicon glyphicon-edit"></i> 
 
 
 
