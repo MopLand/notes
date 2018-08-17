@@ -46,8 +46,16 @@
 	#项目自动更新（每天9:00 - 22:00，每10分钟执行一次）
 	*/10 9-22 * * * /disk/gitpull.sh ####  /var/log/gitpull.log
 
-### sh执行权限
+### sh 执行权限
 	chmod +x gitpull.sh
+
+### Git 预提交 hooks
+	# .git/hooks/pre-commit
+
+	#!/bin/sh
+	# 自动更新版本号
+	php vendor/gitbuild.php
+	exec git add ./config/project.php
 
 ## 常用命令
 
