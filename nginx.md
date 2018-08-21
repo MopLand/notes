@@ -55,10 +55,12 @@
 		rewrite ^/(.*)$ /$1 last;
 	}
 
+	# 域名所有权验证服务
 	# 图片缩略图生成服务
 	# 不存在的静态文件直接抛出 404
 	# 将路由交由 index.php 处理
 	if (!-e $request_filename) {
+		rewrite ^/(.+).txt$ /fn/verify/$1;
 		rewrite ^/attach/(.+)!(.+).(gif|jpg|jpeg|png)$ /fn/resized?file=$1&size=$2&mime=$3;
 		rewrite ^/(.*\.(ico|gif|jpg|jpeg|png|swf|flv|css|js)$) 404;
 		rewrite ^/(.*) /index.php/$1 last;

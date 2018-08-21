@@ -75,6 +75,10 @@
 		# 禁止任务脚本输出
 		RewriteCond %{REQUEST_FILENAME} -f
 		RewriteRule ^cron\/(.+)\.(js|json|sql|sh|md)$ - [R=403,L]
+	
+		# 域名所有权验证服务
+		RewriteCond %{REQUEST_FILENAME} !-f
+		RewriteRule ^(.+)\.txt$ /fn/verify/$1 [L]
 
 		# 图片缩略图生成服务
 		RewriteCond %{REQUEST_FILENAME} !-f
