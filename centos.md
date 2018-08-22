@@ -244,6 +244,16 @@
 
 	检查端口是否开放
 	echo stats | nc memcache_host_name_or_ip 11211
+	
+4. 配置安全的 Memcached
+
+	vi /etc/sysconfig/memcached
+	
+	PORT="11211"
+	USER="memcached"
+	MAXCONN="1024"
+	CACHESIZE="64"
+	OPTIONS="-U 0"
 
 ## CentOS 7 安装 ImageMagick
 
