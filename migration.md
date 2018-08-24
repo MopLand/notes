@@ -263,20 +263,14 @@
 	
 	<label class="col-sm-2 control-label">
 	<label class="col-sm-2 col-form-label">
-	
-	<div class="col-sm-offset-2 col-sm-10">
-	<div class="offset-2 col-sm-10">
-
-	<div class="col-sm-offset-2 col-sm-6">
-	<div class="offset-2 col-sm-10">
-
-	<div class="col-sm-offset-2 col-sm-5">
-	<div class="offset-2 col-sm-10">
 
 	class="col-md-2 control-label"
 	class="col-sm-2 col-form-label"
 
 	class="btn btn-secondary btn-xs">搜索</button>
+	class="btn btn-secondary">搜索</button>
+
+	class="btn btn-secondary btn-sm">搜索</button>
 	class="btn btn-secondary">搜索</button>
 
 	<label class="radio-inline">
@@ -294,6 +288,12 @@
 	<div class="panel-body">
 	<div class="card-body">
 
+	<blockquote>
+	<blockquote class="blockquote">
+
+	class="col-sm-offset-2
+	class="offset-2
+
 	label label-
 	badge badge-
 
@@ -302,6 +302,12 @@
 
 	class="btn btn-sm btn-success"
 	class="btn btn-success"
+
+	<a class="btn btn-sm btn-secondary" data-url
+	<button type="button" class="btn btn-sm btn-danger" data-url
+
+	btn-default
+	btn-secondary
 
 	btn-xs"
 	btn-sm"
