@@ -70,7 +70,9 @@
 
 	vendor								# 依赖类库
 		autoload.php					# 类库自动加载脚本
+		gitbuild.php					# Git 提交自动版本号
 		optimize.php					# Composer 优化脚本
+		initialize.php					# 项目配置初始化脚本
 		composer						# Composer 核心文件
 
 	index.php							# 入口文件
@@ -178,12 +180,14 @@
 	其中还包含 jquery.resize、jquery.validate、jquery.waterfall、jquery.zoom 等插件
 	
 	2.前端 MVVM 框架请使用 Vue.js
-	[http://cn.vuejs.org/](http://cn.vuejs.org/)
+	http://cn.vuejs.org/
 
 	3.优先使用 Webkit 渲染，针对 360、QQ 等双核浏览器有效：
 	<meta name="renderer" content="webkit">
 
-#### GIT 约定
+### GIT 约定
+
+#### 本地忽略配置文件变化
 
 	1.【重要】忽略本地配置文件的更改，防止影响生产环境配置
 	git update-index --assume-unchanged config/attach.php
@@ -202,6 +206,27 @@
 	
 	Linux
 	work/ignore.sh
+
+#### 提交时自动更新版本号
+
+	1. 创建 hooks 文件：.git/hooks/pre-commit
+
+	#!/bin/sh
+	# 自动更新版本号
+	php vendor/gitbuild.php
+	exec git add ./config/project.php
+
+	2. 将在每次提交时，自动更新 config/project.php
+
+	product.build
+
+### 项目初始化
+
+	# 命令行执行
+	php vendor/initialize.php
+
+	# 主要工作项
+	将自动完成 config/config.php 中的各种秘钥更新，创建 cached 子目录
 
 ### 开发环境
 
