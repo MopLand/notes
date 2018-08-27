@@ -14,6 +14,12 @@
 	
 	# 下载地址：https://share.weiyun.com/5QqqT4V
 
+## 外接显示亮度调节
+
+	# Brightness menu bar
+
+	# 下载地址：https://itunes.apple.com/cn/app/id451140932?mt=12
+
 ## 外接 USB 键盘
 	
 	# 系统偏好设置 > 键盘 > 修饰键
