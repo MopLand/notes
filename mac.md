@@ -16,6 +16,10 @@
 
 ## 外接显示亮度调节
 
+	# Shades For Mac
+
+	# 下载地址：http://dl.pconline.com.cn/download/420090-1.html
+
 	# Brightness menu bar
 
 	# 下载地址：https://itunes.apple.com/cn/app/id451140932?mt=12
