@@ -175,7 +175,7 @@
 		location / {
 			resolver 1.1.1.1 8.8.8.8;
 			proxy_pass $scheme://img.alicdn.com$request_uri;
-			proxy_buffers   256 4k;
+			proxy_buffers   32 256k;
 			expires			7d;
 		}
 	}
@@ -184,7 +184,7 @@
 	server {
 		listen 80;
 		server_name proxy.yqt.so proxy.zhfile.com;
-		access_log off;		
+		access_log off;
 		location / {
 			resolver 1.1.1.1 8.8.8.8;
 			
@@ -196,10 +196,66 @@
 			
 			#return 200 $request_uri;
 			
-			proxy_buffers   256 4k;
+			proxy_buffers   32 256k;
 			expires			7d;
 		}		
 	}
+	
+	# 代理任意资源
+	server {
+		listen 80;
+		server_name proxy.yqt.so proxy.zhfile.com;
+		access_log off;
+		location / {
+			resolver 1.1.1.1 8.8.8.8;
+			
+			proxy_pass $scheme:/$request_uri;
+			
+			#if ( $request_uri ~* "qpic.cn" ) {
+				proxy_set_header referer "https://mp.weixin.qq.com/";
+			#}
+			
+			#return 200 $request_uri;
+			
+			proxy_buffers   32 256k;
+			expires			7d;
+		}
+	}
+	
+	# 本地缓存资源
+	proxy_cache_path /disk/cache levels=1:2 keys_zone=imgcache:10m max_size=10g inactive=60m use_temp_path=off;
+
+	server {
+		listen 80;
+		server_name proxy.yqt.so proxy.zhfile.com;
+		access_log off;
+		
+		location / {
+			resolver 114.114.114.114 8.8.8.8;
+			
+			proxy_set_header referer "https://mp.weixin.qq.com/";
+			proxy_cache imgcache;
+			proxy_pass $scheme:/$request_uri;
+			proxy_buffers   64 256k;
+
+			expires			7d;
+		}
+		
+		location ~* "cnblogs" {
+			resolver 114.114.114.114 8.8.8.8;
+			
+			proxy_set_header referer "https://www.cnblogs.com/";
+			proxy_cache imgcache;
+			proxy_pass https:/$request_uri;
+			proxy_buffers   64 256k;
+
+			expires			7d;
+		}
+		
+	}
+
+	# 参考链接
+	https://www.jianshu.com/p/625c2b15dad5
 
 ## 反向代理
 

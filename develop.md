@@ -356,20 +356,29 @@
 	# 对应方法
 	App\Master\Controller\Course\defaultAction( $cate )
 
-### 路由转发
+### 路由过滤
 
 	# URL
 	http://example.com/coupon/
 
 	# 规则匹配，定义在 ./app/*/module.php
 	# 目标 URL 必需包含完整的 [Controller] 和 [Action]，否则会抛出 404 错误
-	'router.regular' => array(
-		'/^\/(today|week|month|ratio|grade|coupon)/' => '/find/?word=\1'		#Bad
-		'/^\/(today|week|month|ratio|grade|coupon)/' => '/find/index/?word=\1'	#Good
+	'router.filter' => array(
+
+		# Bad
+		'/^\/(today|week|month|ratio|grade|coupon)/' => '/find/?word=\1',
+
+		# Good
+		'/^\/(today|week|month|ratio|grade|coupon)/' => '/find/index/?word=\1',
+
+		# 将 Fn 请求转发至 master 模块
+		'/fn\/(.+?)/' => '/master/fn/\\1',
 	);
 
-	# 对应方法
+	# 对应位置
 	App\Master\Controller\Find\indexAction
+
+	App\Master\Controller\Fn
 
 ### CLI 模式
 
@@ -409,7 +418,7 @@
 	use Library\Fs;
 	use Library\Request;
 
-	//首页控制器
+	// 首页控制器
 	class Index extends \Library\Controller {
 
 		// 首页
@@ -442,19 +451,19 @@
 		// 初始化方法，自动执行
 		function init(){
 
-			//Ajax 请求
+			// Ajax 请求
 			$this->ajax = Request::getPost('ajax');
 
-			//Token 签名
+			// Token 签名
 			$this->token = Request::getPost('token');
 
-			//打开连接
+			// 打开连接
 			$this->connect();
 
-			//Ajax 处理
+			// Ajax 处理
 			if( $this->ajax ){
 
-				//禁用视图
+				// 禁用视图
 				$this->disable();
 
 			}
@@ -500,7 +509,7 @@
 
 		function arrivalAction() {
 
-			//实例化模型
+			// 实例化模型
 			$model = new \App\Master\Model\Goods();
 
 			$result = $model->getByFilter( array(), $order = 'goods_id DESC', 1, $size = 40 );
@@ -1450,28 +1459,28 @@
 	use Library\Request;
 	use Library\Response;
 
-	//Ajax 请求
+	// Ajax 请求
 	$this->ajax = Request::getPost('ajax');
 
-	//Token 签名
+	// Token 签名
 	$this->token = Request::getPost('token');
 
-	//Ajax 处理
+	// Ajax 处理
 	if( $this->ajax ){
 
-		//禁用视图
+		// 禁用视图
 		$this->disable();
 
-		//获取来路信息
+		// 获取来路信息
 		$domain = Request::getHttpHeader('HTTP_HOST');
 		$referer = Request::getHttpHeader('HTTP_REFERER');
 
-		//未知来路限制
+		// 未知来路限制
 		if( !$referer || strpos( $referer, $domain ) === FALSE ){
 			Response::callback( array( 'return'=> -1001, 'result'=> 'Invalid referer parameters' ), $this->ajax );
 		}
 
-		//验证签名参数
+		// 验证签名参数
 		if( !$this->token || !Token::valid( $this->token ) ){
 			Response::callback( array( 'return'=> -1002, 'result'=> 'Invalid token parameters' ), $this->ajax );
 		}
@@ -1484,4 +1493,20 @@
 
 	public function simpleUpload(){		
 		return Attach::savefile( array( 'field' => 'file' ) );
+	}
+
+### 在析构函数中统一赋值变量
+
+>  好处是，其他 Action 中可以对变量进行处理，而不用多次 $this->assign
+
+	public function __destruct() {
+		
+		$this->assign( 'website', $this->website );
+		
+		$this->assign( 'widgets', $this->widgets );
+
+		$this->assign( 'category', $this->category );
+
+		parent::__destruct();
+
 	}

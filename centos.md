@@ -166,17 +166,52 @@
 
 ## CentOS 的 systemctl 服务
 
-	systemctl is-enabled servicename.service 	#查询服务是否开机启动
-	systemctl enable *.service 					#开机运行服务
-	systemctl disable *.service 				#取消开机运行
-	systemctl start *.service 					#启动服务
-	systemctl stop *.service 					#停止服务
-	systemctl restart *.service					#重启服务
-	systemctl reload *.service 					#重新加载服务配置文件
-	systemctl status *.service 					#查询服务运行状态
+	systemctl enable [service] 					#开机运行服务
+	systemctl disable [service] 				#取消开机运行
+	systemctl start [service] 					#启动服务
+	systemctl stop [service] 					#停止服务
+	systemctl restart [service]					#重启服务
+	systemctl reload [service] 					#重新加载服务配置文件
+	systemctl status [service] 					#查询服务运行状态
+	systemctl is-enabled [service] 				#查询是否开机启动
 	systemctl --failed 							#显示启动失败的服务
-	systemctl start mariadb
-	systemctl enable mariadb
+
+## CentOS 格式化数据盘
+
+### 输入命令 fdisk -l 查看您的数据盘信息
+
+![](https://mc.qcloudimg.com/static/img/f26b5a092e1521556410afdc75a95474/image.png)
+
+### 对数据盘进行分区。按照界面的提示，依次操作
+
+1. 输入fdisk /dev/vdb(对数据盘进行分区)，回车；
+2. 输入n(新建分区)，回车；
+3. 输入p(新建扩展分区)，回车；
+4. 输入1(使用第 1 个主分区)，回车；
+5. 输入回车(使用默认配置)；
+6. 再次输入回车(使用默认配置)；
+7. 输入wq(保存分区表)，回车开始分区
+
+![](https://mc.qcloudimg.com/static/img/8a9c8ff4db5a7e4622bf2968d0309129/image.png)
+
+### 使用fdisk -l命令，即可查看到，新的分区 vdb1 已经创建完成
+
+![](https://mc.qcloudimg.com/static/img/304ccd9491f2a25b8d3b33b5213faa0e/image.png)
+
+### 格式化数据盘
+
+	# 新分区格式化
+	mkfs.ext3 /dev/vdb1
+
+	# 挂载分区
+	mkdir /disk
+	mount /dev/vdb1 /disk
+
+	# 设置启动自动挂载
+	echo '/dev/vdb1 /disk ext3 defaults 0 0' >> /etc/fstab
+
+	# 将默认目录移动到数据盘
+	mv /disk_/* /disk
 
 ## CentOS 7 安装 Mysql
 
