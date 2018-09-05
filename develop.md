@@ -736,17 +736,18 @@
 	\Library\Request			# 数据输入接口类
 	\Library\Response			# 数据输出接口类
 	\Library\RSA				# RSA 加密与解密
-	\Library\Security			# 常用服务扩展包
-	\Library\Service			# 数组操作
+	\Library\Security			# 安全校验工具包
+	\Library\Service			# 常用服务扩展包
 	\Library\Setting			# 配置读与写
 	\Library\StrExt				# 字符串扩展
 	\Library\Template			# 模板引擎类
+	\Library\Location			# 地理位置服务包
 	\Library\Thumb				# 基本图片处理
 	\Library\Token				# 签名与验证
 	\Library\Wechat				# 微信 SDK 封装
 	\Library\Widget				# Widget 控制器
 
-## Attach 文件上传
+### Attach 文件上传
 
 	# 保存单个上传文件
 	Attach::savefile( $param = array() )
@@ -988,9 +989,6 @@
 	# URL 生成
 	Service::createUrl( $parts = NULL, $param = NULL, $anchor = NULL )
 
-	# 取得手机号码归属地
-	Service::getSeat( $number = NULL )
-
 	# 发送手机短信
 	Service::sendSMS( $mobile, $format, $variable )
 
@@ -1000,18 +998,30 @@
 	# 普通邮件发送函数
 	Service::sendMail( $address, $subject, $content, $template = NULL )
 
-	# 返回 IP 所在地
-	# IP 数据库配置位置：global.module.ipdata
-	# IP 数据库下载地址：http://www.cz88.net/
-	Service::location( $ip )
-
 	# 写入一条系统日志
 	Service::writeLog( $event, $desc = NULL, $opts = array() )
 
 	# 清理某一类型日志
 	Service::cleanLog( $event, $opts = array() )
 
-## Request 请求
+### Location 位置服务
+
+	# 获取手机号码归属地
+	Location::getSeat( $number = NULL )
+
+	# 获取位置数据清单
+	# 数据来自 public/location/location.php
+	Location::getData( $index = NULL )
+
+	# 更新纯真数据库文件
+	Location::upgrade( $filename = NULL )
+
+	# 返回 IP 所在地
+	# IP 数据库配置位置：global.module.ipdata
+	# IP 数据库下载地址：http://www.cz88.net/
+	Location::convert( $ip )
+
+### Request 请求
 
 	# 当前模块名称
 	Request::$module
@@ -1135,7 +1145,7 @@
 	# 返回 JSONP 格式数据
 	Response::callback( $dataset, $callback = NULL )
 
-## Security 安全
+### Security 安全
 
 	# 令牌生成
 	Security::generate( TRUE )
@@ -1146,11 +1156,11 @@
 	# 检查当前 IP 是否在规则内
 	Security::check_ipzone( $array, $ip = NULL )
 
-	# 检查提交参数
-	Security::check_params( $param, $valid = array() )
+	# 按规则检查提交参数
+	Security::check_params( $param, $valid = array(), $default = NULL )
 
 	# 使用 Mcrypt 对消息进行加密或解密
-	Security::message($data, $key , $mode = 'encode')
+	Security::message( $data, $key, $mode = 'encode' )
 
 	# 使用 MD5 给密码加盐
 	Security::password( $password, $salt )
@@ -1317,6 +1327,7 @@
 ### 多模块与域名
 
 	# 模块声明
+	# 第一个模块将作为默认模块，未绑定的域名将指向它
 	./config/project.php
 	'product.module' => array('master', 'admin');
 

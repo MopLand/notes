@@ -124,12 +124,12 @@
 	# 取消 FastCGI server 部分 location 的注释,并要注意 fastcgi_param 行的参数，改为 $document_root$fastcgi_script_name，或者使用绝对路径
 
 ### 测试环境
+
 	cd /usr/share/nginx/html
 	vi index.php #添加以下代码
 
 	<?php
 	phpinfo();
-	?>
 
 ### 常用命令
 	chown nginx.nginx /usr/share/nginx/html -R 	#设置权限
@@ -184,13 +184,13 @@
 
 ### 对数据盘进行分区。按照界面的提示，依次操作
 
-1. 输入fdisk /dev/vdb(对数据盘进行分区)，回车；
-2. 输入n(新建分区)，回车；
-3. 输入p(新建扩展分区)，回车；
-4. 输入1(使用第 1 个主分区)，回车；
-5. 输入回车(使用默认配置)；
-6. 再次输入回车(使用默认配置)；
-7. 输入wq(保存分区表)，回车开始分区
+1. 输入 **fdisk /dev/vdb** (对数据盘进行分区)，回车；
+2. 输入 **n** (新建分区)，回车；
+3. 输入 **p** (新建扩展分区)，回车；
+4. 输入 **1** (使用第 1 个主分区)，回车；
+5. 输入 **回车**(使用默认配置)；
+6. 再次输入 **回车**(使用默认配置)；
+7. 输入 **wq** (保存分区表)，回车开始分区
 
 ![](https://mc.qcloudimg.com/static/img/8a9c8ff4db5a7e4622bf2968d0309129/image.png)
 
@@ -217,105 +217,106 @@
 
 1. 下载 mysql 的 repo 源
 
-	wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+		wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
 
 2. 安装 mysql-community-release-el7-5.noarch.rpm 包
 
-	rpm -ivh mysql-community-release-el7-5.noarch.rpm
+		rpm -ivh mysql-community-release-el7-5.noarch.rpm
 
 3. 安装 mysql
 
-	yum install mysql-server
+		yum install mysql-server
 
 ## CentOS 7 安装 PHP7
 
 1. 删除 PHP 及扩展
 
-	yum remove php* php-common
+		yum remove php* php-common
 
 2. 安装 repo 源
 
-	rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+		rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
 
 3. 修改 yum 源
 
-	vi /etc/yum.repos.d/remi.repo
-	
-	[remi]
-	enabled=1
-	
-	vi /etc/yum.repos.d/remi-php70.repo
-
-	[remi-php70]
-	enabled=1
+	    vi /etc/yum.repos.d/remi.repo
+	    
+	    [remi]
+	    enabled=1
+	    
+	    vi /etc/yum.repos.d/remi-php70.repo
+	    
+	    [remi-php70]
+	    enabled=1
 
 4. yum 安装php7
 
-	yum install -y php php-fpm php-cli php-mysql php-gd php-xml php-xmlrpc php-mbstring php-mcrypt php-bcmath php-mhash php-opcache php-redis libmcrypt
+		yum install -y php php-fpm php-cli php-mysql php-gd php-xml php-xmlrpc php-mbstring php-mcrypt php-bcmath php-mhash php-memcache php-opcache php-redis libmcrypt
 
 5. 检查版本和扩展
 
-	php -v
-	php -m
+		php -v
+		php -m
 
 ## CentOS 7 安装 Memcahce
 
 1. yum 安装
-	yum -y install memcached
+	
+		yum -y install memcached
 
-2. Memcached 运行	
-	memcached -h
-	memcached-tool  127.0.0.1:11211 stats
+2. Memcached 运行
+
+		memcached -h
+		memcached-tool  127.0.0.1:11211 stats
 
 3. 扩展一下，安装PHP-memcache扩展，防火墙放开11211端口
 	
-	yum -y install php-pecl-memcache
-
-	如果是PHP56版本的应该运行
-	yum -y install php56w-pecl-memcache
-
-	防火墙放开11211
-	firewall-cmd --permanent --zone=public --add-port=11211/tcp
-
-	检查端口是否开放
-	echo stats | nc memcache_host_name_or_ip 11211
+		yum -y install php-pecl-memcache
+	
+		如果是PHP56版本的应该运行
+		yum -y install php56w-pecl-memcache
+	
+		防火墙放开11211
+		firewall-cmd --permanent --zone=public --add-port=11211/tcp
+	
+		检查端口是否开放
+		echo stats | nc memcache_host_name_or_ip 11211
 	
 4. 配置安全的 Memcached
 
-	vi /etc/sysconfig/memcached
-	
-	PORT="11211"
-	USER="memcached"
-	MAXCONN="1024"
-	CACHESIZE="64"
-	OPTIONS="-U 0"
+		vi /etc/sysconfig/memcached
+		
+		PORT="11211"
+		USER="memcached"
+		MAXCONN="1024"
+		CACHESIZE="64"
+		OPTIONS="-U 0"
 
 ## CentOS 7 安装 ImageMagick
 
-1. 在 http://www.imagemagick.org/download/ 上找到合适的版本，然后下载：
+1. 在 http://www.imagemagick.org/download/ 上找到合适的版本
 
-    wget http://www.imagemagick.org/download/ImageMagick-6.9.10-8.tar.gz
+    	wget http://www.imagemagick.org/download/ImageMagick-6.9.10-8.tar.gz
 
-2. 解压刚才下载的文件：
+2. 解压刚才下载的文件
 
-	tar xvf ImageMagick-6.9.10-8.tar.gz
+		tar xvf ImageMagick-6.9.10-8.tar.gz
 
-3. 进入解压目录：
+3. 进入解压目录
 
-	cd ImageMagick-6.9.10-8
+		cd ImageMagick-6.9.10-8
 
-4. 检查配置：
+4. 检查配置
 
-	./configure
+		./configure
+		# 如果发现没有安装jpeg（如下图），则必须先安装jpeg
 
-	如果发现没有安装jpeg（如下图），则必须先安装jpeg
+5. 安装jpeg
 
-5. 安装jpeg：
+		yum install libjpeg* libpng* freetype* gd*
 
-	yum install libjpeg* libpng* freetype* gd*
+6. 完成安装
 
-6. 安装ImageMagick
-
-	make install
+		make install
 
 	
