@@ -424,32 +424,6 @@
 ### 解压gzip文件（保留源文件）
 	gunzip –c filename.gz > filename
 
-## 计划任务
-
-	# 编辑任务
-	crontab -e
-	
-	# 查看任务
-	crontab -l
-	
-	# 重启任务
-	service crond restart
-	
-	# 中文编码兼容
-	export LANG=en_US.UTF-8
-	
-	# 每天 23 点重启机器
-	00 23 * * * reboot
-	
-	# 每天 23 点 10 分开始采集
-	10 23 * * * service jd start
-	
-	# 每天 10 点结束采集
-	00 10 * * * service jd stop
-	
-	#  每天 10 点 10 分重启机器
-	00 10 * * * reboot
-
 ## 时间与日期
 
 	# 删除当前默认时区
