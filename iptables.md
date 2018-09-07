@@ -36,7 +36,6 @@
 	-A INPUT -p tcp -m state --state NEW -m tcp --dport 2121 -j ACCEPT
 	-A INPUT -p tcp -m state --state NEW -m tcp --dport 3636 -j ACCEPT
 
-
 ### 允许指定端口段
 	-A INPUT -p tcp -m state --state NEW -m tcp --dport 40000:41000 -j ACCEPT
 
@@ -74,34 +73,60 @@
 
 ## 常用命令
 
-### 临时关闭 SELinux
+	# 临时关闭 SELinux
 	setenforce 0
 
-### 永久关闭 SELinux
+	# 永久关闭 SELinux
 	vi /etc/selinux/config
 	SELINUX=enforcing		#开启
 	SELINUX=disabled		#关闭
 
-### 禁用 firewalld
+	# 禁用 firewalld
 	systemctl stop firewalld
 	systemctl mask firewalld
 
-### 重启防火墙
+	# 重启防火墙
 	systemctl restart iptables
 
-### 开机启动防火墙
+	# 开机启动防火墙
 	systemctl enable iptables
 
-### 关闭防火墙
+	# 关闭防火墙
 	systemctl stop iptables
 
 ## CentOS 6.x
 
-### 创建规则
+	# 创建规则
 	iptables -P OUTPUT ACCEPT
 
-### 存储规则
+	# 存储规则
 	service iptables save
 
-### 重启命令
+	# 重启命令
 	service iptables restart
+
+## 高级实例
+
+### 端口转发给内网其他机器
+
+	vi /etc/sysctl.conf
+
+	# 允许 IPv4 转发
+	net.ipv4.ip_forward = 1
+
+	# 加载内核参数设置
+	/sbin/sysctl -p
+
+	*filter
+	# 允许 FORWARD 链
+	-A FORWARD -p tcp --dport 9101 -j ACCEPT
+	-A FORWARD -p tcp --sport 9101 -j ACCEPT
+	...
+	COMMIT
+
+	*nat
+	# 将 9101 端口转发至内网其他机器
+	-A PREROUTING -p tcp -m tcp --dport 9101 -j DNAT --to-destination 10.66.195.15:9101
+	-A POSTROUTING -d 10.66.195.15 -p tcp -m tcp --dport 9101 -j MASQUERADE
+	...
+	COMMIT
