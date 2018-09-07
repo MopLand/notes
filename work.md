@@ -1,5 +1,14 @@
 # 工作规范
 
+## 常用服务
+
+- 服务器（阿里云/腾讯云）
+- 数据库（阿里云/腾讯云/本地）
+- 附件（本地/异步至七牛云）
+- CDN（七牛云/腾讯云/CloudFlare）
+- 域名购买（GoDaddy/腾讯云/国内备案推荐腾讯云）
+- 域名解析（DNSPOD）
+
 ## 生产环境
 
 ### 基本配置
@@ -12,30 +21,45 @@
 
 ### 目录结构
 
-	disk									# 工作目录
+	disk
+		backup								# 备份目录
+			example.com.sql
+			example.com.zip
+			...			
 		certs								# 证书目录
 			example.com.key
 			example.com.crt
-			...
+			...			
+		cache								# 公共缓存
+			ipdata.dat						# IP 位置库
+			...			
 		rules								# Nginx 规则
 			blocked.conf					
 			mirror.conf
-			...
+			...			
 		sites								# 站点配置
 			default.conf					# 默认站点
 			...
+		shell								# 自动化脚本
+			gitpull.sh						# Git 同步脚本
+			memcached.sh					# Memcached 重启
+			backup.sh						# 数据库备份
+			fdisk.sh						# 数据盘初始化
+			autoclean.sh					# 缓存目录清理
+			backup.sh						# 数据库备份
+			blockip.sh						# 访问频率过高IP自动Ban
+			certserv.sh						# SSL 证书更新和部署
+			compress.sh						# 图片批量压缩
+			...
 		www									# 站点目录
 			default							# 默认站点
+			upgrade							# 升级站点
 			...
 		log									# 日志目录
 			access.log						# Nginx 访问日志
 			error.log						# Nginx 错误日志
 			...
-		gitpull.sh							# Git 同步脚本
-		memcached.sh						# Mem 重启脚本
-		backup.sh							# 数据库备份脚本
-		ipdata.dat							# 公共 IP 数据库
-
+		
 ### 服务器
 
 	1.合理配置 PHP-FPM
@@ -83,19 +107,82 @@
 ### 经验心得
 
 	1. 不要在临近假期进行大版本提交
+	
+## 七牛镜像
 
+### MySQL 备份
+
+- shell 脚本，每天备份至 /disk/backup
+- qrshell 工具，定时同步至七牛 backup
+- 参考 backup.sh
+
+### 上传附件存储
+
+- 附件上传汇总至 /disk/www/attach.zhfile.com/
+- 给上传目录绑定域名：attach.src.zhfile.com
+- 七牛资源绑定 CNAME：attach.zhfile.com
+- 七牛资源设置镜像源：attach.src.zhfile.com
+- attach 为任何可用标识，如：s1 ~ s9
+
+### 公用静态资源
+
+- 资源上传汇总至 /disk/www/public.zhfile.com/
+- 给上传目录绑定域名：public.src.zhfile.com
+- 七牛资源绑定 CNAME：public.zhfile.com
+- 七牛资源设置镜像源：public.src.zhfile.com
+
+### 建立软链接
+	ln -s /disk/www/shihuizhu.com/attach/goods /disk/www/s3.zhfile.com/goods
+	
 ## Nginx
 
-### 服务器标识
+### 基础配置
+	
+	user  nginx;
+	worker_processes  auto;
 
-	# nginx.conf
-	# 123 为服务器内网 IP 最后一段数字
-	http{
-		add_header Node "123" "always";
+	error_log  /var/log/nginx/error.log warn;
+	pid        /var/run/nginx.pid;
+
+	events {
+		worker_connections  1024;
 	}
 
-	# main 日志格式增加主机信息
-	"$http_host"
+	http {
+		include       /etc/nginx/mime.types;
+		default_type  application/octet-stream;
+
+		# main 日志格式增加主机信息
+		log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+						  '$status $body_bytes_sent "$http_referer" '
+						  '"$http_user_agent" "$http_x_forwarded_for" "$http_host"';
+
+		# mirror 镜像服务，增加 APPID 标识
+		log_format  mirror  '$remote_addr - $remote_user [$time_local] "$request" '
+						  '$status $body_bytes_sent "$http_referer" '
+						  '"$http_user_agent" "$http_x_forwarded_for" "$http_APPID"';
+
+		# iponly 仅 IP 格式日志
+		log_format  iponly  '$remote_addr';
+
+		access_log  /var/log/nginx/access.log  main;
+		
+		# 服务器标识，内网 IP 后两段
+		add_header Node "0.3" "always";
+		
+		# CVE-2017-7529
+		max_ranges 1;
+
+		sendfile        on;
+		#tcp_nopush     on;
+
+		keepalive_timeout  65;
+
+		#gzip  on;
+
+		include /disk/sites/*.conf;
+	}
+
 
 ### 默认站点
 
@@ -139,8 +226,8 @@
 
 ### 更改用户和组
 
-	user = nginx 				#修改用户为nginx
-	group = nginx 				#修改组为nginx
+	user = nginx 				#修改用户为 nginx
+	group = nginx 				#修改用户组为 nginx
 
 
 ### 启用 PHP-FPM 状态

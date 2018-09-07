@@ -21,40 +21,40 @@
 
 ## 使用例子
 	
-### 每天 23 点重启机器
+	# 每天 23 点重启机器
 	00 23 * * * reboot
 
-### 每天 23 点 10 分开始采集
+	# 每天 23 点 10 分开始采集
 	10 23 * * * service jd start
 
-### 每天 10 点结束采集
+	# 每天 10 点结束采集
 	00 10 * * * service jd stop
 
-###  每天 10 点 10 分重启机器
+	#  每天 10 点 10 分重启机器
 	00 10 * * * reboot
 
-### 每隔1小时(1:00,2:00,3:00)运行一次脚本
+	# 每隔1小时(1:00,2:00,3:00)运行一次脚本
 	0 */1 * * * /path_to_script
 
-### 每隔1小时(1:20,2:20,3:20)运行一次脚本
+	# 每隔1小时(1:20,2:20,3:20)运行一次脚本
 	20 */1 * * * /path_to_script
 
-### 运行脚本时，丢掉返回的信息
+	# 运行脚本时，丢掉返回的信息
 	20 */1 * * * /path_to_script > /dev/null 2>&1
 
 ## 实际示例
 
 	# 每天8:00 - 22:00，每 15 分钟一次
-		*/15 8-22 * * * curl http://example.com/cron/mins > /dev/null 2>&1
+	*/15 8-22 * * * curl http://example.com/cron/mins > /dev/null 2>&1
 
 	# 每天 23:30 执行一次
-		30 23 * * * curl http://example.com/cron/days > /dev/null 2>&1
+	30 23 * * * curl http://example.com/cron/days > /dev/null 2>&1
 
 	# 分佣订单数据汇总（每天 1:00 和 12:00 各执行一次）
-		0 1,12 * * * curl http://api.example.com/commission/cron > /dev/null 2>&1
+	0 1,12 * * * curl http://api.example.com/commission/cron > /dev/null 2>&1
 
 	# 以上相同功能，使用 PHP 执行
-		0 1,12 * * * php /disk/www/example.com/index.php /api/commission/cron > /dev/null 2>&1
+	0 1,12 * * * php /disk/www/example.com/index.php /api/commission/cron > /dev/null 2>&1
 
 	# 云端商品采集（每天8至23点，间隔20分钟）
 	*/10 8-23 * * * /disk/www/www.example.com/cron/cloud.sh > /dev/null 2>&1

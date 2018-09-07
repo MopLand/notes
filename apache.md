@@ -78,7 +78,7 @@
 	
 		# 域名所有权验证服务
 		RewriteCond %{REQUEST_FILENAME} !-f
-		RewriteRule ^(.+)\.txt$ /fn/verify/$1 [L]
+		RewriteRule ^(.+)\.(txt|htm|html)$ /fn/verify/$1 [L]
 
 		# 图片缩略图生成服务
 		RewriteCond %{REQUEST_FILENAME} !-f
@@ -108,14 +108,15 @@
 	
 ## 常见错误
 
-###403
-	通常为 AllowOverride 或 Require All 配置有误，应当于
+### 403
+
+	# 通常为 AllowOverride 或 Require All 配置有误，应当于
 	AllowOverride All
 	Require All granted
 
-###404
-	通常为 DocumentRoot 配置有误
-	
+### 404
+
+	# 通常为 DocumentRoot 配置有误
 
 ## AB 测试
 
@@ -124,11 +125,11 @@
 
 ### 使用命令
 	
-	ab -n 800 -c 800 http://192.168.0.10/ 
 	#（-n发出800个请求，-c模拟800并发，相当800人同时访问，后面是测试url）
+	ab -n 800 -c 800 http://192.168.0.10/ 
 	
+	# 在60秒内发请求，一次100个请求
 	ab -t 60 -c 100 http://192.168.0.10/ 
-	# 在60秒内发请求，一次100个请求。 
 	  
 	# 如果需要在url中带参数，这样做 
 	ab -t 60 -c 100 -T "text/plain" -p p.txt http://192.168.0.10/hello.html 
