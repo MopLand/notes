@@ -52,13 +52,13 @@
 	security:
 	  authorization: enabled
 
-## PHP-FPM
+## PHP 扩展
 
 ### 编译扩展
 
 	yum install openssl openssl-devel
 	
-	yum install php-devel
+	yum install php-devel php-pear
 	
 	pecl install mongodb 
 
@@ -70,7 +70,6 @@
 ### 重启服务
 	
 	systemctl restart php-fpm
-
 
 ## 服务优化
 
