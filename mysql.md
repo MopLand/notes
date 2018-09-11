@@ -95,6 +95,9 @@
 
 #### 查找以逗号分隔的值，IN 效率更好
 	SELECT COUNT(*) FROM `pre_member_client` WHERE FIND_IN_SET(`app_id`, '20860,20859,20858,20857,20856');
+	
+#### 查找某字段不以某符号结尾的记录
+	SELECT * FROM `pre_article_list` WHERE id NOT IN ( SELECT id FROM `pre_article_list` WHERE article_content LIKE '%>' );
 
 #### 正则匹配
 	SELECT * FROM `pre_wechat_account` where 'www.example.com' REGEXP domain;
