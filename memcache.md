@@ -72,6 +72,38 @@
 	# http://bbs.qcloud.com/thread-49051-1-1.html
 	OPTIONS="-U 0"
 
-## 测试
-telnet 127.0.0.1 11211
+## 服务测试
 
+### 连接服务
+
+	telnet 127.0.0.1 11211
+
+### 命令响应
+
+	STORED 表示存储成功 
+	NOT_STORED：表示存储失败（命令正确，但操作不对） 
+	ERROR：表示命令错误
+	END：完成命令
+	
+### 支持命令
+
+| 命令 | 命令说明 | 示例 |
+| ------ | ------ | ------ |
+| get | 获取值 | get mykey |
+| set | 设定一个值（key/flag/expire/bytes） | set mykey 0 60 5 |
+| add | 添加一个值 | add mykey 0 60 5 |
+| replace | 替换值 | replace mykey 0 60 5 |
+| append | 在后面追加值 | append mykey 0 60 5 |
+| prepend | 在前面追加值 | prepend mykey 0 60 5 |
+| incr | 数值类的值增加给定数字值 | incr mykey 2 |
+| decr | 数值类的值减少给定数字值 | decr mykey 5 |
+| flush_all | 刷新items：立即刷新 或 延迟时间刷新 | flush_all /flush_all 100 |
+| stats | 普通stats查询 | stats |
+| | 内存块使用查询（显示各个slab的信息，包括chunk的大小，数目，使用情况等） | stats slabs |
+| | 查询分配的item（显示各个slab中item的数目和最老item的年龄） | stats items |
+| | stats 详细信息操作命令，有on/off/dump三个选项 | stats detail on |
+| | 统计数量 | stats sizes |
+| | 重置，清空统计数据 | stats reset |
+| version | 查看服务端版本 | version |
+| verbosity | 提升日志级别，有info/error级别可供选择 | verbosity info |
+| quit | 退出 | quit |

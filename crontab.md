@@ -68,16 +68,16 @@
 	# 大淘客商品采集（大淘客比较慢，所以半小时采一次）
 	*/25 8-23 * * * /disk/www/www.example.com/cron/dataoke.sh > /dev/null 2>&1
 	
-	#商品优惠券统计（每天 9:00 - 23:50，每15分钟执行一次）
+	# 商品优惠券统计（每天 9:00 - 23:50，每15分钟执行一次）
 	*/15 9-23 * * * curl http://api.example.com/cron/hour > /dev/null 2>&1
 	
-	#商品每日自动结算（每天 23:50 执行一次）
+	# 商品每日自动结算（每天 23:50 执行一次）
 	50 23 * * * curl http://api.example.com/cron/days > /dev/null 2>&1
 	
-	#项目自动更新（每天9:00 - 22:00，每10分钟执行一次）
+	# 项目自动更新（每天9:00 - 22:00，每10分钟执行一次）
 	*/10 9-22 * * * /disk/shell/gitpull.sh > /var/log/gitpull.log
 	
-	#自动封锁将连接数超过150的IP（每 5 分钟执行一次）
+	# 自动封锁将连接数超过150的IP（每 5 分钟执行一次）
 	*/5 * * * * /disk/shell/blockip.sh > /dev/null 2>&1
 	
 	# 每天 4:00 重启机器
