@@ -107,6 +107,10 @@
 
 ## 高级实例
 
+### 本机端口转发（8080 转向 80）
+
+	iptables -t nat -A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-ports 80
+
 ### 端口转发给内网其他机器
 
 	vi /etc/sysctl.conf
