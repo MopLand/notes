@@ -1,4 +1,4 @@
-#performance
+# performance
 
 ## 修改机器名称
 	vi /etc/sysconfig/network
@@ -100,25 +100,25 @@
 ### 参数说明
 	pm = dynamic | static
 	
-	# 静态方式下开启的php-fpm进程数量
+	# 静态方式下开启的 php-fpm 进程数量
 	pm.max_children
 	
-	# 动态方式下的起始php-fpm进程数量
+	# 动态方式下的起始 php-fpm 进程数量
 	pm.start_servers
 	
-	# 动态方式下的最小php-fpm进程数
+	# 动态方式下的最小 php-fpm 进程数
 	pm.min_spare_servers
 	
-	# 动态方式下的最大php-fpm进程数量
+	# 动态方式下的最大 php-fpm 进程数量
 	pm.max_spare_servers
 	
 	# 动态适合小内存机器，灵活分配进程，省内存。静态适用于大内存机器，动态创建回收进程对服务器资源也是一种消耗
 	
-	# 如果pm设置为 static，那么其实只有pm.max_children这个参数生效。
-	# 系统会开启设置数量的php-fpm进程。
-	# 如果pm设置为 dynamic，那么pm.max_children参数失效，后面3个参数生效。
-	# 系统会在php-fpm运行开始 的时候启动pm.start_servers个php-fpm进程，
-	# 然后根据系统的需求动态在pm.min_spare_servers和pm.max_spare_servers之间调整php-fpm进程数
+	# 如果 pm 设置为 static，那么其实只有 pm.max_children 这个参数生效。
+	# 系统会开启设置数量的 php-fpm 进程。
+	# 如果pm设置为 dynamic，那么 pm.max_children 参数失效，后面3个参数生效。
+	# 系统会在 php-fpm 运行开始 的时候启动 pm.start_servers 个 php-fpm 进程，
+	# 然后根据系统的需求动态在 pm.min_spare_servers 和 pm.max_spare_servers 之间调整 php-fpm 进程数
 	
 ### 8G内存参考
 	pm = dynamic
@@ -154,7 +154,6 @@
 		fastcgi_connect_timeout 10s;
 		fastcgi_send_timeout 60s;
 		fastcgi_read_timeout 60s;
-
 		fastcgi_buffers 8 128k;
 		fastcgi_buffer_size 256k;	
 	}
