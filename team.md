@@ -26,7 +26,7 @@
 
 [TortoiseSVN](https://tortoisesvn.net/downloads.zh.html)
 
-## 网络工具
+## 终端工具
 
 ### Items 终端模拟器（Mac）
 
@@ -36,21 +36,28 @@
 
 [Xshell是一个功能强大的终端模拟器，支持SSH、SFTP、telnet，rlogin和串行](https://pc.qq.com/detail/4/detail_2644.html)
 
+## 网络工具
+
+### Fiddler 网络请求抓包
+
+[Fiddler 网络监控](https://www.telerik.com/download/fiddler)
+
 ### ShadowSocks 客户端（Windows）
+
 [shadowsocks-windows](https://github.com/shadowsocks/shadowsocks-windows/releases)
 
 ### ShadowSocks 客户端（Mac）
+
 [shadowsocks-mac](https://github.com/shadowsocks/ShadowsocksX-NG/releases)
 
 ### VPN 科学上网
 
 [Lantern - 全局 VPN 科学上网工具，支持 PC、MAC 和 Android](https://www.getlantern.org/)
 
-### 网络工具
+## 常用服务
 
-[Fiddler 网络监控](https://www.telerik.com/download/fiddler)
-
-## 常用工具
+### 在线正则测试
+[https://regexr.com/](https://regexr.com/)
 
 ### 项目跟踪管理
 
@@ -60,9 +67,19 @@
 
 ### 源代码托管
 
+[https://github.com/](https://github.com/)
+
+最大的面向开源及私有软件项目的托管平台
+
 [http://git.oschina.net/](http://git.oschina.net/)
 
 国内比较可靠的第三方 Git 托管服务，支持私有项目
+
+### CDN 公共资源
+
+[https://www.bootcdn.cn/](https://www.bootcdn.cn/)
+
+稳定、快速、免费的前端开源项目 CDN 加速服务
 
 ### Gif录制
 

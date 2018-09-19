@@ -74,6 +74,9 @@
 
 #### 查询重复记录
 	SELECT email, COUNT(email) AS q FROM emails_table GROUP BY email HAVING q > 1 ORDER BY q DESC;
+	
+#### 销售额前100的代理
+	SELECT t.agent_id, t.agent_name, a.qq, sum(t.money) AS total FROM `pre_agent_trade` as t left join pre_agent_list as a on a.agent_id = t.agent_id WHERE t.money > 0 GROUP BY t.agent_id ORDER BY total DESC LIMIT 100;
 
 #### 返回得分最高的 20 条记录，每个用户保留一条记录
 	SELECT raw.userid, raw.username, tmp.score, min(time) time FROM (select userid, max(score) score FROM `pre_testing_record` WHERE activity_id = ? GROUP BY userid) tmp JOIN `pre_testing_record` raw ON raw.userid = tmp.userid AND tmp.score = raw.score WHERE activity_id = ? GROUP BY tmp.userid, tmp.score ORDER BY tmp.score DESC, time ASC, raw.record_id ASC LIMIT 20;
