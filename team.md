@@ -28,7 +28,7 @@
 
 ## 终端工具
 
-### Items 终端模拟器（Mac）
+### iTerm2 终端模拟器（Mac）
 
 [macOS Terminal Replacement](https://www.iterm2.com/)
 
