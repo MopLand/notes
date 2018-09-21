@@ -1,20 +1,61 @@
 # Redis
 
-## 启动
-redis-server.exe redis.conf
+## Windows
 
-## 测试
-redis-cli.exe -h 127.0.0.1 -p 6379
+### 安装
+	https://github.com/MicrosoftArchive/redis/releases
 
-## 扩展
-phpredis_5.4_vc9_ts
+### 启动
+	redis-server.exe redis.conf
 
-## 配置
+### 测试
+	redis-cli.exe -h 127.0.0.1 -p 6379
+
+### 扩展
+	phpredis_5.4_vc9_ts
+
+### 配置
 - php.ini
 - extension=php_igbinary.dll
 - extension=php_redis.dll
 
-## 配置文件 redis.conf
+----------
+
+## Linux
+
+### 安装
+	http://redis.io/download
+
+### 下载并安装
+	$ wget http://download.redis.io/releases/redis-4.0.11.tar.gz
+	$ tar xzf redis-4.0.11.tar.gz
+	$ cd redis-4.0.11
+	$ make
+
+### 启动 redis 服务
+	$ cd src
+	$ ./redis-server
+
+### 使用指定配置文件
+	$ cd src
+	$ ./redis-server ../redis.conf
+
+### 测试 redis 服务
+	$ src/redis-cli
+	redis> set foo bar
+	OK
+	redis> get foo
+	"bar"
+
+----------
+
+## 配置说明
+
+### 文件位置
+	/etc/redis.conf
+
+### 参数说明
+
 1. Redis默认不是以守护进程的方式运行，可以通过该配置项修改，使用yes启用守护进程
     daemonize no
 2. 当Redis以守护进程方式运行时，Redis默认会把pid写入/var/run/redis.pid文件，可以通过pidfile指定
