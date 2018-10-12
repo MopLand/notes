@@ -1,5 +1,7 @@
 # Migrating
 
+> Project DORA 升级和迁移指导
+
 ## PHP
 
 	$this->getnum
@@ -311,6 +313,12 @@
 
 	btn-xs"
 	btn-sm"
+	
+	cdn.bootcss.com
+	cdn.staticfile.org
+	
+	cdn.staticfile.org/bootstrap
+	cdn.staticfile.org/twitter-bootstrap
 
 ### remove
 

@@ -1,5 +1,7 @@
 # CentOS
 
+> CentOS 常用配置与优化
+
 ## DNS
 	vi /etc/resolv.conf
 	nameserver 8.8.8.8

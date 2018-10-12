@@ -1,6 +1,6 @@
 # Hybrid
 
-## 混合开发环境
+> 基于 Vue 的前后端混合开发环境
 
 ## 安装使用
 	<script src="//pubic.zhfile.com/js/ray.js">
