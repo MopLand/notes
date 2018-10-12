@@ -77,6 +77,10 @@
 
 ### CDN 公共资源
 
+[http://staticfile.org/](http://staticfile.org/)
+
+来自七牛云，免费、快速、开放的 CDN 服务
+
 [https://www.bootcdn.cn/](https://www.bootcdn.cn/)
 
 稳定、快速、免费的前端开源项目 CDN 加速服务
