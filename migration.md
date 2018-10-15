@@ -317,7 +317,7 @@
 	cdn.bootcss.com
 	cdn.staticfile.org
 	
-	cdn.staticfile.org/bootstrap
+	cdn.bootcss.org/bootstrap
 	cdn.staticfile.org/twitter-bootstrap
 
 ### remove
