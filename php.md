@@ -1,6 +1,6 @@
-#PHP
+# PHP
 
-##优化选项
+## 优化选项
 
 	# 禁止显示php版本的信息
 	expose_php = Off
@@ -47,6 +47,11 @@
 
 	[app]
 	app.environ=develop
+
+## 让 Windows 命令行支持 PHP
+
+	[环境变量 > 系统变量 > Path] 中加入 PHP 执行文件目录，如：
+	;D:\EasyPHP\eds-binaries\php\php713vc14
 
 ## 安装 Opcache
 

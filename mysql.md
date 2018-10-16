@@ -81,6 +81,9 @@
 #### 返回得分最高的 20 条记录，每个用户保留一条记录
 	SELECT raw.userid, raw.username, tmp.score, min(time) time FROM (select userid, max(score) score FROM `pre_testing_record` WHERE activity_id = ? GROUP BY userid) tmp JOIN `pre_testing_record` raw ON raw.userid = tmp.userid AND tmp.score = raw.score WHERE activity_id = ? GROUP BY tmp.userid, tmp.score ORDER BY tmp.score DESC, time ASC, raw.record_id ASC LIMIT 20;
 
+#### 左连接的表中有多条数据，只取按时间排序最大的一条
+	SELECT c.*, g.goods_name, g.goods_short, g.goods_thumb, g.attr_price FROM `pre_goods_list` AS g INNER JOIN `pre_goods_comment` AS c ON c.goods_id = g.goods_id WHERE g.goods_id > 0 AND g.attr_comment > 0 AND c.comment_id = (SELECT MAX(comment_id) FROM `pre_goods_comment` WHERE goods_id = g.goods_id);
+
 #### 连接字段
 	SELECT CONCAT(name,' ',surname) AS complete_name FROM users;
 
@@ -535,6 +538,9 @@
 	pdo_mysql.default_socket = /disk/mysql/mysql.sock
 
 ## 常见错误
+
+#### Table 'performance_schema.session_status' doesn't exist
+	mysql_upgrade -u root -p --force
 	
 #### SQLSTATE[HY000] [1129] is blocked because of many connection errors
 	mysqladmin -uroot -p flush-hosts
