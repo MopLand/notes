@@ -246,9 +246,9 @@
 	    [remi]
 	    enabled=1
 	    
-	    vi /etc/yum.repos.d/remi-php70.repo
+	    vi /etc/yum.repos.d/remi-php72.repo
 	    
-	    [remi-php70]
+	    [remi-php72]
 	    enabled=1
 
 4. yum 安装php7

@@ -46,7 +46,7 @@
 	}
 	
 	# 禁止证书文件输出
-	location ~* \.(p12|pem|key|crt|gitignore|htaccess)$ {
+	location ~* \.(p12|pem|key|crt|sql|md|gitignore|htaccess)$ {
 		deny all;
 	}
 
