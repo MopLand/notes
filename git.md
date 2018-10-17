@@ -40,22 +40,36 @@
 ### 复制已有缓存和配置文件
 	\cp -r -f -p /disk/www/rj.shihuizhu.com/attach/ /disk/www/rj.shz.com/
 	\cp -r -f -p /disk/www/rj.shihuizhu.com/config/ /disk/www/rj.shz.com/
-	\cp -r -f -p /disk/www/rj.shihuizhu.com/cached/ /disk/www/rj.shz.com/	
+	\cp -r -f -p /disk/www/rj.shihuizhu.com/cached/ /disk/www/rj.shz.com/
 
-### Cron 脚本
+## 生产环境定时拉取项目
+
+### cron 脚本
 	#项目自动更新（每天9:00 - 22:00，每10分钟执行一次）
-	*/10 9-22 * * * /disk/gitpull.sh ####  /var/log/gitpull.log
+	*/10 9-22 * * * /disk/shell/gitpull.sh > /var/log/gitpull.log
 
 ### sh 执行权限
-	chmod +x gitpull.sh
+	chmod +x /disk/shell/gitpull.sh
 
-### Git 预提交 hooks
+## Git hooks
+
+### pre-commit
 	# .git/hooks/pre-commit
 
 	#!/bin/sh
 	# 自动更新版本号
+
 	php vendor/gitbuild.php
 	exec git add ./config/project.php
+
+### post-merge
+
+	# .git/hooks/post-merge
+
+	#!/bin/sh
+	# 生产环境打包部署
+
+	npm install && npm run build
 
 ## 常用命令
 
@@ -428,7 +442,7 @@
 
 	git upload-pack
 
-##邮件相关命令
+## 邮件相关命令
 
 	git imap-send
 
@@ -534,7 +548,7 @@
 
 	git fast-export
 
-#### 其他版本库迁移至Git的通用工具
+#### 其他版本库迁移至 Git 的通用工具
 
 	git fast-import
 
@@ -556,7 +570,7 @@
 
 	git merge-index
 
-#### 合并两个以上分支。参见 git merge 的octopus合并策略
+#### 合并两个以上分支。参见 git merge 的 octopus 合并策略
 
 	git merge-octopus
 
@@ -661,10 +675,6 @@
 #### 子模组管理
 
 	git submodule
-
-#### 过时命令，请使用 git archive
-
-	git tar-tree
 
 #### 显示 Git 环境变量
 
