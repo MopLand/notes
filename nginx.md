@@ -99,8 +99,8 @@
 		
 		include phpfpm.conf;
 
-		if ($http_host != 'www.shihuizhu.com') {
-			rewrite (.*)  http://www.shihuizhu.com$1 permanent;
+		if ($http_host != 'www.example.com') {
+			rewrite (.*)  http://www.example.com$1 permanent;
 			return 301;
 		}
 		
@@ -357,13 +357,13 @@
 	
 ### upstream 设备状态值
 
-1. down 表示单前的server暂时不参与负载
+1. down 表示单前的 server 暂时不参与负载
 
-2. weight 默认为1.weight越大，负载的权重就越大
+2. weight 默认为1，weight 越大，负载的权重就越大
 
 3. max_fails 允许请求失败的次数默认为1。当超过最大次数时，返回 proxy_next_upstream 模块定义的错误
 
-4. fail_timeout max_fails次失败后，暂停的时间
+4. fail_timeout max_fails 次失败后，暂停的时间
 
 5. backup 其它所有的非backup机器down或者忙的时候，请求backup机器。所以这台机器压力会最轻
 
@@ -388,12 +388,13 @@
 	server {
 	
 		listen 80;
-		server_name mirror.shihuizhu.net mirror.shihuizhu.com;
-		root /disk/www/domain.shz.com;
+		server_name mirror.example.net mirror.example.com;
+		root /disk/www/domain.example.com;
+		error_page 500 502 503 504 =200 /public/errors/server_error.html;
 		index index.htm index.html index.php;
 	
-		if ($http_host != 'mirror.shihuizhu.com') {
-			rewrite (.*)  http://mirror.shihuizhu.com$1 permanent;
+		if ($http_host != 'mirror.example.com') {
+			rewrite (.*)  http://mirror.example.com$1 permanent;
 			return 301;
 		}
 
@@ -404,13 +405,12 @@
 	
 	}
 
-
 ### 前端路由
 
 	server {
 
 		listen 80;
-		server_name chaocheyi.com www.chaocheyi.com;
+		server_name example.com www.example.com;
 		root /disk/www/new.ccy.com/;
 		index index.htm index.html;
 		
@@ -420,16 +420,16 @@
 	
 	}
 
-### SSL 配置
+### HTTP 转向 HTTPS
 
-	# 处理 80 端口转发
-	server {
-       listen         80;
-       server_name    example.com;
-       rewrite ^(.*)  https://$host$1 permanent;
+	server {  
+		listen 80;  
+		server_name example.com;
+		rewrite ^(.*)$  https://$host$1 permanent;
 	}
+
+### SSL 配置
 	
-	# 处理 443 端口
 	# 注意 iptables 中需要允许 443 端口
 	server {
 		listen 443;
@@ -439,8 +439,8 @@
 		
 		# 启动 ssl
 		ssl on;
-		ssl_certificate /disk/certswww/example.com/.cert/certificate.crt;
-		ssl_certificate_key /disk/certs/example.com/.cert/private.key;
+		ssl_certificate /disk/certs/example.com.crt;
+		ssl_certificate_key /disk/certs/example.com.key;
 	
 		# error_page 404 = http://www.example.com/misc.php?action=404;
 		include phpcgi.conf;
@@ -486,15 +486,15 @@
 
 	server {
 	    listen       80;
-	    server_name ~^(\d+)\.shihuizhu\.com$;
+	    server_name ~^(\d+)\.example\.com$;
 	    root /disk/www/agent.shz.com;
 	    index  index.html index.php index.htm;
 	    
 	    include phpcgi.conf;
 	    
 	    #
-	    if ($host ~* (\d+)\.shihuizhu\.com) {
-			return 301 http://rj.shihuizhu.com/trade/$1;
+	    if ($host ~* (\d+)\.example\.com) {
+			return 301 http://rj.example.com/trade/$1;
 		}
 	}
 
@@ -502,12 +502,12 @@
 
 	server {
 		listen 80 default_server;
-		server_name ~^([a-z0-9]+)\.mirror\.shihuizhu\.com$;
+		server_name ~^([a-z0-9]+)\.mirror\.example\.com$;
 		root /disk/www/domain.shz.com;
 		index index.htm index.html index.php;
 		
 		set $sub_domain "";
-		if ($host ~* (.*)\.mirror\.shihuizhu\.com) {
+		if ($host ~* (.*)\.mirror\.example\.com) {
 			set $sub_domain $1;		
 		}
 		

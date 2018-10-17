@@ -95,13 +95,13 @@
 ### 非 WWW 转向到 WWW 的域名下
 	Options +FollowSymLinks 
 	RewriteEngine on 
-	RewriteCond %{HTTP_HOST} ^jb51.net [NC] 
-	RewriteRule ^(.*)$ http://www.jb51.net/$1 [L,R=301]
+	RewriteCond %{HTTP_HOST} ^example.com [NC] 
+	RewriteRule ^(.*)$ http://www.example.com/$1 [L,R=301]
 
 ### 重定向到新域名
 	Options +FollowSymLinks 
 	RewriteEngine on 
-	RewriteRule ^(.*)$ http://www.baidu.com/$1 [L,R=301] 
+	RewriteRule ^(.*)$ http://www.example.com/$1 [L,R=301] 
 
 ### 使用正则进行 301 重定向，实现伪静态
 	Options +FollowSymLinks 

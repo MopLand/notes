@@ -2,13 +2,15 @@
 
 > CentOS 常用配置与优化
 
-## DNS
+## 基础配置
+
+### DNS
 	vi /etc/resolv.conf
 	nameserver 8.8.8.8
 	nameserver 180.76.76.76
 	nameserver 114.114.114.114
 
-## 时钟同步
+### 时钟同步
 	yum install ntp	
 	ntpdate time.nist.gov
 
@@ -62,109 +64,6 @@
 	shopt -s globstar; rename.pl 's/-/\!/g' **/*;
 
 
-## Nginx / PHP / MySQL
-
-### 安装 Nginx
-
-#### 安装 wget
-
-	yum install wget
-
-#### 安装源
-
-	wget http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
-
-	rpm -ivh nginx*.rpm
-
-#### 安装命令
-
-	yum remove httpd* php* 	#删除系统自带的软件包
-	yum install nginx 		#安装nginx 根据提示输入y进行安装
-	chkconfig nginx on 		#设置nginx开机启动
-	service nginx start 	#启动nginx
-
-### 安装 MySQL
-
-#### 1、安装 MySQL
-
-	yum install mysql mysql-server 					#输入Y即可自动安装，直到安装完成
-	/etc/init.d/mysqld start 						#启动MySQL
-	chkconfig mysqld on 							#设为开机启动
-	cp /usr/share/mysql/my-medium.cnf /etc/my.cnf 	#拷贝配置文件
-	
-#### 2、为root账户设置密码
-
-	mysql_secure_installation		#回车，根据提示输入Y，输入2次密码，回车，根据提示一路输入Y，最后出现：Thanks for using MySQL!	
-
-### 安装 PHP5
-
-#### 1、安装PHP5和组件
-
-	yum install -y php php-fpm php-mysql php-gd libjpeg* php-xml php-xmlrpc php-mbstring php-mcrypt php-bcmath php-mhash php-opcache libmcrypt
-
-	chkconfig php-fpm on 			#设置php-fpm开机启动
-
-	/etc/init.d/php-fpm start		#启动php-fpm
-
-### 2、配置 nginx 支持 php
-
-	vi /etc/nginx/nginx.conf 				#编辑
-	user nginx nginx; 						#修改nginx运行账号为：nginx组的nginx用户
-
-	vi /etc/nginx/conf.d/default.conf 		#编辑
-
-	index index.php index.html index.htm; 	#增加index.php
-	# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
-	location ~ \.php$ {
-		root html;
-		fastcgi_pass 127.0.0.1:9000;
-		fastcgi_index index.php;
-		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-		include fastcgi_params;
-	}
-
-	# 取消 FastCGI server 部分 location 的注释,并要注意 fastcgi_param 行的参数，改为 $document_root$fastcgi_script_name，或者使用绝对路径
-
-### 测试环境
-
-	cd /usr/share/nginx/html
-	vi index.php #添加以下代码
-
-	<?php
-	phpinfo();
-
-### 常用命令
-	chown nginx.nginx /usr/share/nginx/html -R 	#设置权限
-	service nginx restart 						#重启nginx
-	service php-fpm restart 					#重启php-fpm
-
-	/etc/init.d/mysqld restart 					#重启mysql
-	/etc/init.d/mysqld stop 					#停止mysql
-	/etc/init.d/mysqld start 					#启动mysql
-
-### 邮件发送
-	vi /etc/postfix/main.cf
-	#inet_protocols = all
-	inet_protocols = ipv4
-	service postfix restart
-
-## MariaDB 安装
-
-1. 安装 MariaDB
-
-	yum -y install mariadb mariadb-server
-
-2. 开始运行 MariaDB
-
-	systemctl start mariadb
-
-3. 设置自动启动	
-	
-	systemctl enable mariadb
-
-4. 进行 MariaDB 引导设置	
-	
-	mysql_secure_installation
 
 ## CentOS 的 systemctl 服务
 
@@ -214,6 +113,100 @@
 
 	# 将默认目录移动到数据盘
 	mv /disk_/* /disk
+
+## CentOS 安装 wget
+
+	yum install wget
+
+## CentOS 安装 Nginx
+
+### 安装源
+
+	wget http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+
+	rpm -ivh nginx*.rpm
+
+### 安装命令
+
+	yum remove httpd* php* 	#删除系统自带的软件包
+	yum install nginx 		#安装nginx 根据提示输入y进行安装
+	chkconfig nginx on 		#设置nginx开机启动
+	service nginx start 	#启动nginx
+
+## CentOS 安装 MySQL
+
+### 1、安装 MySQL
+
+	yum install mysql mysql-server 					#输入Y即可自动安装，直到安装完成
+	/etc/init.d/mysqld start 						#启动MySQL
+	chkconfig mysqld on 							#设为开机启动
+	cp /usr/share/mysql/my-medium.cnf /etc/my.cnf 	#拷贝配置文件
+	
+### 2、为root账户设置密码
+
+	mysql_secure_installation		#回车，根据提示输入Y，输入2次密码，回车，根据提示一路输入Y，最后出现：Thanks for using MySQL!	
+
+## CentOS 安装 PHP5
+
+### 1、安装PHP5和组件
+
+	yum install -y php php-fpm php-mysql php-gd libjpeg* php-xml php-xmlrpc php-mbstring php-mcrypt php-bcmath php-mhash php-opcache libmcrypt
+
+	chkconfig php-fpm on 			#设置php-fpm开机启动
+
+	/etc/init.d/php-fpm start		#启动php-fpm
+
+### 2、配置 nginx 支持 php
+
+	vi /etc/nginx/nginx.conf 				#编辑
+	user nginx nginx; 						#修改nginx运行账号为：nginx组的nginx用户
+
+	vi /etc/nginx/conf.d/default.conf 		#编辑
+
+	index index.php index.html index.htm; 	#增加index.php
+	# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+	location ~ \.php$ {
+		root html;
+		fastcgi_pass 127.0.0.1:9000;
+		fastcgi_index index.php;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		include fastcgi_params;
+	}
+
+	# 取消 FastCGI server 部分 location 的注释,并要注意 fastcgi_param 行的参数，改为 $document_root$fastcgi_script_name，或者使用绝对路径
+
+### 常用命令
+	chown nginx.nginx /usr/share/nginx/html -R 	#设置权限
+	service nginx restart 						#重启nginx
+	service php-fpm restart 					#重启php-fpm
+
+	/etc/init.d/mysqld restart 					#重启mysql
+	/etc/init.d/mysqld stop 					#停止mysql
+	/etc/init.d/mysqld start 					#启动mysql
+
+### 邮件发送
+	vi /etc/postfix/main.cf
+	#inet_protocols = all
+	inet_protocols = ipv4
+	service postfix restart
+
+## MariaDB 安装
+
+1. 安装 MariaDB
+
+	yum -y install mariadb mariadb-server
+
+2. 开始运行 MariaDB
+
+	systemctl start mariadb
+
+3. 设置自动启动	
+	
+	systemctl enable mariadb
+
+4. 进行 MariaDB 引导设置	
+	
+	mysql_secure_installation
 
 ## CentOS 7 安装 Mysql
 
@@ -321,4 +314,3 @@
 
 		make install
 
-	
