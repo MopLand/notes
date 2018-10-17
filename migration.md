@@ -260,6 +260,12 @@
 
 ### bootstrap3 => bootstrap4
 
+	btn-default
+	btn-secondary
+
+	btn-xs"
+	btn-sm"
+
 	<div class="form-group">
 	<div class="form-group row">
 	
@@ -307,12 +313,6 @@
 
 	<a class="btn btn-sm btn-secondary" data-url
 	<button type="button" class="btn btn-sm btn-danger" data-url
-
-	btn-default
-	btn-secondary
-
-	btn-xs"
-	btn-sm"
 	
 	cdn.bootcss.com
 	cdn.staticfile.org

@@ -30,8 +30,15 @@
 	php_memcache-3.0.8-5.4-ts-vc9-x86
 
 ### 配置
-- php.ini
-- extension=php_memcache.dll
+
+	# php.ini
+	extension=php_memcache.dll
+
+### 下载地址
+
+- [PHP 5.3 ~ 5.6 可用扩展下载](https://windows.php.net/downloads/pecl/releases/memcache/)
+- [PHP 7.x 可用扩展下载](https://github.com/nono303/PHP7-memcache-dll)
+- 根据 phpinfo 中的 Architecture 和 PHP Extension Build 选择适用的版本
 
 ## Linux
 
