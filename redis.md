@@ -6,15 +6,19 @@
 	https://github.com/MicrosoftArchive/redis/releases
 
 ### 启动
-	redis-server.exe redis.conf
+	redis-server.exe redis.windows.conf
 
 ### 测试
 	redis-cli.exe -h 127.0.0.1 -p 6379
 
-### 扩展
-	phpredis_5.4_vc9_ts
+### 扩展下载
+
+> 根据 phpinfo > Architecture & PHP Extension Build 下载对应版本
+
+	[http://pecl.php.net/package/redis](http://pecl.php.net/package/redis)
 
 ### 配置
+
 - php.ini
 - extension=php_igbinary.dll
 - extension=php_redis.dll

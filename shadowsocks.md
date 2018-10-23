@@ -1,6 +1,6 @@
 # ShadowSocks
 
-## 安装
+## Shadowsocks 安装
 
 ### 安装 pip
 	yum install python-pip
@@ -73,3 +73,5 @@
 
 - [在 CentOS 7 下安装配置 shadowsocks](https://morning.work/page/2015-12/install-shadowsocks-on-centos-7.html)
 - [安装 supervisor 守护进程](https://www.jianshu.com/p/d259911ca361)
+- [Shadowsocks Mac 客户端](https://github.com/shadowsocks/ShadowsocksX-NG/releases)
+- [Shadowsocks Windows 客户端](https://github.com/shadowsocks/shadowsocks-windows/releases)
