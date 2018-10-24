@@ -40,10 +40,7 @@
 #### IF CASE 运算
 	SELECT IF (priv=1, admin, guest) As usertype FROM privs WHERE username = joe;
 
-#### 指定使用索引
-	SELECT id FROM data USE INDEX(type) WHERE type=12345 AND level > 3 ORDER BY id;
-
-#### 分组查询
+#### GROUP BY 分组查询
 	SELECT name, SUM(price) FROM `tblname` GROUP BY name;
 
 #### BETWEEN 查询
@@ -84,10 +81,16 @@
 #### 左连接的表中有多条数据，只取按时间排序最大的一条
 	SELECT c.*, g.goods_name, g.goods_short, g.goods_thumb, g.attr_price FROM `pre_goods_list` AS g INNER JOIN `pre_goods_comment` AS c ON c.goods_id = g.goods_id WHERE g.goods_id > 0 AND g.attr_comment > 0 AND c.comment_id = (SELECT MAX(comment_id) FROM `pre_goods_comment` WHERE goods_id = g.goods_id);
 
-#### 连接字段
+#### 连接多个字段
 	SELECT CONCAT(name,' ',surname) AS complete_name FROM users;
 
-### 使用全文索引
+#### 移除小数后面的零
+	SELECT (TRIM(attr_price) + 0 ) AS attr_price;
+
+#### 指定使用索引
+	SELECT id FROM data USE INDEX(type) WHERE type = 12345 AND level > 3 ORDER BY id;
+
+#### 使用全文索引
 	SELECT * FROM articles WHERE MATCH(content_column) AGAINST ('music');
 
 #### 中文字符排序
@@ -105,8 +108,8 @@
 #### 查找某字段不以某符号结尾的记录
 	SELECT * FROM `pre_article_list` WHERE id NOT IN ( SELECT id FROM `pre_article_list` WHERE article_content LIKE '%>' );
 
-#### 正则匹配
-	SELECT * FROM `pre_wechat_account` where 'www.example.com' REGEXP domain;
+#### 使用正则匹配
+	SELECT * FROM `pre_wechat_account` WHERE 'www.example.com' REGEXP domain;
 
 #### 当前时间戳
 	SELECT UNIX_TIMESTAMP();
