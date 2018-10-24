@@ -487,15 +487,30 @@
 	server {
 	    listen       80;
 	    server_name ~^(\d+)\.example\.com$;
-	    root /disk/www/agent.shz.com;
+	    root /disk/www/agent.example.com;
 	    index  index.html index.php index.htm;
 	    
 	    include phpcgi.conf;
 	    
-	    #
+	    # 取子域名作为参数
 	    if ($host ~* (\d+)\.example\.com) {
 			return 301 http://rj.example.com/trade/$1;
 		}
+	}
+
+### 规则匹配域名
+	
+	server {
+	    listen       80;
+	    server_name weixin.example.com ~^sku\.([a-z0-9\.]+)\.(com|net|cn|so)$;
+	    root /disk/www/weixin.example.com;
+	    index  index.html index.php index.htm;
+	    
+	    location / {
+			add_header Access-Control-Allow-Origin *;
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+			proxy_pass http://127.0.0.1:3600;
+		}		
 	}
 
 ### 自定义 HTTP 变量

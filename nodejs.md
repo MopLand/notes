@@ -159,6 +159,9 @@
 
 	# 随机启动 CentOS
 	pm2 startup centos
+	
+	# 应用 pm2-root
+	systemctl enable pm2-root
 
 	# 删除启动脚本
 	pm2 unstartup centos
