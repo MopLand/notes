@@ -48,6 +48,12 @@
 ### 一前年的时间
 	strtotime('last year')
 	
+### 格式化显示银行卡号
+	<code><?php echo preg_replace('/(\d{4})(?=\d)/','$1</code><code>', $bankcard);?></code>
+	
+### 使用 \n 或 || 分解字符串
+	preg_split('/(\n|,|(\|\|))/', $text );
+	
 ## HTML
 	
 ## JavaScript
@@ -55,6 +61,12 @@
 ### 随机指定长度字符
 
 	Math.random().toString(36).substr(2);
+	
+### 将大金额格式为：XX万元
+
+	Hybrid.App.format = function( num ){
+		return num / 10000 + '万元';
+	}
 
 ## CSS
 
