@@ -18,14 +18,16 @@
 ### 3个月后的时间
 	strtotime('+3 month')
 
-### 本月第一天
+### 本月第一天 和 最后一天
 	strtotime('first day of this month')
-
-### 本月最后一天
 	strtotime('last day of this month')
 
-### 上一个月的时间
+### 上个月的时间
 	strtotime('last month')
+	
+### 上个月第一天 和 最后一天
+	strtotime('first day of last month')
+	strtotime('last day of last month')
 
 ### 本周一 和 本周日
 	strtotime('last Monday')
@@ -45,3 +47,25 @@
 
 ### 一前年的时间
 	strtotime('last year')
+	
+## HTML
+	
+## JavaScript
+
+### 随机指定长度字符
+
+	Math.random().toString(36).substr(2);
+
+## CSS
+
+### 文字下方颜色条
+
+	margin: 1.5rem 0;
+    font-size: 1.8rem;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: inline-block;
+    box-shadow: inset 0 -8px 0 #b0d3ff;
+
+
+
