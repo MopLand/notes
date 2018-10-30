@@ -60,7 +60,7 @@
 	certbot renew --dry-run --force-renewal
 
 	# 更新完后，执行钩子脚本
-	certbot renew --deploy-hook /disk/certserv.sh
+	certbot renew --deploy-hook /disk/shell/certserv.sh
 
 ### 定时更新脚本
 
@@ -68,7 +68,7 @@
 	30 4 * * 1 certbot renew --deploy-hook "systemctl restart nginx" --quiet > /dev/null 2>&1 &
 
 	# 每周一凌晨4点30自动更新证书，更新成功就执行 Shell 脚本
-	30 4 * * 1 certbot renew --deploy-hook /disk/certserv.sh --quiet > /dev/null 2>&1 &
+	30 4 * * 1 certbot renew --deploy-hook /disk/shell/certserv.sh --quiet > /dev/null 2>&1 &
 
 ## Nginx 证书配置
 
