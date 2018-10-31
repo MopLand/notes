@@ -70,6 +70,36 @@
 	ssh -p 12333 root@216.230.230.114
 
 ----------
+	
+## Git 配置多个 SSH-Key
+
+### 创建配置文件
+	# vi ~/.ssh/config
+
+### 文件内容如下
+
+	# Lay
+	Host gitee.com
+		HostName gitee.com
+		PreferredAuthentications publickey
+		IdentityFile ~/.ssh/id_rsa
+		User git
+
+	# XiaoWang
+	Host gitee
+		HostName gitee.com
+		PreferredAuthentications publickey
+		IdentityFile ~/.ssh/id_rsa_xw
+		User git
+
+### 配置文件参数
+
+	# Host : Host可以看作是一个你要识别的模式，对识别的模式，进行配置对应的的主机名和ssh文件
+	# HostName : 要登录主机的主机名
+	# User : 登录名
+	# IdentityFile : 指明上面User对应的identityFile路径
+
+----------
 
 ## SCP 远程拷贝
 
