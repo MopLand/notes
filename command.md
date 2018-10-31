@@ -2,6 +2,10 @@
 
 ## 常用命令
 
+### 清屏命令
+	clear
+	reset
+
 ### 查找大文件
 	find . -type f -size +100M
 
