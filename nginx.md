@@ -513,6 +513,18 @@
 		}		
 	}
 
+### 目录规则匹配
+
+	location ~ ^/agent\/(.*)/ {
+		rewrite ^(.*)$ http://agent.example.com$1 permanent;
+		return 301;
+	}
+
+	location ~ ^/trade\/(.*)/ {
+		rewrite ^(.*)$ http://client.example.com/trade/$1 permanent;
+		return 301;
+	}
+
 ### 自定义 HTTP 变量
 
 	server {

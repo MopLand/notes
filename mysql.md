@@ -80,6 +80,27 @@
 
 #### 左连接的表中有多条数据，只取按时间排序最大的一条
 	SELECT c.*, g.goods_name, g.goods_short, g.goods_thumb, g.attr_price FROM `pre_goods_list` AS g INNER JOIN `pre_goods_comment` AS c ON c.goods_id = g.goods_id WHERE g.goods_id > 0 AND g.attr_comment > 0 AND c.comment_id = (SELECT MAX(comment_id) FROM `pre_goods_comment` WHERE goods_id = g.goods_id);
+	
+#### 最近7天，每个时段查询
+	SELECT FROM_UNIXTIME(dateline,'%H') AS hh, appid, `version`, count(*) FROM pre_app_statis WHERE `datetime` > DATE_SUB(CURDATE(), INTERVAL 7 DAY) GROUP BY hh, appid, `version`;
+
+#### 最近7天，每个版本查询
+	SELECT `datetime`, appid, `version`, count(*) FROM pre_app_statis WHERE appid = 1 AND `datetime` > DATE_SUB(CURDATE(), INTERVAL 7 DAY) GROUP BY `datetime`, `version`;
+
+#### 提现次数大于 2 笔的用户
+	SELECT agent_id, agent_name, `money`, `datetime`, count(*) as stat FROM `pre_agent_trade` where `money` < 0 and `datetime` >= 20160720 group by agent_id having stat > 1;
+
+#### 查找重复的卡密
+	SELECT agent_id, agent_name, code, count(*) as stat FROM `pre_agent_cdkey` group by code having stat > 1;
+
+#### 新注册代理付款金额
+	select t.sn, t.id, t.money, c.agent_id, c.agent_name from pre_agent_trade as t left join ( select * from pre_agent_cdkey where trade_id > 0 order trade_id ASC group by trade_id ) as c on t.id = c.trade_id where t.sn != '';
+
+#### 商品搜索页排序显示
+	SELECT `id`, `gid`, `title`, stick, uid, `dateline`, `timeline`, from_unixtime( `timeline`, '%Y/%m/%d %T' ) FROM `pre_goods_list` WHERE 1 = 1 AND `status` > 0  ORDER BY stick DESC, timeline DESC limit 80, 40;
+
+#### 代理销售前100
+	SELECT t.agent_id, t.agent_name, l.qq, sum(t.money) as stat FROM `pre_trade_list` as t left join `pre_agent_list` as l on t.agent_id = l.agent_id group by t.agent_id order by stat desc limit 100
 
 #### 连接多个字段
 	SELECT CONCAT(name,' ',surname) AS complete_name FROM users;
@@ -186,6 +207,9 @@
 
 ### 保留用户最新一条记录，其他删除
 	DELETE FROM `tblname` WHERE id NOT IN( SELECT ids FROM ( SELECT max(id) AS ids FROM `tblname` GROUP BY openid ) AS tmp );
+
+#### 上架已通过审核的商品
+	UPDATE `pre_goods_list` SET status = 1 WHERE gid IN ( SELECT gid FROM pre_member_goods WHERE status = 1 );
 
 ----------
 
