@@ -3,7 +3,7 @@
 ## Windows
 
 ### 安装
-	https://github.com/MicrosoftArchive/redis/releases
+[https://github.com/MicrosoftArchive/redis/releases](https://github.com/MicrosoftArchive/redis/releases)
 
 ### 启动
 	redis-server.exe redis.windows.conf
@@ -15,7 +15,7 @@
 
 > 根据 phpinfo > Architecture & PHP Extension Build 下载对应版本
 
-	[http://pecl.php.net/package/redis](http://pecl.php.net/package/redis)
+[http://pecl.php.net/package/redis](http://pecl.php.net/package/redis)
 
 ### 配置
 
