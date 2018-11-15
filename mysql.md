@@ -38,7 +38,7 @@
 	SELECT a.*, b.* FROM `tbla` AS a LEFT JOIN `tblb` AS b ON a.id = b.id;
 
 #### IF CASE 运算
-	SELECT IF (priv=1, admin, guest) As usertype FROM privs WHERE username = joe;
+	SELECT IF (priv=1, admin, guest) AS usertype FROM privs WHERE username = joe;
 
 #### GROUP BY 分组查询
 	SELECT name, SUM(price) FROM `tblname` GROUP BY name;
@@ -88,19 +88,19 @@
 	SELECT `datetime`, appid, `version`, count(*) FROM pre_app_statis WHERE appid = 1 AND `datetime` > DATE_SUB(CURDATE(), INTERVAL 7 DAY) GROUP BY `datetime`, `version`;
 
 #### 提现次数大于 2 笔的用户
-	SELECT agent_id, agent_name, `money`, `datetime`, count(*) as stat FROM `pre_agent_trade` where `money` < 0 and `datetime` >= 20160720 group by agent_id having stat > 1;
+	SELECT agent_id, agent_name, `money`, `datetime`, count(*) as stat FROM `pre_agent_trade` WHERE `money` < 0 and `datetime` >= 20160720 group by agent_id HAVING stat > 1;
 
 #### 查找重复的卡密
-	SELECT agent_id, agent_name, code, count(*) as stat FROM `pre_agent_cdkey` group by code having stat > 1;
+	SELECT agent_id, agent_name, code, count(*) as stat FROM `pre_agent_cdkey` GROUP BY code HAVING stat > 1;
 
 #### 新注册代理付款金额
-	select t.sn, t.id, t.money, c.agent_id, c.agent_name from pre_agent_trade as t left join ( select * from pre_agent_cdkey where trade_id > 0 order trade_id ASC group by trade_id ) as c on t.id = c.trade_id where t.sn != '';
+	SELECT t.sn, t.id, t.money, c.agent_id, c.agent_name from pre_agent_trade as t LEFT JOIN ( SELECT * FROM `pre_agent_cdkey` WHERE trade_id > 0 ORDER BY trade_id ASC group by trade_id ) AS c on t.id = c.trade_id WHERE t.sn != '';
 
 #### 商品搜索页排序显示
-	SELECT `id`, `gid`, `title`, stick, uid, `dateline`, `timeline`, from_unixtime( `timeline`, '%Y/%m/%d %T' ) FROM `pre_goods_list` WHERE 1 = 1 AND `status` > 0  ORDER BY stick DESC, timeline DESC limit 80, 40;
+	SELECT `id`, `gid`, `title`, stick, uid, `dateline`, `timeline`, from_unixtime( `timeline`, '%Y/%m/%d %T' ) FROM `pre_goods_list` WHERE 1 = 1 AND `status` > 0 ORDER BY stick DESC, timeline DESC limit 80, 40;
 
 #### 代理销售前100
-	SELECT t.agent_id, t.agent_name, l.qq, sum(t.money) as stat FROM `pre_trade_list` as t left join `pre_agent_list` as l on t.agent_id = l.agent_id group by t.agent_id order by stat desc limit 100
+	SELECT t.agent_id, t.agent_name, l.qq, sum(t.money) as stat FROM `pre_trade_list` as t LEFT JOIN `pre_agent_list` as l on t.agent_id = l.agent_id group by t.agent_id ORDER BY stat DESC limit 100;
 
 #### 连接多个字段
 	SELECT CONCAT(name,' ',surname) AS complete_name FROM users;
@@ -208,9 +208,12 @@
 ### 保留用户最新一条记录，其他删除
 	DELETE FROM `tblname` WHERE id NOT IN( SELECT ids FROM ( SELECT max(id) AS ids FROM `tblname` GROUP BY openid ) AS tmp );
 
-#### 上架已通过审核的商品
-	UPDATE `pre_goods_list` SET status = 1 WHERE gid IN ( SELECT gid FROM pre_member_goods WHERE status = 1 );
-
+### 上架已通过审核的商品
+	UPDATE `pre_goods_list` SET status = 1 WHERE gid IN ( SELECT gid FROM `pre_member_goods` WHERE status = 1 );
+	
+### 补全 URL 协议
+	UPDATE `pre_member_list` SET avatar = CONCAT( 'https:', avatar ) WHERE SUBSTRING( avatar, 1, 2 ) = '//';
+	
 ----------
 
 ## 结构更改
@@ -302,7 +305,7 @@
 ### 新增触发器
 	CREATE TRIGGER `tasks_order_totals` AFTER INSERT ON `pre_tasks_order` FOR EACH ROW
 	BEGIN
-	    UPDATE pre_tasks_dist set `total` = `total` + 1, `money` = `money` + new.money where tasks_id = new.tasks_id;
+	    UPDATE pre_tasks_dist set `total` = `total` + 1, `money` = `money` + new.money WHERE tasks_id = new.tasks_id;
 	END;;
 
 ### 触发器时机
@@ -319,14 +322,14 @@
 	DECLARE stats INT;
 
     SET stats = ( SELECT COUNT(*) FROM pre_tasks_order WHERE tasks_id = new.tasks_id AND taoke_id = old.taoke_id AND status = 1 LIMIT 1 );
-    UPDATE pre_tasks_dist set valid = stats where tasks_id = old.tasks_id AND taoke_id = old.taoke_id;
+    UPDATE pre_tasks_dist set valid = stats WHERE tasks_id = old.tasks_id AND taoke_id = old.taoke_id;
 
 ### 多个变量赋值
 	DECLARE stats INT;
 	DECLARE total decimal(10,2);
 
     SELECT COUNT(*),SUM(money) INTO @stats,@total FROM pre_tasks_order WHERE tasks_id = new.tasks_id AND taoke_id = old.taoke_id AND status = 1;
-    UPDATE pre_tasks_dist set `valid` = @stats, `money` = @total where tasks_id = old.tasks_id AND taoke_id = old.taoke_id;
+    UPDATE pre_tasks_dist set `valid` = @stats, `money` = @total WHERE tasks_id = old.tasks_id AND taoke_id = old.taoke_id;
 
 ### 删除触发器
 	DROP TRIGGER `tasks_order_totals`;
@@ -378,10 +381,10 @@
 ## 视图操作
 
 ### 创建视图
-	CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER  VIEW `pre_tasks_order_extend` AS SELECT o.*, tk.taoke_name FROM `pre_tasks_order` AS o LEFT JOIN `pre_taoke_list` AS tk ON o.taoke_id = tk.taoke_id;
+	CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `pre_tasks_order_extend` AS SELECT o.*, tk.taoke_name FROM `pre_tasks_order` AS o LEFT JOIN `pre_taoke_list` AS tk ON o.taoke_id = tk.taoke_id;
 
-### 跨表建视图
-	CREATE VIEW `pre_agent_config` AS select * from `tps`.`pre_agent_config`;
+### 跨库建视图
+	CREATE VIEW `pre_agent_config` AS select * FROM `tps`.`pre_agent_config`;
 
 ### 删除视图
 	DROP VIEW `pre_tasks_order_extend`;
@@ -488,7 +491,7 @@
 
 ### 拆分大的 DELETE 或 INSERT 语句
 
-	DELETE FROM logs WHERE log_date <= '2009-11-01' LIMIT 1000
+	DELETE FROM logs WHERE log_date <= '2009-11-01' LIMIT 1000;
 
 ## 配置说明
 
