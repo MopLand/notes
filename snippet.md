@@ -57,8 +57,12 @@
 	$thead = "<tr><th>" . implode("</th><th>", array_keys($res[0])) . "</th></tr>";
 
 	echo '<table class="table table-striped">'. $thead . $tbody .'</table>';
+	
 ### 使用 \n 或 || 分解字符串
 	preg_split('/(\n|,|(\|\|))/', $text );
+	
+### 过滤 ../ 等路径字符
+	preg_replace('/[\\\\\/]/ism', '', $file);
 	
 ## HTML
 	
