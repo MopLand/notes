@@ -252,6 +252,23 @@
 			expires			7d;
 		}
 		
+		location ~* "goods/(\d+)" {
+			resolver 1.1.1.1 8.8.8.8;
+			
+			set $item $1;
+			set $size $arg_size;
+			
+			proxy_set_header referer "https://proxy.rexcdn.com/";
+			
+			proxy_cache imgcache;
+			proxy_cache_valid 301 302 24h;
+			
+			proxy_pass https://jellybox.mopland.com/robot/goodspic/$item/$size;
+			
+			proxy_buffers   64 256k;
+			expires			7d;
+		}
+		
 	}
 
 	# 参考链接

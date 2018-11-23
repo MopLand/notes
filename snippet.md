@@ -48,9 +48,6 @@
 ### 一前年的时间
 	strtotime('last year')
 	
-### 格式化显示银行卡号
-	<code><?php echo preg_replace('/(\d{4})(?=\d)/','$1</code><code>', $bankcard);?></code>
-	
 ### 将数组格式成表格显示
 	$tbody = array_reduce($res, function($a, $b){return $a.="<tr><td>".implode("</td><td>",$b)."</td></tr>";});
 
@@ -58,11 +55,7 @@
 
 	echo '<table class="table table-striped">'. $thead . $tbody .'</table>';
 	
-### 使用 \n 或 || 分解字符串
-	preg_split('/(\n|,|(\|\|))/', $text );
-	
-### 过滤 ../ 等路径字符
-	preg_replace('/[\\\\\/]/ism', '', $file);
+
 	
 ## HTML
 	

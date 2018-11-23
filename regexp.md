@@ -1,14 +1,29 @@
 # 正则表达式
 
-## 匹配以中文开头的字符
-
-	^[^a-z\*\>\#]
-
-## 银行卡号格式化显示
-
-	<code><?php echo preg_replace('/(\d{4})(?=\d)/','$1</code><code>', $cardid);?></code>
+## PHP
 	
-## 匹配 {} 包围的字符
+### 银行卡号格式化显示
+	<code><?php echo preg_replace('/(\d{4})(?=\d)/','$1</code><code>', $bankcard);?></code>
+	
+### 使用 \n 或 || 分解字符串
+	preg_split('/(\n|,|(\|\|))/', $text );
+	
+### 过滤 ../ 等路径字符
+	preg_replace('/[\\\\\/]/ism', '', $file);
+	
+### 移除图片 URL 上尺寸尾巴
+	preg_replace( '/_(\d+?)x(\d+?)\.jpg/', '', $string );
+
+## JavaScript
+	
+### 匹配淘口令字符
+	/(\S)([a-zA-Z0-9]{11})\1/
+
+### 匹配以中文开头的字符
+
+	/^[^a-z\*\>\#]/
+	
+### 匹配 {} 包围的字符
 	\{(.+)\}
 
 ## 常用链接

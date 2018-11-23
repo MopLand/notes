@@ -62,6 +62,8 @@
 	SELECT GROUP_CONCAT(id ORDER BY id DESC SEPARATOR ',') AS ids FROM pre_portal_category WHERE status > 0 AND parent = 10;
 
 	SELECT COALESCE(GROUP_CONCAT(id ORDER BY id DESC SEPARATOR ','),0) AS ids FROM pre_portal_category WHERE status > 0 AND parent = 10;
+	
+	SELECT GROUP_CONCAT(goods_id SEPARATOR ',') AS ids FROM ( SELECT goods_id FROM `pre_goods_list` WHERE `status` = 1 AND `cate_route` IS NULL ORDER BY id DESC LIMIT 40 ) AS tmp;
 
 #### 同时使用 GROUP BY 和 ORDER BY
 	SELECT * FROM ( select id, agent_id, agent_name , sum(money) AS total FROM `pre_agent_trade` WHERE money > 0 AND `status` > 0 GROUP BY agent_id ) as t ORDER BY total DESC LIMIT 10;
@@ -128,6 +130,9 @@
 	
 #### 查找某字段不以某符号结尾的记录
 	SELECT * FROM `pre_article_list` WHERE id NOT IN ( SELECT id FROM `pre_article_list` WHERE article_content LIKE '%>' );
+	
+#### 查找没有店铺信息的店铺ID 
+	SELECT seller_id FROM `pre_goods_list` WHERE seller_id NOT IN ( SELECT seller_id FROM `pre_goods_shop` ) AND status = 1 AND seller_id > 0 ORDER BY id DESC LIMIT 100
 
 #### 使用正则匹配
 	SELECT * FROM `pre_wechat_account` WHERE 'www.example.com' REGEXP domain;
@@ -204,6 +209,12 @@
 
 ### 带查询的更新
 	UPDATE pre_tasks_list SET payout_quantity =( SELECT count(*) FROM pre_tasks_order WHERE pre_tasks_order.status = 1 AND pre_tasks_list.id = pre_tasks_order.tasks_id );
+	
+### 更新订单表商品主图
+	UPDATE `pre_order_list` SET goods_thumb = ( SELECT goods_thumb FROM `pre_goods_list` WHERE goods_id = `pre_order_list`.num_iid ) WHERE goods_thumb IS NULL;
+
+### 更新订单表来源字段
+	UPDATE `pre_order_list` SET source = ( SELECT IF ( EXISTS( SELECT 1 FROM `pre_goods_list` WHERE goods_id = `pre_order_list`.num_iid ), 1, 2) ) WHERE source = 0;
 
 ### 保留用户最新一条记录，其他删除
 	DELETE FROM `tblname` WHERE id NOT IN( SELECT ids FROM ( SELECT max(id) AS ids FROM `tblname` GROUP BY openid ) AS tmp );
