@@ -50,6 +50,9 @@
 	SELECT admin_id, SUM( money ) FROM pre_tasks_list GROUP BY admin_id;
 
 	SELECT admin_id, SUM( DISTINCT admin_id ) FROM pre_tasks_list GROUP BY admin_id;
+	
+#### 按状态值统计数量
+	SELECT `status`, COUNT(*) AS stats FROM `pre_taobao_adzone` GROUP BY `status`;
 
 #### 返回第一个非 NULL 的值
 	SELECT COALESCE(NULL, NULL, 1);

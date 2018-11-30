@@ -260,23 +260,23 @@
 
 #### 处理返回
 	<?php
-	Response::callback( array( 'return'=> 0, 'result'=> $result ), $this->ajax );
+	Response::callback( array( 'status'=> 0, 'result'=> $result ), $this->ajax );
 
 #### 常规数据
 	{
-		'return'=> 0, 
+		'status'=> 0, 
 		'result'=> $data
 	}
 	
 #### Ajax 消息
 	{
-		'return'=> 0, 
+		'status'=> 0, 
 		'result'=> '操作成功'
 	}
 
 #### 变量数据
 	{
-		'return'=> 0, 
+		'status'=> 0, 
 		'result'=> '操作成功', 
 		'variable'=> '这是一条字符串'
 	}
@@ -284,7 +284,7 @@
 ----------
 
 	{
-		'return'=> 0, 
+		'status'=> 0, 
 		'result'=> '操作成功', 
 		'variable'=> {
 			'goods_id' => 530598549821,
@@ -295,7 +295,7 @@
 ----------
 
 	{
-		'return'=> -1000, 
+		'status'=> -1000, 
 		'result'=> '操作失败', 
 		'variable'=> null
 	}
@@ -304,7 +304,7 @@
 #### 带分页信息
 	{
 		// 返回状态
-		'return'=> 0,
+		'status'=> 0,
 
 		// 当前页码
 		'paging'=> $page, 
@@ -342,21 +342,21 @@
 **0	没有错误**
 
 	{
-		'return'=> 0, 
+		'status'=> 0, 
 		'result'=> '操作成功'
 	}
 
 **> 0 消息编号**
 
 	{
-		'return'=> 12345, 
+		'status'=> 12345, 
 		'result'=> '用户注册成功'
 	}
 
 **< 0 错误编号**
 
 	{
-		'return'=> -1000, 
+		'status'=> -1000, 
 		'result'=> '必要的错误不能为空'
 	}
 
