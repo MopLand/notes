@@ -62,8 +62,42 @@
 
 ### 确定修改文件，移除 -n
 	shopt -s globstar; rename.pl 's/-/\!/g' **/*;
+	
+## NFS 网络文件系统
 
+### 安装 NFS-Utils
+	yum install -y nfs-utils
+	
+### Linux下挂载
+	
+	NFS 4.0 挂载根目录：sudo mount -t nfs -o vers=4 172.16.16.16:/ /localfolder
 
+	NFS 4.0 挂载子目录：sudo mount -t nfs -o vers=4 172.16.16.16:/subfolder /localfolder 
+
+	NFS 3.0 挂载子目录：sudo mount -t nfs -o vers=3,nolock,proto=tcp 172.16.16.16:/v7qikvgu /localfolder
+
+	注，"localfolder" 指用户本地自己创建的目录； "subfolder" 指用户在 CFS 文件系统里创建的子目录
+	
+### Windows下挂载
+
+	使用 FSID 挂载： mount 172.16.16.16:/v7qikvgu x: 
+
+	注，"x：" 指用户需要挂载的盘符
+	
+### 生产环境实例
+
+	# 临时挂载
+	sudo mount -t nfs -o vers=4 172.16.16.16:/ /disk/www/assets.baohe.com
+	
+	# 批定权限
+	chgrp -R nginx /disk/www/assets.baohe.com/
+	chown -R nginx /disk/www/assets.baohe.com/
+
+	# 自动挂载
+	echo '172.16.16.16:/ /disk/www/assets.baohe.com nfs  vers=4 0 0' >> /etc/fstab
+	
+### 文档说明
+	https://cloud.tencent.com/document/product/582/11523
 
 ## CentOS 的 systemctl 服务
 
