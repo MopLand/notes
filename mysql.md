@@ -228,6 +228,9 @@
 ### 补全 URL 协议
 	UPDATE `pre_member_list` SET avatar = CONCAT( 'https:', avatar ) WHERE SUBSTRING( avatar, 1, 2 ) = '//';
 	
+### 更新 Ymd 日期
+	UPDATE `pre_member_upgrade` SET `datetime` = FROM_UNIXTIME(`dateline`, '%Y%m%d');
+	
 ----------
 
 ## 结构更改
