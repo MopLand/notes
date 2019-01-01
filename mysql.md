@@ -442,6 +442,12 @@
 ### 开启事件
 	ALTER EVENT `test_event` ENABLE;
 
+### 执行一次
+	ALTER EVENT `test_event` ON COMPLETION NOT PRESERVE;
+
+### 持久执行
+	ALTER EVENT `test_event` ON COMPLETION PRESERVE;
+
 ### 删除事件
 	DROP EVENT IF EXISTS `test_event`;
 
