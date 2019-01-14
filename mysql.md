@@ -1,9 +1,16 @@
 # MySQL
 
-## 命令行
+## 连接 MySQL
+
+#### 连接本机 MySQL
+	mysql -u root -p
+	
+#### 连接远程 MySQL
+	mysql -h110.110.110.110 -u root -p
+
+## 常用命令
 
 #### 显示当前数据库服务器中的数据库列表
-
 	SHOW DATABASES;
 
 #### 切换至某数据库
