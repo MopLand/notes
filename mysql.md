@@ -184,6 +184,9 @@
 
 	SELECT UNIX_TIMESTAMP( CURRENT_DATE - INTERVAL 15 DAY );
 	# 15天前的时间戳
+	
+	SELECT DATE_FORMAT( CURRENT_DATE - INTERVAL 15 DAY, '%Y%m%d' );
+	# 15天前的格式化时间
 
 ----------
 
