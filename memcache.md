@@ -8,7 +8,7 @@
 	memcached -d install
 
 ### 启动
-	memcached –m  1024  -d start
+	memcached –m 1024 -d start
 
 ### 参数
 - -p 监听的端口

@@ -337,7 +337,7 @@
 		'target'=> 'http://www.baidu.com'
 	}
 
-#### return 规范
+#### status 规范
 
 **0	没有错误**
 
