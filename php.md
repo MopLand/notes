@@ -1,6 +1,16 @@
 # PHP
 
-## 优化选项
+## 扩展管理工具 pecl
+
+### Ubuntu/Debian
+
+	# pear 包含 pecl，php5-dev 包含 phpize，pecl 依赖 phpize
+	apt-get install php-pear php5-dev
+
+### CentOS/Redhat
+	yum install php-pear php-devel
+
+## php.ini 优化选项
 
 	# 禁止显示php版本的信息
 	expose_php = Off
