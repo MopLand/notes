@@ -33,12 +33,6 @@
 
 	goaccess -f /var/log/nginx/access.log
 
-### 安装 nload（实时带宽）
-	yum install nload -y
-
-### 带宽统计
-	nload
-
 ### 安装 iostat
 	yum install sysstat
 
@@ -63,8 +57,37 @@
 ### 定时执行查询
 	watch -d 'netstat -antlp | grep 80 | grep ESTABLISHED | wc -l'
 
+## 进程分析
+
+### 通过进程名查看进程信息
+	ps -ef | grep memcached
+
+### 通过端口号查找进程 PID
+	netstat -nap | grep 8080
+
+### 查看被占用端口的 PID
+	lsof -i:443
+
+### 根据进程id查看进程信息
+	ps -ef | grep 13049
+
+### 查看进程完整信息
+	ll /proc/13049
+
+### 特定进程运行状况
+	top -H -p <pid>
+
 ### 杀掉某一个进程
 	pkill node
+
+## nload 实时网速查看
+
+### 安装
+	yum install nload -y
+
+### 使用
+	nload -h
+	# 左右键可以在多个网卡之间切换
 
 ## wrk 压力测试
 
