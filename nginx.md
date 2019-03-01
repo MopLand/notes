@@ -591,6 +591,37 @@
 		}
 	
 	}
+	
+### CNAME 转成指定域名
+
+	server {
+		listen 80 default_server;
+		server_name mirror.example.com;
+		root /disk/www/domain.shz.com;
+		index index.htm index.html index.php;
+		
+		location ~ ^(.+\.php)(.*)$ {
+			
+			fastcgi_param HTTP_DOMAIN $host;
+			fastcgi_param HTTP_HOST "sites.guodongbaohe.com";
+			
+			fastcgi_split_path_info ^(.+\.php)(.*)$;
+			fastcgi_param PATH_INFO $fastcgi_path_info;
+			fastcgi_pass 127.0.0.1:9000;
+			fastcgi_read_timeout 60;
+			fastcgi_connect_timeout 10;
+			fastcgi_index index.php;
+			
+			include fastcgi_params;
+		}
+	
+		if (!-e $request_filename) {
+			rewrite ^/(.+).(txt|htm|html)$ /fn/verify/$1;
+			rewrite ^/(.*\.(ico|gif|jpg|jpeg|png|swf|flv|css|js)$) 404;
+			rewrite ^/(.*) /index.php/$1 last;
+		}
+	
+	}
 
 ## Windows 环境安装
 
