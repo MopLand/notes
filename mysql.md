@@ -579,6 +579,9 @@
 #### 写入日志文件时的缓冲区大小
 	innodb_log_buffer_size = 8M
 
+#### 等待事务锁超时时间
+	innodb_lock_wait_timeout = 60
+
 #### 更改 Data 目录
 
 	# /etc/my.cnf
