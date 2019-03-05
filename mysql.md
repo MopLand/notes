@@ -653,11 +653,12 @@
 	AND     `TABLE_TYPE` = 'BASE TABLE'
 	ORDER BY table_name DESC;
 
-### 相关文章
+### 相关链接
 
-- [http://lobert.iteye.com/blog/1953827](http://lobert.iteye.com/blog/1953827)
-- [http://www.jianshu.com/p/8faa7dadd073](http://www.jianshu.com/p/8faa7dadd073)
-- [creating-event-that-execute-at-end-of-each-month](http://dba.stackexchange.com/questions/80049/creating-event-that-execute-at-end-of-each-month)
+- [实战mysql存储程序与定时器](http://lobert.iteye.com/blog/1953827)
+- [mysql中的事件](http://www.jianshu.com/p/8faa7dadd073)
+- [项目中常用的19条MySQL优化](https://segmentfault.com/a/1190000012155267)
+- [Creating Event that execute at end of each month](http://dba.stackexchange.com/questions/80049/creating-event-that-execute-at-end-of-each-month)
 - [ON SCHEDULE EVERY 1 MONTH](http://www.java2s.com/Code/SQL/Event/ONSCHEDULEEVERY1MONTH.htm)
 - [MySql常用30种SQL查询语句优化方法](https://segmentfault.com/a/1190000013935099)
 - [MySQL 性能优化神器 Explain 使用分析](https://segmentfault.com/a/1190000008131735)
