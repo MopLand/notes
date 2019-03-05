@@ -17,7 +17,7 @@
 
 ## 规则格式
 
-![](markdown/image/crontab.png)
+![](notes/image/crontab.png)
 
 ## 使用例子
 	
