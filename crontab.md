@@ -15,9 +15,9 @@
 	# 中文编码兼容
 	export LANG=en_US.UTF-8
 
-## 规则说明
+## 规则格式
 
-![](https://i.loli.net/2018/09/06/5b90e38828e22.png)
+![](markdown/image/crontab.png)
 
 ## 使用例子
 	
