@@ -7,7 +7,7 @@
 
 ### 配置 Nginx
 	# 将 nginx-1.6.3.zip 解压后，配置 nginx-1.6.3/conf/nginx.conf 
-
+	
 	# 增加多站点配置
 	include /etc/nginx/sites/*;
 
@@ -15,26 +15,26 @@
 
 	# 关闭访问日志
 	access_log off;
-
+	
 	# 禁用错误日志
 	# 注意这样并不能关闭日志记录功能，它将日志文件写入一个文件名为 nginx/off 的文件中
 	error_log off;
-
+	
 	# 关闭错误日志
 	error_log /dev/null crit;
-
+	
 	# PHP 解析配置
 	location ~ \.php$ {
 		root           html;
 		fastcgi_pass   127.0.0.1:9000;
 		fastcgi_index  index.php;
 		fastcgi_read_timeout 150;
-
+	
 		# 特别注意这里，SCRIPT_FILENAME 非常重要
 		fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
 		include        fastcgi_params;
-    }
-
+	}
+	
 	# 禁止GIT或SVN目录输出
 	location ~ /\.(git|svn) {
 		deny all;
@@ -49,12 +49,12 @@
 	location ~* \.(p12|pem|key|crt|sql|md|gitignore|htaccess)$ {
 		deny all;
 	}
-
+	
 	# 直接输出静态文件
 	if ( $request_uri ~ ^/static ) {
 		rewrite ^/(.*)$ /$1 last;
 	}
-
+	
 	# 域名所有权验证服务
 	# 图片缩略图生成服务
 	# 不存在的静态文件直接抛出 404
@@ -65,7 +65,7 @@
 		rewrite ^/(.*\.(ico|gif|jpg|jpeg|png|swf|flv|css|js)$) 404;
 		rewrite ^/(.*) /index.php/$1 last;
 	}
-
+	
 	# 将静态文件缓存7天，并允许跨域
 	location ~ \.(js|css|webp|jpg|jpeg|png|gif|swf|ttf|otf|eot|svg|woff|woff2)$ {
 		expires 7d;
@@ -73,22 +73,22 @@
 	}
 
 ## 相关命令
-	
+
 ### 启动 PHP-CGI
 	php-cgi.exe -b 127.0.0.1:9000 -c D:/wnmp/www/php/php.ini
 
 ### 启动 Nginx
 	nginx.exe
-	
+
 ### 查看日志
 	tail -f /var/log/nginx/error.log
 
 ## 虚拟主机
 
 ### nginx.conf
-	
+
 	include D:/EasyPHP/eds-binaries/httpserver/nginx-1.6.3/vhost/*.conf;
-	
+
 ### vhost/*.conf
 
 	server {
@@ -98,7 +98,7 @@
 		index index.htm index.html index.php;
 		
 		include phpfpm.conf;
-
+	
 		if ($http_host != 'www.example.com') {
 			rewrite (.*)  http://www.example.com$1 permanent;
 			return 301;
@@ -107,7 +107,7 @@
 		location / {
 	        proxy_read_timeout 150;
 	    }
-
+	
 		location ~* /cron/.*\.(js|json|sql|sh|md)$ {
 			deny all;
 		}
@@ -130,7 +130,7 @@
 	fastcgi_param  DOCUMENT_URI       $document_uri;
 	fastcgi_param  DOCUMENT_ROOT      $document_root;
 	fastcgi_param  SERVER_PROTOCOL    $server_protocol;
-
+	
 	# 非常重要
 	fastcgi_param  SCRIPT_NAME        $fastcgi_script_name;
 	fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
@@ -139,13 +139,13 @@
 ### phpfpm.conf
 
 	location ~ ^(.+\.php)(.*)$ {
-
+	
 		fastcgi_pass_request_body off;
 		
 		#client_body_temp_path temp/client_body_temp;
 		#client_body_in_file_only clean;
 		#client_max_body_size 20m;
-
+	
 		fastcgi_param REQUEST_BODY_FILE $request_body_file;
 		
 		# 非常重要，伪静态必需
@@ -155,7 +155,7 @@
 		# 监听方式，二选一
 		fastcgi_pass 127.0.0.1:9000;
 		#fastcgi_pass unix:/dev/shm/php-cgi.sock;
-
+	
 		# 读取超时
 		fastcgi_read_timeout 300;
 		
@@ -166,6 +166,8 @@
 	}
 
 ## 正向代理
+
+![](notes/image/nginx_forward_proxy.png)
 
 	# 代理阿里图片
 	server {
@@ -224,7 +226,7 @@
 	
 	# 本地缓存资源
 	proxy_cache_path /disk/cache levels=1:2 keys_zone=imgcache:10m max_size=10g inactive=60m use_temp_path=off;
-
+	
 	server {
 		listen 80;
 		server_name proxy.yqt.so proxy.zhfile.com;
@@ -237,7 +239,7 @@
 			proxy_cache imgcache;
 			proxy_pass $scheme:/$request_uri;
 			proxy_buffers   64 256k;
-
+	
 			expires			7d;
 		}
 		
@@ -248,7 +250,7 @@
 			proxy_cache imgcache;
 			proxy_pass https:/$request_uri;
 			proxy_buffers   64 256k;
-
+	
 			expires			7d;
 		}
 		
@@ -270,22 +272,41 @@
 		}
 		
 	}
-
+	
 	# 参考链接
 	https://www.jianshu.com/p/625c2b15dad5
 
 ## 反向代理
 
+![](notes/image/nginx_reverse_proxy.png)
+
 	# 转发 Node
 	server {
 		listen 80;
 		server_name chat.veryide.com;
+		
 		location / {
 			add_header Access-Control-Allow-Origin *;
 			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 			proxy_read_timeout 150;
 	        proxy_pass http://127.0.0.1:3000;    
 	    } 
+	}
+	
+	# 转发 PHP
+	server {
+		listen 80;
+		server_name www.veryide.com;
+		
+		location ~ ^(.+\.php)(.*)$ {
+			fastcgi_split_path_info ^(.+\.php)(.*)$;
+			fastcgi_param PATH_INFO $fastcgi_path_info;			
+			fastcgi_pass 127.0.0.1:9000;			
+			fastcgi_read_timeout 60;
+			fastcgi_connect_timeout 10;
+			fastcgi_index index.php;			
+			include fastcgi_params;			
+		}
 	}
 
 ## 负载均衡
@@ -299,24 +320,24 @@
 		server 192.168.1.247:900;
 		server 192.168.1.247:900 weight=10;
 	}
-
+	
 	# 主机配置
 	server {
 		listen       80;
 		server_name  2;
 		location / {
-
+	
 			#设置主机头和客户端真实地址，以便服务器获取客户端真实IP
 			proxy_set_header Host $host;
 			proxy_set_header X-Real-IP $remote_addr;
 			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-
+	
 			#禁用缓存
 			proxy_buffering off;
-
+	
 			#反向代理的地址
 			proxy_pass http://backend;
-
+	
 		}
 	}
 
@@ -330,7 +351,7 @@
 		server 192.168.1.102:8888;
 		server 192.168.1.103:8888;
 	}
-	
+
 #### 2. weight
 
 	# 轮询的加强版，即可以指定轮询比率，weight和访问几率成正比，主要应用于后端服务器异质的场景下
@@ -339,7 +360,7 @@
 		server 192.168.1.102 weight=2;
 		server 192.168.1.103 weight=3;
 	}
-	
+
 #### 3. ip_hash
 
 	# 每个请求按照访问ip（即Nginx的前置服务器或者客户端IP）的hash结果分配，这样每个访客会固定访问一个后端服务器，可以解决session一致问题
@@ -349,7 +370,7 @@
 		server 192.168.1.102:8888;
 		server 192.168.1.103:9999;
 	}
-	
+
 #### 4. fair
 
 	# fair 顾名思义，公平地按照后端服务器的响应时间（rt）来分配请求，响应时间短即rt小的后端服务器优先分配请求
@@ -359,7 +380,7 @@
 		server 192.168.1.103;
 		fair;
 	}
-	
+
 #### 5. url_hash
 
 	# 与ip_hash类似，但是按照访问url的hash结果来分配请求，使得每个url定向到同一个后端服务器，主要应用于后端服务器为缓存时的场景下
@@ -371,7 +392,7 @@
 		hash_method crc32;
 	}
 	# 其中，hash_method为使用的hash算法，需要注意的是：此时，server语句中不能加weight等参数
-	
+
 ### upstream 设备状态值
 
 1. down 表示单前的 server 暂时不参与负载
@@ -414,7 +435,7 @@
 			rewrite (.*)  http://mirror.example.com$1 permanent;
 			return 301;
 		}
-
+	
 		# 处理特殊请求
 		if ($http_APPID = '1608021601467185'){
 			return 204;
@@ -425,7 +446,7 @@
 ### 前端路由
 
 	server {
-
+	
 		listen 80;
 		server_name example.com www.example.com;
 		root /disk/www/new.ccy.com/;
@@ -446,7 +467,7 @@
 	}
 
 ### SSL 配置
-	
+
 	# 注意 iptables 中需要允许 443 端口
 	server {
 		listen 443;
@@ -476,7 +497,7 @@
 		}
 	
 	}
-	
+
 ### 80, 443 共存
 
 	server {
@@ -495,14 +516,14 @@
 ### Auth_Basic 认证
 
 	# htpasswd 文件生成
-
+	
 	printf "newbie:$(openssl passwd -crypt 123456)\n" >> /disk/certs/htpasswd
-
+	
 	printf "username:$(openssl passwd -crypt 123456):comment\n" >> /disk/certs/htpasswd
-
+	
 	# 站点配置
 	server {
-
+	
 	    server 80;
 	
 	    auth_basic on;
@@ -531,7 +552,7 @@
 	}
 
 ### 规则匹配域名
-	
+
 	server {
 	    listen       80;
 	    server_name weixin.example.com ~^sku\.([a-z0-9\.]+)\.(com|net|cn|so)$;
@@ -551,7 +572,7 @@
 		rewrite ^(.*)$ http://agent.example.com$1 permanent;
 		return 301;
 	}
-
+	
 	location ~ ^/trade\/(.*)/ {
 		rewrite ^(.*)$ http://client.example.com/trade/$1 permanent;
 		return 301;
@@ -591,7 +612,7 @@
 		}
 	
 	}
-	
+
 ### CNAME 转成指定域名
 
 	server {
@@ -676,16 +697,16 @@
 
 #### 安装服务
 	CMD:\> myapp.exe install
- 
+
 #### 卸载服务
 	CMD:\> myapp.exe uninstall
- 
+
 #### 启动服务
 	CMD:\> myapp.exe start
- 
+
 #### 停止服务
 	CMD:\> myapp.exe stop
-	
+
 ### Nginx 内置变量
 
 	$args                    #请求中的参数值
@@ -748,3 +769,8 @@
 	$sent_http_last_modified
 	$sent_http_location
 	$sent_http_transfer_encoding
+
+## 参考内容
+- [Nginx Config 生成](https://nginxconfig.io/)
+- [前端开发者必备的Nginx知识](https://segmentfault.com/a/1190000018454271)
+	

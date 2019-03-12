@@ -196,26 +196,26 @@
 
 > MySQL LEFT JOIN 会读取左边数据表的全部数据，即便右边表无对应数据
 
-![](notes/image/leftjoin.gif)
+![](notes/image/mysql_left_join.gif)
 
 
 ### RIGHT JOIN
 
 > MySQL RIGHT JOIN 会读取右边数据表的全部数据，即便左边边表无对应数据
 
-![](notes/image/rightjoin.gif)
+![](notes/image/mysql_right_join.gif)
 
 ### INNER JOIN
 
 > MySQL INNER JOIN 获取两个表中字段匹配关系的记录
 
-![](notes/image/innerjoin.gif)
+![](notes/image/mysql_inner_join.gif)
 
 ### FULL JOIN
 
 > MySQL FULL JOIN 当左表或右表中有匹配项时，返回所有记录
 
-![](notes/image/fulljoin.gif)
+![](notes/image/mysql_full_join.gif)
 
 ----------
 
