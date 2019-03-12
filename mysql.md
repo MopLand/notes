@@ -4,7 +4,7 @@
 
 #### 连接本机 MySQL
 	mysql -u root -p
-	
+
 #### 连接远程 MySQL
 	mysql -h110.110.110.110 -u root -p
 
@@ -53,11 +53,14 @@
 #### BETWEEN 查询
 	SELECT name, SUM(price) FROM `tblname` WHERE `month` BETWEEN 1 AND 12;
 
+#### 区分大小写查询
+	SELECT * from `tblname` WHERE BINARY columnA = 'abc';
+
 #### 分组查询并去重复
 	SELECT admin_id, SUM( money ) FROM pre_tasks_list GROUP BY admin_id;
-
-	SELECT admin_id, SUM( DISTINCT admin_id ) FROM pre_tasks_list GROUP BY admin_id;
 	
+	SELECT admin_id, SUM( DISTINCT admin_id ) FROM pre_tasks_list GROUP BY admin_id;
+
 #### 按状态值统计数量
 	SELECT `status`, COUNT(*) AS stats FROM `pre_taobao_adzone` GROUP BY `status`;
 
@@ -66,11 +69,11 @@
 
 #### 返回一个字符串结果，该结果由分组中的值连接组合而成
 	SELECT GROUP_CONCAT(id) AS ids FROM pre_portal_category WHERE status > 0 AND parent = 10;
-
+	
 	SELECT GROUP_CONCAT(id SEPARATOR '|') AS ids FROM pre_portal_category WHERE status > 0 AND parent = 10;
-
+	
 	SELECT GROUP_CONCAT(id ORDER BY id DESC SEPARATOR ',') AS ids FROM pre_portal_category WHERE status > 0 AND parent = 10;
-
+	
 	SELECT COALESCE(GROUP_CONCAT(id ORDER BY id DESC SEPARATOR ','),0) AS ids FROM pre_portal_category WHERE status > 0 AND parent = 10;
 	
 	SELECT GROUP_CONCAT(goods_id SEPARATOR ',') AS ids FROM ( SELECT goods_id FROM `pre_goods_list` WHERE `status` = 1 AND `cate_route` IS NULL ORDER BY id DESC LIMIT 40 ) AS tmp;
@@ -83,7 +86,7 @@
 
 #### 查询重复记录
 	SELECT email, COUNT(email) AS q FROM emails_table GROUP BY email HAVING q > 1 ORDER BY q DESC;
-	
+
 #### 销售额前100的代理
 	SELECT t.agent_id, t.agent_name, a.qq, sum(t.money) AS total FROM `pre_agent_trade` as t left join pre_agent_list as a on a.agent_id = t.agent_id WHERE t.money > 0 GROUP BY t.agent_id ORDER BY total DESC LIMIT 100;
 
@@ -92,7 +95,7 @@
 
 #### 左连接的表中有多条数据，只取按时间排序最大的一条
 	SELECT c.*, g.goods_name, g.goods_short, g.goods_thumb, g.attr_price FROM `pre_goods_list` AS g INNER JOIN `pre_goods_comment` AS c ON c.goods_id = g.goods_id WHERE g.goods_id > 0 AND g.attr_comment > 0 AND c.comment_id = (SELECT MAX(comment_id) FROM `pre_goods_comment` WHERE goods_id = g.goods_id);
-	
+
 #### 最近7天，每个时段查询
 	SELECT FROM_UNIXTIME(dateline,'%H') AS hh, appid, `version`, count(*) FROM pre_app_statis WHERE `datetime` > DATE_SUB(CURDATE(), INTERVAL 7 DAY) GROUP BY hh, appid, `version`;
 
@@ -137,10 +140,10 @@
 
 #### 查找以逗号分隔的值，IN 效率更好
 	SELECT COUNT(*) FROM `pre_member_client` WHERE FIND_IN_SET(`app_id`, '20860,20859,20858,20857,20856');
-	
+
 #### 查找某字段不以某符号结尾的记录
 	SELECT * FROM `pre_article_list` WHERE id NOT IN ( SELECT id FROM `pre_article_list` WHERE article_content LIKE '%>' );
-	
+
 #### 查找没有店铺信息的店铺ID 
 	SELECT seller_id FROM `pre_goods_list` WHERE seller_id NOT IN ( SELECT seller_id FROM `pre_goods_shop` ) AND status = 1 AND seller_id > 0 ORDER BY id DESC LIMIT 100
 
@@ -175,13 +178,13 @@
 	
 	SELECT FROM_UNIXTIME( 1529640863, '%Y%m%d');
 	# 输出结果：20180622
-
+	
 	SELECT CURRENT_DATE - INTERVAL 15 DAY;
 	# 15天前的时间
-
+	
 	SELECT CURRENT_DATE - INTERVAL 1 MONTH;
 	# 1个月前的时间
-
+	
 	SELECT UNIX_TIMESTAMP( CURRENT_DATE - INTERVAL 15 DAY );
 	# 15天前的时间戳
 	
@@ -226,7 +229,7 @@
 
 ### 从一个表插入另外一个表
 	INSERT INTO `tblname` (field1,field2,field3) SELECT newfield1,newfield2,'fixed value' FROM `tblname2`;
-	
+
 ### 将过期商品拷贝到备份表
 	REPLACE INTO `pre_goods_backup` SELECT * FROM `pre_goods_list` WHERE `status` = 0 AND `coupon_expire` - today <= valid;
 
@@ -236,7 +239,7 @@
 
 ### 删除数据
 	DELETE FROM `tblname` WHERE site_id = 46;
-	
+
 ### 带查询的删除
 	DELETE FROM `tblname` WHERE gid IN( SELECT gid FROM `pre_goods_list` WHERE `status` = 0 AND `coupon_expire` - today <= valid );
 
@@ -251,7 +254,7 @@
 
 ### 带查询的更新
 	UPDATE pre_tasks_list SET payout_quantity =( SELECT count(*) FROM pre_tasks_order WHERE pre_tasks_order.status = 1 AND pre_tasks_list.id = pre_tasks_order.tasks_id );
-	
+
 ### 更新订单表商品主图
 	UPDATE `pre_order_list` SET goods_thumb = ( SELECT goods_thumb FROM `pre_goods_list` WHERE goods_id = `pre_order_list`.num_iid ) WHERE goods_thumb IS NULL;
 
@@ -263,13 +266,13 @@
 
 ### 上架已通过审核的商品
 	UPDATE `pre_goods_list` SET status = 1 WHERE gid IN ( SELECT gid FROM `pre_member_goods` WHERE status = 1 );
-	
+
 ### 补全 URL 协议
 	UPDATE `pre_member_list` SET avatar = CONCAT( 'https:', avatar ) WHERE SUBSTRING( avatar, 1, 2 ) = '//';
-	
+
 ### 更新 Ymd 日期
 	UPDATE `pre_member_upgrade` SET `datetime` = FROM_UNIXTIME(`dateline`, '%Y%m%d');
-	
+
 ----------
 
 ## 结构更改
@@ -291,7 +294,7 @@
 
 ### 完全复制表
 	CREATE TABLE `tblname` SELECT * FROM `users`;
-		
+
 ### 备份表不存在时，复制表结构
 	CREATE TABLE IF NOT EXISTS `pre_goods_backup` LIKE `pre_goods_list`;
 
@@ -333,7 +336,7 @@
 
 ### 新增索引
 	CREATE INDEX `state` ON `tblname` (`state`);
-
+	
 	CREATE UNIQUE INDEX `state` ON `tblname` (`state`);
 
 ### 删除主键
@@ -356,6 +359,20 @@
 
 ----------
 
+## 字段大小写
+
+Collate 校对规则
+
+```
+*_bin: binary case sensitive collation，区分大小写
+*_cs: case sensitive collation，区分大小写
+*_ci: case insensitive collation，不区分大小写
+```
+
+
+
+----------
+
 ## 触发器操作
 
 ### 新增触发器
@@ -367,25 +384,25 @@
 ### 触发器时机
 	AFTER UPDATE	更新时
 	BEFORE UPDATE	更新前
-
+	
 	AFTER INSERT	插入时
 	BEFORE INSERT	插入前
-
+	
 	AFTER DELETE	删除时
 	BEFORE DELETE	删除前
 
 ### 单个变量定义
 	DECLARE stats INT;
-
-    SET stats = ( SELECT COUNT(*) FROM pre_tasks_order WHERE tasks_id = new.tasks_id AND taoke_id = old.taoke_id AND status = 1 LIMIT 1 );
-    UPDATE pre_tasks_dist set valid = stats WHERE tasks_id = old.tasks_id AND taoke_id = old.taoke_id;
+	
+	SET stats = ( SELECT COUNT(*) FROM pre_tasks_order WHERE tasks_id = new.tasks_id AND taoke_id = old.taoke_id AND status = 1 LIMIT 1 );
+	UPDATE pre_tasks_dist set valid = stats WHERE tasks_id = old.tasks_id AND taoke_id = old.taoke_id;
 
 ### 多个变量赋值
 	DECLARE stats INT;
 	DECLARE total decimal(10,2);
-
-    SELECT COUNT(*),SUM(money) INTO @stats,@total FROM pre_tasks_order WHERE tasks_id = new.tasks_id AND taoke_id = old.taoke_id AND status = 1;
-    UPDATE pre_tasks_dist set `valid` = @stats, `money` = @total WHERE tasks_id = old.tasks_id AND taoke_id = old.taoke_id;
+	
+	SELECT COUNT(*),SUM(money) INTO @stats,@total FROM pre_tasks_order WHERE tasks_id = new.tasks_id AND taoke_id = old.taoke_id AND status = 1;
+	UPDATE pre_tasks_dist set `valid` = @stats, `money` = @total WHERE tasks_id = old.tasks_id AND taoke_id = old.taoke_id;
 
 ### 删除触发器
 	DROP TRIGGER `tasks_order_totals`;
@@ -399,11 +416,11 @@
 	DROP FUNCTION IF EXISTS fetch_month;
 	CREATE FUNCTION fetch_month() RETURNS INT READS SQL DATA
 	BEGIN
-
+	
 		-- 上月时间
 		DECLARE m_begin INT DEFAULT( date_add(date_add(LAST_DAY(CURRENT_DATE),interval 1 DAY),interval -2 MONTH) );
 		DECLARE m_final INT DEFAULT( LAST_DAY(CURRENT_DATE - INTERVAL 1 MONTH) );
-
+	
 		RETURN( m_final - m_begin );
 	END;
 	;;
@@ -520,8 +537,8 @@
 
 	<?php
 	$sql = "SELECT company_name FROM users LEFT JOIN companies ON (users.state = companies.state)
-    WHERE users.id = $user_id";
-
+	WHERE users.id = $user_id";
+	
 	$result = mysql_query( $sql );
 
 ### 千万不要 ORDER BY RAND()
@@ -538,7 +555,7 @@
 	$r = mysql_query("SELECT username FROM user LIMIT $rand, 1");
 
 ### 避免 SELECT *
-	
+
 	SELECT goods_id, goods_name FROM `pre_member_goods` WHERE `status` = 0 AND uid = 12003 LIMIT 1;
 
 ### 永远为每张表设置一个ID
@@ -548,7 +565,7 @@
 ### 把IP地址存成 UNSIGNED INT
 
 	使用 INET_ATON() 来把一个字符串IP转成一个整形，并使用 INET_NTOA() 把一个整形转成一个字符串IP
-
+	
 	而在PHP中，使用函数 ip2long() 和 long2ip()
 
 ### 拆分大的 DELETE 或 INSERT 语句
@@ -614,7 +631,7 @@
 #### 更改 Data 目录
 
 	# /etc/my.cnf
-
+	
 	[mysqld]
 	datadir=/disk/mysql
 	socket=/disk/mysql/mysql.sock
@@ -622,12 +639,12 @@
 #### 更改 sock 位置
 
 	# /etc/my.cnf
-
+	
 	[client]
 	socket=/disk/mysql/mysql.sock
-
+	
 	# /etc/php.ini
-
+	
 	mysql.default_socket = /disk/mysql/mysql.sock
 	mysqli.default_socket = /disk/mysql/mysql.sock
 	pdo_mysql.default_socket = /disk/mysql/mysql.sock
@@ -636,7 +653,7 @@
 
 #### Table 'performance_schema.session_status' doesn't exist
 	mysql_upgrade -u root -p --force
-	
+
 #### SQLSTATE[HY000] [1129] is blocked because of many connection errors
 	mysqladmin -uroot -p flush-hosts
 
