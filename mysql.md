@@ -260,6 +260,9 @@
 
 ### 更新订单表来源字段
 	UPDATE `pre_order_list` SET source = ( SELECT IF ( EXISTS( SELECT 1 FROM `pre_goods_list` WHERE goods_id = `pre_order_list`.num_iid ), 1, 2) ) WHERE source = 0;
+	
+### 同时 JOIN 更新多个字段
+	UPDATE `pre_member_upgrade` AS upg JOIN `pre_member_relation` AS rel ON rel.`member_id` = upg.member_id SET upg.source_id = rel.source_id, upg.source_name = rel.source_name WHERE upg.source_id IS NULL;
 
 ### 保留用户最新一条记录，其他删除
 	DELETE FROM `tblname` WHERE id NOT IN( SELECT ids FROM ( SELECT max(id) AS ids FROM `tblname` GROUP BY openid ) AS tmp );
