@@ -10,8 +10,30 @@
 
 ## 常用命令
 
+#### 显示当前进程列表
+	SHOW PROCESSLIST;
+	
+#### 显示会话变量
+	SHOW VARIABLES;
+	SHOW SESSION VARIABLES;
+	SHOW SESSION VARIABLES LIKE 'event_scheduler';
+	
+#### 设置会话变量
+	SET wait_timeout = 10;
+	SET SESSION wait_timeout = 10;
+	
+#### 显示系统变量
+	SHOW GLOBAL VARIABLES;
+	SHOW GLOBAL VARIABLES LIKE 'event_scheduler';
+	
+#### 设置全局变量
+	SET GLOBAL wait_timeout = 10;
+
 #### 显示当前数据库服务器中的数据库列表
 	SHOW DATABASES;
+
+#### 显示当前用户
+	SELECT current_user;
 
 #### 切换至某数据库
 	USE `dbname`;
@@ -30,9 +52,6 @@
 
 #### 刷新权限
 	FLUSH PRIVILEGES;
-
-#### 显示系统变量值
-	SHOW VARIABLES LIKE 'max_connections';
 
 ----------
 
@@ -372,8 +391,6 @@ Collate 校对规则
 *_ci: case insensitive collation，不区分大小写
 ```
 
-
-
 ----------
 
 ## 触发器操作
@@ -450,7 +467,7 @@ Collate 校对规则
 	//
 
 ### 调用方法
-	call create_serial();
+	CALL create_serial();
 
 ----------
 
@@ -467,20 +484,38 @@ Collate 校对规则
 
 ----------
 
-## 添加用户
+## 操作用户
 
 ### 指定主机
 	GRANT ALL PRIVILEGES ON *.* TO qcloud@localhost IDENTIFIED BY 'password' WITH GRANT OPTION;
 
 ### 任何主机
 	GRANT ALL PRIVILEGES ON *.* TO qcloud@'%' IDENTIFIED BY 'password' WITH GRANT OPTION;
+	
+### 修改用户密码
+	ALTER USER test_user IDENTIFIED BY 'password';
+
+### 修改当前登录用户
+	ALTER USER USER() IDENTIFIED BY 'password';
+
+### 使密码过期
+	ALTER USER test_user IDENTIFIED BY 'password' PASSWORD EXPIRE;
+
+### 使密码从不过期
+	ALTER USER test_user IDENTIFIED BY 'password' PASSWORD EXPIRE NEVER;
+
+### 按默认设置过期时间
+	ALTER USER test_user IDENTIFIED BY 'password' PASSWORD EXPIRE DEFAULT;
+
+### 指定密码过期间隔
+	ALTER USER test_user IDENTIFIED BY 'password' PASSWORD EXPIRE INTERVAL 90 DAY;
 
 ----------
 
 ## 事件调度器
 
 ### 全局开启
-	set global event_scheduler=1;
+	SET GLOBAL event_scheduler=1;
 
 ### 创建方法
 	DELIMITER $$
@@ -613,8 +648,11 @@ Collate 校对规则
 #### 普通日志文件
 	general_log_file = /var/log/mysql.general.log
 
-#### 禁止DNS反向解析（可以提升远程连接速度）
-	skip-name-resolve
+#### 禁止DNS反向解析（只使用IP连接，可以提升远程连接速度）
+	skip-name-resolve = 1
+	
+#### 跳过权限验证表（常用于修改 root 密码）
+	skip-grant-tables = 1
 
 #### 独立表空间
 	innodb_file_per_table = 1
@@ -659,6 +697,28 @@ Collate 校对规则
 
 #### SQLSTATE[HY000] [1129] is blocked because of many connection errors
 	mysqladmin -uroot -p flush-hosts
+	
+#### Plugin '*81F5E21E35407D884A6CD4A731AEBFB6AF209E1B' is not loaded
+
+	# 配置并重启 MySQL
+	skip-grant-tables = 1
+	
+	# 使用 root 登录后执行
+	USE mysql;
+	UPDATE user SET authentication_string = password('root'), password_expired = 'N' WHERE user = 'root';
+	UPDATE user SET plugin = "mysql_native_password";
+	DELETE FROM user WHERE user = '';
+	FLUSH PRIVILEGES;
+	QUIT;
+	
+	# 移除配置后重启 MySQL
+	#skip-grant-tables = 1
+	
+#### ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.
+	SET authentication_string = password('my_password') WHERE user = 'root';	
+	
+#### ERROR 1819 (HY000): Your password does not satisfy the current policy requirements
+	SET password = password('!XXXXX);
 
 #### ERROR 1040(00000):Too many connections
 
@@ -684,3 +744,9 @@ Collate 校对规则
 - [MySQL 性能优化神器 Explain 使用分析](https://segmentfault.com/a/1190000008131735)
 - [腾讯云 CDB for MySQL 使用规范指南](https://cloud.tencent.com/document/product/236/13390)
 - [DCDB开发指南](https://cloud.tencent.com/document/product/557/7714)
+- [mysql5.7系列修改root默认密码](https://www.cnblogs.com/activiti/p/7810166.html)
+- [MySQL 5.7 忘记root密码，使用--skip-grant-tables重置root密码的通用方法](https://majing.io/posts/10000005451184)
+
+
+
+
