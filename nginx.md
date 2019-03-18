@@ -706,6 +706,11 @@
 
 #### 停止服务
 	CMD:\> myapp.exe stop
+	
+### 常见问题
+
+#### 413 Request Entity Too Large
+	client_max_body_size 10m;
 
 ### Nginx 内置变量
 

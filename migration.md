@@ -319,6 +319,14 @@
 	
 	cdn.bootcss.org/bootstrap
 	cdn.staticfile.org/twitter-bootstrap
+	
+### bootstrap4 => new
+
+	class="btn btn-default btn-sm">搜索</button>
+	class="btn btn-secondary btn-block">搜索</button>
+	
+	class="btn btn-sm btn-success">导出</button>
+	class="btn btn-success btn-block">导出</button>
 
 ### remove
 
