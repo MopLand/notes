@@ -380,7 +380,9 @@
 
 	App\Master\Controller\Fn
 
-### CLI 模式
+## CLI 模式
+
+### 基本语法
 
 	# 命令
 	php /disk/www/example.com/index.php
@@ -402,7 +404,21 @@
 	php /disk/www/example.com/index.php /admin/cron
 
 	# 对应方法
-	App\Admin\Controller\Cron\indexAction	
+	App\Admin\Controller\Cron\indexAction
+	
+### 传入参数
+
+	# 命令
+	php /disk/www/example.com/index.php /cron/account/test -foo bar
+	
+	# 获取参数列表
+	func_get_args()
+	
+	# 获取路径加参数，使用 / 连接
+	Request::getArgv()
+	
+	# 获取指定的参数，省略 - 符号
+	Request::getArgv('foo')
 
 ## Controller 控制器
 

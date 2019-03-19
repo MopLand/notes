@@ -776,6 +776,8 @@
 	$sent_http_transfer_encoding
 
 ## 参考内容
+- [Nginx 官方文档](https://nginx.org/en/docs/)
+- [Nginx 中文文档](http://www.nginx.cn/doc/)
 - [Nginx Config 生成](https://nginxconfig.io/)
 - [前端开发者必备的Nginx知识](https://segmentfault.com/a/1190000018454271)
 	
