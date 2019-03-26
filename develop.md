@@ -580,6 +580,9 @@
 	# 禁用模板视图
 	$this->disable()
 
+	# 禁用 HTTP 头
+	$this->discard()
+
 	# 赋值模板变量
 	$this->assign( $key, $val )
 
@@ -744,6 +747,7 @@
 	\Library\DateTime			# 日期与时间函数
 	\Library\Error				# 系统错误处理
 	\Library\Fs					# FileSystem 文件系统
+	\Library\Fn					# 公共功能服务控制器
 	\Library\Ftp				# FTP 文件上传操作
 	\Library\HTML				# HTML 模板类
 	\Library\HttpClient			# HTTP 类封装
@@ -913,6 +917,9 @@
 	# 编码或解码JSON，并修正JSON不支持中文的问题
 	StrExt::JSON( $data )
 
+	# 使用正则提取数据
+	StrExt::match( $source, $regex, $index = NULL, $useall = FALSE )
+
 	# 字符串截取
 	StrExt::substr($string, $length, $ellipsis = '...')
 
@@ -1014,6 +1021,9 @@
 	# 普通邮件发送函数
 	Service::sendMail( $address, $subject, $content, $template = NULL )
 
+	# 清空或暂存上下文数据
+	Service::context( $name = NULL, $clip = NULL )
+
 	# 写入一条系统日志
 	Service::writeLog( $event, $desc = NULL, $opts = array() )
 
@@ -1071,6 +1081,9 @@
 
 	# 获取页码参数
 	Request::getPage( $key = NULL )
+
+	# 获取 Argv 参数
+	Request::getArgv( $key = NULL )
 
 	# 获取数值
 	Request::getNum( $key, $default = 0 )
@@ -1417,7 +1430,7 @@
 
 	Service::writeLog( 'MEMBER_PROFILE', var_export( $data, TRUE ), array( 'userid' => 12345, 'username' => 'TEST' ) );
 
-### 报表下载
+### 表格下载
 
 	# 控制器
 	<?php
@@ -1462,6 +1475,48 @@
 		</table>
 		...
 	<?php include MOD_ROOT .'views/footer.php';?>
+
+### CSV 下载
+
+	<?php
+
+	use Library\Request;
+	use Library\Response;
+
+	// Ajax 请求
+	$this->ajax = Request::getPost('ajax');
+
+	// 控制器
+	if ( $this->ajax == 'export' ) {
+
+		//禁用视图和 HTTP 头
+		$this->disable();
+		$this->discard();
+
+		$this->db->setattr(\PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, FALSE);
+
+		$result = $this->db->query( $sql );
+
+		$struct = array(
+			'member_id' => '#',
+			'phone' => '手机号',
+			'member_name' => '昵称',
+			'invite_code' => '邀请码',
+			'taobao_uid' => '淘宝UID',
+			'member_role' => '角色',
+			'qq' => 'QQ',
+			'wechat' => '微信',
+			'layer' => '层级',
+			'fans' => '粉丝',
+			'balance' => '可用余额',
+			'credits' => '可用津贴',
+			'income' => '累计收益',
+			'status' => '状态',
+		);
+
+		Response::excel( '用户数据 - '.date('Y-m-d'), $struct, $result );
+
+	}
 
 ### 更新标题
 
