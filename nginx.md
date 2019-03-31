@@ -643,6 +643,42 @@
 		}
 	
 	}
+	
+### 前后端共用同一域名
+	
+	server {
+		listen 80;
+		server_name proxy.baohe.com;
+		set $doc /disk/www/baohe.com;
+		root $doc;
+		
+		# 后端 PHP
+		location ~ /backend {
+			
+			rewrite ^/backend/(.*) /index.php/$1 break;
+
+			fastcgi_split_path_info ^(.+\.php)(.*)$;
+			fastcgi_param PATH_INFO $fastcgi_path_info;
+			
+			fastcgi_pass 127.0.0.1:9000;
+			fastcgi_index index.php;
+			
+			include fastcgi_params;
+		}
+		
+		# 前端 VUE
+		location / {
+			root $doc/html;
+			try_files $uri $uri/ /index.html;
+		}
+
+		# 静态文件
+		location ~ \.(js|css|webp|jpg|jpeg|png|gif|swf|ttf|otf|eot|svg|woff|woff2)$ {
+			expires 7d;
+			add_header "Access-Control-Allow-Origin" "*";
+		}
+
+	}
 
 ## Windows 环境安装
 
