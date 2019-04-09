@@ -36,11 +36,9 @@
 ### 生成域名证书
 
 #### 单个域名
-
 	certbot certonly --email admin@veryide.com --agree-tos --webroot -w /disk/www/ssl.veryide.net -d ssl.veryide.net
 
 #### 多个域名
-
 	certbot certonly --email admin@veryide.com --agree-tos --webroot -w /disk/www/veryide.net -d veryide.net -d www.veryide.net -w /disk/www/veryide.com -d veryide.com -d www.veryide.com
 
 #### 通配符证书
@@ -70,12 +68,15 @@
 	# 每周一凌晨4点30自动更新证书，更新成功就执行 Shell 脚本
 	30 4 * * 1 certbot renew --deploy-hook /disk/shell/certbot-deploy.sh --quiet > /dev/null 2>&1 &
 	
+### 单域名文件验证
+	certbot certonly --email admin@veryide.com --agree-tos --webroot -w /disk/www/ssl.veryide.net -d ssl.veryide.net --manual-auth-hook /disk/shell/certbot-auth-file.sh
+	
 ### DNSPOD 解析认证
 
 	# 在 dnspod 生成 API Token
 	https://www.dnspod.cn/console/user/security
 	
-	# 并以 ID,Token 形式存入 /etc/dnspod_token
+	# 并以 ID,Token 形式存入 /etc/dnspod_token 或 /disk/certs/dnspod_token
 	91302,effb4ff11b869b26d99cbe086f8china
 	
 	# certbot 指定手动验证钩子
@@ -96,3 +97,4 @@
 - [使用 Let's Encrypt 加入全站 HTTPS 支持](https://blog.zengrong.net/post/2650.html)
 - [Certbot 申请的 https 证书续期报错的解决方案](https://learnku.com/articles/16996/certbot-application-for-https-certificate-renewal-error-reporting-solution)
 - [使用Certbot获取免费泛域名(通配符)证书](https://www.jianshu.com/p/1eb7060c5ede)
+- [Certbot DNS Authenticator For DNSPod](https://github.com/al-one/certbot-auth-dnspod/)

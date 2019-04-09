@@ -83,13 +83,105 @@
 ### 查看日志
 	tail -f /var/log/nginx/error.log
 
-## 虚拟主机
+## 配置文件
 
-### nginx.conf
+### conf/nginx.conf
 
-	include D:/EasyPHP/eds-binaries/httpserver/nginx-1.6.3/vhost/*.conf;
+	http {
+	
+		# Server identity
+		map $host $server_node {
+			default "macbook";
+		}
+		
+		# Server Tokens
+		server_tokens  off;
+		
+		# Server identity
+		add_header Node $server_node "always";
+		
+		# CVE-2017-7529
+		max_ranges 1;
 
-### vhost/*.conf
+		# Sites config
+		include /disk/sites/*.conf;
+	
+	}
+
+### conf/fastcgi_params
+
+	fastcgi_param  REQUEST_URI        $request_uri;
+	fastcgi_param  DOCUMENT_URI       $document_uri;
+	fastcgi_param  DOCUMENT_ROOT      $document_root;
+	fastcgi_param  SERVER_PROTOCOL    $server_protocol;
+	
+	# PATH_INFO 支持 
+	fastcgi_param  SCRIPT_NAME        $fastcgi_script_name;
+	fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+
+### rules/phpcgi.conf
+
+	#location ~ ^(.+\.php)(.*)$ {
+	
+		#fastcgi_pass_request_body off;	
+		#fastcgi_param REQUEST_BODY_FILE $request_body_file;
+		
+		# PATH_INFO 支持 
+		fastcgi_split_path_info ^(.+\.php)(.*)$;
+		fastcgi_param PATH_INFO $fastcgi_path_info;
+		
+		# FASTCGI 运行参数 
+		fastcgi_param SERVER_NODE		$server_node;
+		fastcgi_param SERVER_SOFTWARE	shadow/$nginx_version;
+		fastcgi_param SCRIPT_FILENAME	$document_root$fastcgi_script_name;
+		
+		# PHP CGI 监听方式，二选一 
+		fastcgi_pass 127.0.0.1:9000;
+		#fastcgi_pass unix:/dev/shm/php-cgi.sock;
+	
+		# 超时设置 
+		fastcgi_read_timeout 60;
+		fastcgi_connect_timeout 10;
+		fastcgi_index index.php;
+		
+		include fastcgi_params;
+		
+	#}
+
+### rules/dora_route.conf
+
+	# Dora 框架路由规则 
+	if (!-e $request_filename) {
+		rewrite ^/(.+).(txt|htm|html)$ /fn/verify/$1;
+		rewrite ^/attach/(.+)!(.+).(gif|jpg|jpeg|png)$ /fn/resized?file=$1&size=$2&mime=$3;
+		rewrite ^/(.*\.(ico|gif|jpg|jpeg|png|swf|flv|css|js)$) 404;
+		rewrite ^/(.*) /index.php/$1 last;
+	}
+
+### rules/security.conf
+	
+	# 禁止GIT或SVN目录输出 
+	location ~ /\.(git|svn) {
+		deny all;
+	}
+
+	# 禁止任务脚本输出 
+	location ~* /cron/.*\.(js|json|sql|sh|md)$ {
+		deny all;
+	}
+
+	# 禁止证书文件输出 
+	location ~* \.(p12|pem|key|crt|sql|md|gitignore|htaccess)$ {
+		deny all;
+	}
+
+	# 将静态文件缓存7天，并允许跨域 
+	location ~ \.(js|css|webp|jpg|jpeg|png|gif|swf|ttf|otf|eot|svg|woff|woff2)$ {
+		expires 7d;
+		add_header "Access-Control-Allow-Origin" "*";
+	}
+
+### sites/*.conf
 
 	server {
 		listen 88;
@@ -124,46 +216,6 @@
 	
 	}
 
-### fastcgi_params
-
-	fastcgi_param  REQUEST_URI        $request_uri;
-	fastcgi_param  DOCUMENT_URI       $document_uri;
-	fastcgi_param  DOCUMENT_ROOT      $document_root;
-	fastcgi_param  SERVER_PROTOCOL    $server_protocol;
-	
-	# 非常重要
-	fastcgi_param  SCRIPT_NAME        $fastcgi_script_name;
-	fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
-
-
-### phpfpm.conf
-
-	location ~ ^(.+\.php)(.*)$ {
-	
-		fastcgi_pass_request_body off;
-		
-		#client_body_temp_path temp/client_body_temp;
-		#client_body_in_file_only clean;
-		#client_max_body_size 20m;
-	
-		fastcgi_param REQUEST_BODY_FILE $request_body_file;
-		
-		# 非常重要，伪静态必需
-		fastcgi_split_path_info ^(.+\.php)(.*)$;
-		fastcgi_param PATH_INFO $fastcgi_path_info;
-		
-		# 监听方式，二选一
-		fastcgi_pass 127.0.0.1:9000;
-		#fastcgi_pass unix:/dev/shm/php-cgi.sock;
-	
-		# 读取超时
-		fastcgi_read_timeout 300;
-		
-		fastcgi_index index.php;
-		
-		include fastcgi_params;
-		
-	}
 
 ## 正向代理
 
@@ -653,17 +705,9 @@
 		root $doc;
 		
 		# 后端 PHP
-		location ~ /backend {
-			
+		location ~ /backend {			
 			rewrite ^/backend/(.*) /index.php/$1 break;
-
-			fastcgi_split_path_info ^(.+\.php)(.*)$;
-			fastcgi_param PATH_INFO $fastcgi_path_info;
-			
-			fastcgi_pass 127.0.0.1:9000;
-			fastcgi_index index.php;
-			
-			include fastcgi_params;
+			include ../rules/phpcgi.conf;
 		}
 		
 		# 前端 VUE
@@ -673,10 +717,7 @@
 		}
 
 		# 静态文件
-		location ~ \.(js|css|webp|jpg|jpeg|png|gif|swf|ttf|otf|eot|svg|woff|woff2)$ {
-			expires 7d;
-			add_header "Access-Control-Allow-Origin" "*";
-		}
+		include ../rules/security.conf;
 
 	}
 

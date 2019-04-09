@@ -27,6 +27,7 @@
 			example.com.zip
 			...			
 		certs								# 证书目录
+			dnspod_token					# DNSPOD API Token
 			example.com.key
 			example.com.crt
 			...			
@@ -48,7 +49,9 @@
 			autoclean.sh					# 缓存目录清理
 			backup.sh						# 数据库备份
 			blockip.sh						# 访问频率过高IP自动Ban
-			certserv.sh						# SSL 证书更新和部署
+			certbot-deploy.sh				# CertBot SSL 证书更新和部署
+			certbot-auth-file.sh			# CertBot 域名验证，以文件形式
+			certbot-auth-dnspod.sh			# CertBot DNSPOD 验证脚本
 			compress.sh						# 图片批量压缩
 			...
 		www									# 站点目录
