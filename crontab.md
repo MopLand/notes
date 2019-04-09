@@ -63,7 +63,7 @@
 	0 1,12 * * * php /disk/www/example.com/index.php /api/commission/cron > /dev/null 2>&1
 	
 	# 淘客易一手券商品抓取，间隔 10 分钟
-	*/10 0,8-23 * * * php /disk/www/baohe.com/index.php /cron/dataoke/night/dis
+	*/10 0,8-23 * * * php /disk/www/example.com/index.php /cron/dataoke/night/dis
 
 	# 云端商品采集（每天8至23点，间隔20分钟）
 	*/10 8-23 * * * /disk/www/www.example.com/cron/cloud.sh > /dev/null 2>&1

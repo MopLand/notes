@@ -51,7 +51,7 @@
 			blockip.sh						# 访问频率过高IP自动Ban
 			certbot-deploy.sh				# CertBot SSL 证书更新和部署
 			certbot-auth-file.sh			# CertBot 域名验证，以文件形式
-			certbot-auth-dnspod.sh			# CertBot DNSPOD 验证脚本
+			certbot-auth-dnspod.sh			# CertBot DNSPOD 解析验证脚本
 			compress.sh						# 图片批量压缩
 			...
 		www									# 站点目录
