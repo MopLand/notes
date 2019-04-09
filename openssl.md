@@ -60,7 +60,7 @@
 	certbot renew --dry-run --force-renewal
 
 	# 更新完后，执行钩子脚本
-	certbot renew --deploy-hook /disk/shell/certserv.sh
+	certbot renew --deploy-hook /disk/shell/certbot-deploy.sh
 
 ### 定时更新脚本
 
@@ -68,7 +68,18 @@
 	30 4 * * 1 certbot renew --deploy-hook "systemctl restart nginx" --quiet > /dev/null 2>&1 &
 
 	# 每周一凌晨4点30自动更新证书，更新成功就执行 Shell 脚本
-	30 4 * * 1 certbot renew --deploy-hook /disk/shell/certserv.sh --quiet > /dev/null 2>&1 &
+	30 4 * * 1 certbot renew --deploy-hook /disk/shell/certbot-deploy.sh --quiet > /dev/null 2>&1 &
+	
+### DNSPOD 解析认证
+
+	# 在 dnspod 生成 API Token
+	https://www.dnspod.cn/console/user/security
+	
+	# 并以 ID,Token 形式存入 /etc/dnspod_token
+	91302,effb4ff11b869b26d99cbe086f8china
+	
+	# certbot 指定手动验证钩子
+	certbot renew --manual-auth-hook /disk/shell/certbot-auth-dnspod.sh --deploy-hook /disk/shell/certbot-deploy.sh	
 
 ## Nginx 证书配置
 
@@ -82,4 +93,6 @@
 ## 参考资料
 - [Let’s Encrypt 提供，有效期 90 天](https://www.sslforfree.com/)
 - [Let’s Encrypt 证书生成教程](https://free.com.tw/ssl-for-free/)
-- [https://blog.zengrong.net/post/2650.html](https://blog.zengrong.net/post/2650.html)
+- [使用 Let's Encrypt 加入全站 HTTPS 支持](https://blog.zengrong.net/post/2650.html)
+- [Certbot 申请的 https 证书续期报错的解决方案](https://learnku.com/articles/16996/certbot-application-for-https-certificate-renewal-error-reporting-solution)
+- [使用Certbot获取免费泛域名(通配符)证书](https://www.jianshu.com/p/1eb7060c5ede)
