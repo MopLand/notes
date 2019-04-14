@@ -4,6 +4,19 @@
 
 ## PHP
 
+### 三元运算符
+
+	(expr1) ? (expr2) : (expr3)
+	在 expr1 求值为 TRUE 时的值为 expr2，否则为 expr3
+
+	(expr1) ?: (expr3)
+	简写 ?:
+	PHP 5.3 开始，在 expr1 求值为 TRUE 时的值为 expr1，否则为 expr3
+	
+	(expr1) ?? (expr3)
+	简写 ??
+	PHP 7 开始，等价于 ?:，当遇到未定义变量会产生的 Notice 错误
+
 ### 今天/明天/昨天的时间
 	strtotime('today')
 	strtotime('tomorrow')
