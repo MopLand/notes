@@ -1,13 +1,23 @@
 # Nodejs
 
-## 安装
+## yum 安装
+
+### 安装命令
+	yum install epel-release
+	curl -sL https://rpm.nodesource.com/setup_9.x | sudo -E bash -
+	yum install nodejs
+	
+### 卸载命令
+	yum remove nodejs npm -y
+
+## 编译安装
 
 ### 安装依赖包
 	yum install gcc-c++ openssl-devel
 
 ### 安装最新版本Node.js
 	cd /usr/local/src
-	wget http://nodejs.org/dist/node-latest.tar.gz
+	wget https://nodejs.org/dist/node-latest.tar.gz
 	tar -zxvf node-latest.tar.gz
 
 ### 对当前版本进行编译

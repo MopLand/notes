@@ -55,6 +55,9 @@
 
 ### hooks 位置
 	$GIT_DIR/hooks/* (or git config core.hooksPath/*)
+	
+### 权限设置
+	chmod +x .git/hooks/post-merge
 
 ### pre-commit
 	# .git/hooks/pre-commit

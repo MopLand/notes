@@ -716,9 +716,6 @@
 			try_files $uri $uri/ /index.html;
 		}
 
-		# 静态文件
-		include ../rules/security.conf;
-
 	}
 
 ## Windows 环境安装
