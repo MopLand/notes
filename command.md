@@ -117,9 +117,6 @@
 	-X 根据扩展名排序
 	-1 每行只列出一个文件
 
-### 切换目录
-	cd [dirname]
-
 ### 文件下载
 	wget http://www.minjieren.com/wordpress-3.1-zh_CN.zip
 
@@ -234,13 +231,30 @@
 	显示前十个占用空间最大的文件或目录
 	du -sh * | sort -nr | head
 
-## 文件管理
+## 文件目录
+		
+### 创建新文件
+	touch [options] [file]
+	-a   或--time=atime或--time=access或--time=use 　只更改存取时间。
+	-c   或--no-create 　不建立任何文档。
+	-d 　使用指定的日期时间，而非现在的时间。
+	-f 　此参数将忽略不予处理，仅负责解决BSD版本touch指令的兼容性问题。
+	-m   或--time=mtime或--time=modify 　只更改变动时间。
+	-r 　把指定文档或目录的日期时间，统统设成和参考文档或目录的日期时间相同。
+	-t 　使用指定的日期时间，而非现在的时间。
+	
+### 写入文件
+	echo text > file.txt
+	echo text >> file.txt
 
 ### 创建目录
 	mkdir /tmp/test
 
 ### 删除目录
 	rmdir /tmp/test
+
+### 切换目录
+	cd [dirname]
 
 ### 删除文件
 	rm [options] file.txt
@@ -315,17 +329,6 @@
 
 	-w  ：行号栏位的占用的位数。
 	-p 在逻辑定界符处不重新开始计算。
-	
-		
-### 创建新文件
-	touch [options] [file]
-	-a   或--time=atime或--time=access或--time=use 　只更改存取时间。
-	-c   或--no-create 　不建立任何文档。
-	-d 　使用指定的日期时间，而非现在的时间。
-	-f 　此参数将忽略不予处理，仅负责解决BSD版本touch指令的兼容性问题。
-	-m   或--time=mtime或--time=modify 　只更改变动时间。
-	-r 　把指定文档或目录的日期时间，统统设成和参考文档或目录的日期时间相同。
-	-t 　使用指定的日期时间，而非现在的时间。
 
 ## 用户管理
 
