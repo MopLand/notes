@@ -1592,3 +1592,70 @@
 		parent::__destruct();
 
 	}
+	
+### 通过控制器中的注释生成权限缓存
+
+	/**
+	 * 文件描述
+	 * @name   页面名称
+	 * @weight 排序权重，从小到大，范围 1~255
+	 * @navbar 是否可见，默认可见 visible || 隐藏 hidden
+	 * @access 访问限制，默认允许 allowed || 关闭 closed
+	 */
+	class Admin extends Common {
+
+		function init(){
+			parent::init();
+		}
+
+		/**
+		 * 功能描述
+		 * @label  导航名称
+		 * @action 入口地址，通常与 Action 同名
+		 * @navbar 导航显示，默认显示 visible || 隐藏 hidden
+		 * @access 访问限制，默认允许 allowed || 验证 limited || 关闭 closed
+		 * @markup 样式标识
+		 */
+		public function indexAction() {
+		
+		}
+		
+		/**
+		 * @label 已处理
+		 * @action success
+		 * @access limited
+		 */
+
+		/**
+		 * @label 已取消
+		 * @action cancel
+		 * @access limited
+		 */
+		public function defaultAction($act = null) {
+		
+		}
+		
+		/**
+		 * @label 方法示例
+		 * @action apply
+		 * @navbar hidden
+		 * @access limited
+		 */
+		public function applyAction( $id = NULL ) {
+		
+		}
+		
+		/**
+		 * @label 删除订单
+		 * @action delete
+		 * @viable hidden
+		 * @markup text-danger
+		 * @access closed
+		 */
+		public function deleteAction( $id = NULL ) {
+		
+		}
+
+	}
+
+

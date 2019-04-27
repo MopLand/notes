@@ -35,6 +35,46 @@
 	tool: 运行go提供的工具
 	version: 显示go的版本
 	vet: 运行go tool vet
+	
+## 编译选项
+
+	$GOOS      $GOARCH
+    android    arm
+    darwin     386
+    darwin     amd64
+    darwin     arm
+    darwin     arm64
+    dragonfly  amd64
+    freebsd    386
+    freebsd    amd64
+    freebsd    arm
+    linux      386
+    linux      amd64
+    linux      arm
+    linux      arm64
+    linux      ppc64
+    linux      ppc64le
+    linux      mips
+    linux      mipsle
+    linux      mips64
+    linux      mips64le
+    netbsd     386
+    netbsd     amd64
+    netbsd     arm
+    openbsd    386
+    openbsd    amd64
+    openbsd    arm
+    plan9      386
+    plan9      amd64
+    solaris    amd64
+    windows    386
+    windows    amd64
+	
+	$ SET CGO_ENABLED=0
+	$ SET GOOS=linux
+	$ SET GOARCH=amd64
+	$ go build test.go
+	
 
 ## 项目结构
 
@@ -58,5 +98,6 @@
 - [Go 编程最佳实践](https://peter.bourgon.org/go-best-practices-2016/)
 - [golang笔记——命令](https://www.cnblogs.com/tianyajuanke/p/5196436.html)
 - [go语言学习-常用命令](https://www.cnblogs.com/itogo/p/8645441.html)
+- [Go基本数据类型](https://www.cnblogs.com/hanbowen/p/10391388.html)
 
 
