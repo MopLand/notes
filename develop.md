@@ -1609,7 +1609,7 @@
 		}
 
 		/**
-		 * 功能描述
+		 * 导航菜单
 		 * @label  导航名称
 		 * @action 入口地址，通常与 Action 同名
 		 * @navbar 导航显示，默认显示 visible || 隐藏 hidden
@@ -1617,6 +1617,19 @@
 		 * @markup 样式标识
 		 */
 		public function indexAction() {
+		
+		}
+
+		/**
+		 * API 接口
+		 * @label  导航名称
+		 * @action 入口地址，通常与 Action 同名
+		 * @param  定义参数，type name summary [required]
+		 * @method  请求方式，GET / POST / GET&POST
+		 * @access 访问限制，默认允许 allowed || 验证 limited || 关闭 closed
+		 * @example 代码示例，必需是最后一个属性
+		 */
+		public function requestAction() {
 		
 		}
 		
@@ -1648,11 +1661,29 @@
 		/**
 		 * @label 删除订单
 		 * @action delete
-		 * @viable hidden
+		 * @navbar hidden
 		 * @markup text-danger
 		 * @access closed
 		 */
 		public function deleteAction( $id = NULL ) {
+		
+		}
+		
+		/**
+		 * @label 产品列表
+		 * @action product
+		 * @method GET
+		 * @param int size 每页数量
+		 * @param int page 当前页码
+		 * @param string keyword 搜索关键字
+		 * @access limited
+		 * @example
+		 * {
+		 *	"status":0,
+		 *	"result":[]
+		 * }
+		 */
+		public function productAction( ) {
 		
 		}
 

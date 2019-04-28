@@ -168,6 +168,11 @@
 
 #### 使用正则匹配
 	SELECT * FROM `pre_wechat_account` WHERE 'www.example.com' REGEXP domain;
+	
+#### 两时间比较
+	SELECT TIMESTAMPDIFF(DAY, '2018-03-20 23:59:00', '2015-03-22 00:00:00');
+	
+	SELECT DATEDIFF('2018-03-22 09:00:00', '2018-03-20 07:00:00');
 
 #### 当前时间戳
 	SELECT UNIX_TIMESTAMP();
