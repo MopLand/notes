@@ -1670,12 +1670,12 @@
 		}
 		
 		/**
-		 * @label 产品列表
+		 * @label 产品搜索
 		 * @action product
 		 * @method GET
 		 * @param int size 每页数量
 		 * @param int page 当前页码
-		 * @param string keyword 搜索关键字
+		 * @param string keyword 搜索关键字 required
 		 * @access limited
 		 * @example
 		 * {
