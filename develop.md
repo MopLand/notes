@@ -1592,7 +1592,7 @@
 		parent::__destruct();
 
 	}
-	
+
 ### 通过控制器中的注释生成权限缓存
 
 	/**
@@ -1668,6 +1668,34 @@
 		public function deleteAction( $id = NULL ) {
 		
 		}
+
+	}
+
+
+### 通过控制器中的注释生成 API 校验
+
+	/**
+	 * 文件描述
+	 * @name   页面名称
+	 * @access 访问限制，默认允许 allowed || 关闭 closed
+	 * @cross  是否允许跨域访问，true || false
+	 * @verify 需校验的请求信息，可选 appid, token, client
+	 * @require 检查客户端版本，例如 JellyBox/1.2
+	 */
+	class Common extends \Library\Controller {
+	
+		use \App\Admin\Model\Gateway;
+
+		function init(){
+			parent::init();
+
+			//开发模式
+			$this->debug( Request::get('debug') == md5( date('md') ) );
+
+			//检查参数
+			$this->start( $this->_module, $this->_control, $this->_action );
+			
+		}
 		
 		/**
 		 * @label 产品搜索
@@ -1683,10 +1711,11 @@
 		 *	"result":[]
 		 * }
 		 */
-		public function productAction( ) {
+		public function searchAction( ) {
+		
+			//获取通过验证的参数
+			$text = $this->arg('keyword');
 		
 		}
 
 	}
-
-
