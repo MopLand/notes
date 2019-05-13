@@ -1694,6 +1694,9 @@
 
 			//检查参数
 			$this->start( $this->_module, $this->_control, $this->_action );
+
+			//回调方法
+			$this->callback = $this->ajax;
 			
 		}
 		
