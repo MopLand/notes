@@ -1701,8 +1701,11 @@
 		 * @label 产品搜索
 		 * @action product
 		 * @method GET
-		 * @param int size 每页数量
-		 * @param int page 当前页码
+		 * @param integer size 每页数量
+		 * @param integer page 当前页码
+		 * @param number money 金额限定
+		 * @param mobile phone 手机号码
+		 * @param json object 数据对象
 		 * @param string keyword 搜索关键字 required
 		 * @access limited
 		 * @example
