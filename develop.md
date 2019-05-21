@@ -1679,6 +1679,7 @@
 	 * @name   页面名称
 	 * @access 访问限制，默认允许 allowed || 关闭 closed
 	 * @cross  是否允许跨域访问，true || false
+	 * @cache  是否缓存返回数据，0 || second
 	 * @verify 需校验的请求信息，可选 appid, token, client
 	 * @require 检查客户端版本，例如 JellyBox/1.2
 	 */
@@ -1702,6 +1703,7 @@
 		
 		/**
 		 * @label 产品搜索
+		 * @cache 缓存结果，0 || second
 		 * @action product
 		 * @method GET
 		 * @param integer size 每页数量
