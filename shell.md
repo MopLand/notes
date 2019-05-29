@@ -153,3 +153,4 @@
 - [Shell传入参数的处理](https://blog.csdn.net/andylauren/article/details/68957195)
 - [Linux学习笔记 -- 为 Shell 传递参数](https://www.cnblogs.com/atuotuo/p/6431289.html)
 - [linux shell脚本通过参数名传递参数值](https://www.cnblogs.com/rwxwsblog/p/5668254.html)
+- [Linux学习——Shell语法](https://juejin.im/post/5ce8f030518825338614124e)
