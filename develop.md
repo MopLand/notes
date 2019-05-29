@@ -1680,7 +1680,7 @@
 	 * @access 访问限制，默认允许 allowed || 关闭 closed
 	 * @cross  是否允许跨域访问，true || false
 	 * @cache  是否缓存返回数据，0 || second
-	 * @verify 需校验的请求信息，可选 appid, token, client
+	 * @verify 需校验的请求信息，可选 appid, token, client, format
 	 * @require 检查客户端版本，例如 JellyBox/1.2
 	 */
 	class Common extends \Library\Controller {
