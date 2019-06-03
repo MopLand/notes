@@ -120,11 +120,37 @@
 	</assembly>
 
 ### 生成 syso 文件
-	rsrc -manifest main.exe.manifest -ico rc.ico -o main.syso
+	rsrc -manifest main.exe.manifest -ico main.ico -o main.syso
 
 ### 编译生成 main.exe
-	go build -o main.exe
 
+	# 指定输出文件
+	go build -o main.exe
+	
+	# 带编译选项，-s 去掉符号信息，-w 去掉DWARF调试信息
+	go build -o main.exe -ldflags "-s -w"
+	
+## GoLang 包管理工具 dep
+
+### dep 安装
+	go get -u github.com/golang/dep/cmd/dep
+	
+### dep 使用
+
+	#进入项目，需要确包含在 $GOPATH 中
+	cd /home/gopath/src/demo
+	
+	#dep初始化，初始化配置文件Gopkg.toml
+	dep init
+	
+	#dep加载依赖包，自动归档到vendor目录
+	dep ensure
+	
+### dep 生成文件
+	Gopkg.lock 是生成的文件，不要手工修改
+	Gopkg.toml 是依赖管理的核心文件，可以生成也可以手动修改
+	vendor 目录是 golang1.5 以后依赖管理目录，这个目录的依赖代码是优先加载的
+	
 ## 相关链接
 
 - [Go 编程语言/文档](https://go-zh.org/doc/)
@@ -134,5 +160,7 @@
 - [golang笔记——命令](https://www.cnblogs.com/tianyajuanke/p/5196436.html)
 - [go语言学习-常用命令](https://www.cnblogs.com/itogo/p/8645441.html)
 - [Go基本数据类型](https://www.cnblogs.com/hanbowen/p/10391388.html)
+- [Build and (re)start go web apps after saving/creating/deleting source files.](https://github.com/gravityblast/fresh)
+- [Very simple compile daemon for Go](https://github.com/githubnemo/CompileDaemon)
 
 
