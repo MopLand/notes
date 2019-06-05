@@ -151,6 +151,18 @@
 	Gopkg.toml 是依赖管理的核心文件，可以生成也可以手动修改
 	vendor 目录是 golang1.5 以后依赖管理目录，这个目录的依赖代码是优先加载的
 	
+### 无法下载 golang.org/x/ 库时，使用代理
+	
+	# 查找代理端口号
+	netstat -ano
+	
+	# 使用 shadowsocks 代理
+	set http_proxy=127.0.0.1:1080
+	set https_proxy=127.0.0.1:1080
+	
+	# 或使用 GOPROXY 代理服务
+	set GOPROXY=https://goproxy.io
+	
 ## 相关链接
 
 - [Go 编程语言/文档](https://go-zh.org/doc/)
@@ -162,5 +174,6 @@
 - [Go基本数据类型](https://www.cnblogs.com/hanbowen/p/10391388.html)
 - [Build and (re)start go web apps after saving/creating/deleting source files.](https://github.com/gravityblast/fresh)
 - [Very simple compile daemon for Go](https://github.com/githubnemo/CompileDaemon)
+- [golang程序在windows上，注册为服务](https://blog.csdn.net/yang8023tao/article/details/53332984)
 
 
