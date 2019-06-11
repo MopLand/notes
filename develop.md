@@ -1599,7 +1599,8 @@
 	 * 文件描述
 	 * @name   页面名称
 	 * @weight 排序权重，从小到大，范围 1~255
-	 * @navbar 是否可见，默认可见 visible || 隐藏 hidden
+	 * @navbar 导航状态，默认可见 visible || 隐藏 hidden
+	 * @manual 文档状态，默认可见 visible || 隐藏 hidden
 	 * @access 访问限制，默认允许 allowed || 关闭 closed
 	 */
 	class Admin extends Common {
@@ -1612,7 +1613,8 @@
 		 * 导航菜单
 		 * @label  导航名称
 		 * @action 入口地址，通常与 Action 同名
-		 * @navbar 导航显示，默认显示 visible || 隐藏 hidden
+		 * @navbar 导航状态，默认显示 visible || 隐藏 hidden
+		 * @manual 文档状态，默认可见 visible || 隐藏 hidden
 		 * @access 访问限制，默认允许 allowed || 验证 limited || 关闭 closed
 		 * @markup 样式标识
 		 */
@@ -1627,6 +1629,7 @@
 		 * @param  定义参数，type name summary [required]
 		 * @method  请求方式，GET / POST / GET&POST
 		 * @access 访问限制，默认允许 allowed || 验证 limited || 关闭 closed
+		 * @linkup 相关链接
 		 * @example 代码示例，必需是最后一个属性
 		 */
 		public function requestAction() {
