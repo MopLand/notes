@@ -1617,6 +1617,7 @@
 		 * @manual 文档状态，默认可见 visible || 隐藏 hidden
 		 * @access 访问限制，默认允许 allowed || 验证 limited || 关闭 closed
 		 * @markup 样式标识
+		 * @remark 备注说明
 		 */
 		public function indexAction() {
 		
@@ -1655,6 +1656,7 @@
 		 * @label 方法示例
 		 * @action apply
 		 * @navbar hidden
+		 * @remark 财务必需
 		 * @access limited
 		 */
 		public function applyAction( $id = NULL ) {

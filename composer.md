@@ -20,6 +20,8 @@
 ## 常用命令
 
 ### 中国镜像
+	
+	composer config repo.packagist composer https://packagist.laravel-china.org
 
 	composer config -g repo.packagist composer https://packagist.phpcomposer.com
 
