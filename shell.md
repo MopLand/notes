@@ -147,6 +147,16 @@
 
 	# ./func.sh
 	
+## 常见错误
+
+### $'\r': command not found
+
+	文件换行符必需是 Unix (LF)
+	
+### CentOS 7.3 环境中，LF 换行符的 Shell 可能会出错，需要转换为
+
+	Mac (CR)
+	
 ## 相关链接
 
 - [Linux Shell脚本学习指南](http://c.biancheng.net/shell/)

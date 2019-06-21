@@ -31,6 +31,8 @@
 		domain.php						# 域名配置
 		global.php						# 全局配置
 		project.php						# 项目配置
+		module.php						# 公共模块
+		kernel.php						# 框架配置
 		licence.php						# 授权文件
 		...								# 其它配置
 
@@ -39,6 +41,7 @@
 		dataset							# 数据缓存
 		memorys							# 临时缓存
 		modules							# 模块配置
+		backlog							# 运行日志
 
 	library								# 公共类库
 		...								# 各种类库
@@ -71,6 +74,7 @@
 	vendor								# 依赖类库
 		autoload.php					# 类库自动加载脚本
 		gitbuild.php					# Git 提交自动版本号
+		gitmerge.php					# Git 自动刷新模块缓存
 		optimize.php					# Composer 优化脚本
 		initialize.php					# 项目配置初始化脚本
 		composer						# Composer 核心文件

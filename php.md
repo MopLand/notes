@@ -1,5 +1,40 @@
 # PHP
 
+## CentOS 7 安装 PHP7
+
+1. 删除 PHP 及扩展
+
+	yum remove php* php-common
+
+2. 安装 repo 源
+
+	rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+	
+2.1 出现 epel-release = 7 is needed by remi-release-7.6-2.el7.remi.noarch
+
+	yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+3. 修改 yum 源
+
+		vi /etc/yum.repos.d/remi.repo
+		
+		[remi]
+		enabled=1
+		
+		vi /etc/yum.repos.d/remi-php72.repo
+		
+		[remi-php72]
+		enabled=1
+
+4. yum 安装php7
+
+		yum install -y php php-fpm php-cli php-mysql php-gd php-xml php-xmlrpc php-mbstring php-mcrypt php-bcmath php-mhash php-memcache php-opcache php-redis libmcrypt
+
+5. 检查版本和扩展
+
+	php -v
+	php -m
+
 ## 扩展管理工具 pecl
 
 ### Ubuntu/Debian
