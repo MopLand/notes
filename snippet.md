@@ -83,6 +83,14 @@
 	Hybrid.App.format = function( num ){
 		return num / 10000 + '万元';
 	}
+	
+### 将整个表单变成只读
+
+	<fieldset disabled="disabled">
+		<form>
+		...
+		</form>
+	</fieldset>
 
 ## CSS
 

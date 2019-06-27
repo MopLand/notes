@@ -1,39 +1,64 @@
 # PHP
 
+## 版本选择
+
+### Thread-Safety
+	TS(Thread-Safety)即线程安全，多线程访问时，采用了加锁机制，当一个线程访问该类的某个数据时进行数据加锁保护，其他线程不能同时进行访问该数据，直到该线程读取完毕，其他线程才可访问使用该数据，好处是不会出现数据不一致或者数据污染的情况，但耗费的时间要比 NTS 长。
+	
+	PHP以 ISAPI 方式（Apache 常用方式）加载的时候选择TS版本。
+
+### None-Thread Safe
+
+	NTS(None-Thread Safe)即非线程安全，不提供数据访问保护，有可能出现多个线程先后或同时操作同一数据的情况，容易造成数据错乱（即脏数据），一般操作的执行时间要比 TS 短。
+	
+	PHP以FAST-CGI方式加载运行的时候选择TNS版，具有更好的性能；
+
 ## CentOS 7 安装 PHP7
 
 1. 删除 PHP 及扩展
 
-	yum remove php* php-common
+    ```
+    yum remove php* php-common
+    ```
 
 2. 安装 repo 源
 
+	```
 	rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+	```
 	
-2.1 出现 epel-release = 7 is needed by remi-release-7.6-2.el7.remi.noarch
+3. 出现错误 epel-release = 7 is needed by remi-release-7.6-2.el7.remi.noarch
 
-	yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+	```
+    yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+	```
 
-3. 修改 yum 源
+4. 修改 yum 源
 
-		vi /etc/yum.repos.d/remi.repo
-		
-		[remi]
-		enabled=1
-		
-		vi /etc/yum.repos.d/remi-php72.repo
-		
-		[remi-php72]
-		enabled=1
+	```
+	vi /etc/yum.repos.d/remi.repo
 
-4. yum 安装php7
+	[remi]
+	enabled=1
 
-		yum install -y php php-fpm php-cli php-mysql php-gd php-xml php-xmlrpc php-mbstring php-mcrypt php-bcmath php-mhash php-memcache php-opcache php-redis libmcrypt
+	vi /etc/yum.repos.d/remi-php72.repo
 
-5. 检查版本和扩展
+	[remi-php72]
+	enabled=1
+	```  
 
+5. yum 安装php7
+
+	```
+	yum install -y php php-fpm php-cli php-mysql php-gd php-xml php-xmlrpc php-mbstring php-mcrypt php-bcmath php-mhash php-memcache php-opcache php-redis libmcrypt
+	```
+
+6. 检查版本和扩展
+
+	```
 	php -v
 	php -m
+	```
 
 ## 扩展管理工具 pecl
 
@@ -59,23 +84,23 @@
 	# 时区配置
 	[Date]
 	date.timezone = Asia/Shanghai
-
+	
 	# 禁止显示php版本的信息
 	expose_php = Off
-
+	
 	# 修改输入变量数量限制（针对大表单）
 	max_input_vars = 3000
-
+	
 	# 大文件上传（php.ini）
 	post_max_size = 20M
 	upload_max_filesize = 20M
-
+	
 	# 大文件上传（nginx）
 	client_max_body_size 32M;
-
+	
 	# Session 有效期
 	session.cookie_lifetime = 172800
-
+	
 	# Session 自动回收时间
 	session.gc_maxlifetime = 1440
 
@@ -107,13 +132,13 @@
 	[opcache]
 	; dll地址
 	zend_extension=php_opcache.dll
-
+	
 	; 开关打开
 	opcache.enable=1
-
+	
 	; 开启CLI
 	opcache.enable_cli=1
-
+	
 	; 共享内存的大小, 总共能够存储多少预编译的 PHP 代码(单位:MB)
 	; 推荐 128
 	opcache.memory_consumption=64
