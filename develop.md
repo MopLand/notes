@@ -5,6 +5,7 @@
 ### 目录结构
 	app									# 应用目录
 		master							# 默认应用
+			readme.md					# 说明文档（可选）
 			module.php					# 模块配置（可选）
 			controller					# 控制器
 				index.php				# index 控制器
@@ -218,7 +219,6 @@
 	#!/bin/sh
 	# 自动更新版本号
 	php vendor/gitbuild.php
-	exec git add ./config/project.php
 
 	2. 将在每次提交时，自动更新 config/project.php
 
@@ -230,7 +230,7 @@
 	php vendor/initialize.php
 
 	# 主要工作项
-	将自动完成 config/config.php 中的各种秘钥更新，创建 cached 子目录
+	将自动完成 config/config.php 中的各种秘钥生成，创建 cached 子目录
 
 ### 开发环境
 

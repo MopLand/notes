@@ -60,11 +60,11 @@
 	chmod +x .git/hooks/post-merge
 
 ### .git/hooks/pre-commit
+
 	#!/bin/sh
 	# 自动更新版本号
 	
 	php vendor/gitbuild.php
-	exec git add ./config/project.php
 
 --------
 
@@ -81,6 +81,13 @@
 
 
 ### .git/hooks/post-merge
+
+	#!/bin/sh
+	# 自动刷新模块缓存
+
+	php vendor/gitmerge.php
+
+--------
 
 	#!/bin/sh
 	# 生产环境打包部署
