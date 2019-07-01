@@ -30,6 +30,9 @@
 
 ### 3个月后的时间
 	strtotime('+3 month')
+	
+### 使用修正短语来获得准确时间
+	strtotime('last day of 20181031 + 1 month')
 
 ### 本月第一天 和 最后一天
 	strtotime('first day of this month')
