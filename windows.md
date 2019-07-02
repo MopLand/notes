@@ -31,6 +31,9 @@
 	
 ### 移动文件
 	move [file] [target]
+	
+### 一行命令中执行多个命令
+	echo foo & echo bar
 
 ## 注册为 Windows 服务
 
@@ -42,3 +45,7 @@
 
 ### 相关软件
 	Windows Service Wrapper
+	
+## 相关链接
+
+- [bat命令入门与高级技巧详解](https://www.jb51.net/article/97204.htm)
