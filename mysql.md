@@ -47,11 +47,34 @@
 #### 导入 SQL
 	SOURCE d:/mysql.sql;
 
-#### 重建索引
-	REPAIR TABLE `tblname` QUICK;
-
 #### 刷新权限
 	FLUSH PRIVILEGES;
+	
+## 表操作
+
+#### 分析表
+	ANALYZE TABLE `tblname`;
+	
+#### 优化表（会锁定表）
+	OPTIMIZE TABLE `tblname`;
+
+#### 检查表
+	CHECK TABLE `tblname`;
+	
+#### 校验表
+	CHECKSUM TABLE `tblname`;
+
+#### 修复表
+	REPAIR TABLE `tblname`;
+
+#### 快速修复表（重建索引）
+	REPAIR TABLE `tblname` QUICK;
+
+#### 清空表
+	TRUNCATE TABLE `pre_template_widget`;
+
+#### 删除表
+	DROP TABLE `tblname`;
 
 ----------
 
@@ -319,8 +342,8 @@
 ### 复制表结构
 	CREATE TABLE `tblname` LIKE `users`;
 
-### 完全复制表
-	CREATE TABLE `tblname` SELECT * FROM `users`;
+### 复制表结构和数据（不带索引）
+	CREATE TABLE `tblname` [AS] SELECT * FROM `users`;
 
 ### 备份表不存在时，复制表结构
 	CREATE TABLE IF NOT EXISTS `pre_goods_backup` LIKE `pre_goods_list`;
