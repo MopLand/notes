@@ -25,11 +25,16 @@
 
 ### 环境变量
 
-### 
+### 安装 Homebrew
+
+	/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+### 配置变量
+
 	sudo vi /etc/profile
 	
 	export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre
-	export ANDROID_HOME=/User/Lay/Works/SDK
+	export ANDROID_HOME=/Users/lay/Library/Android/sdk
 
 ## 参考资料
 
