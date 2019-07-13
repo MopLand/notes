@@ -1,13 +1,10 @@
 
 # Android
 
-> Android 开发环境安装与配置
-
-## 下载安装
-
-### 下载地址
-
+## 下载地址
 	http://www.androiddevtools.cn/
+
+## Windows
 
 ### 避免重新下载新版本的SDK
 	
@@ -23,6 +20,16 @@
 	
 ### ANDROID_HOME
 	D:\Android\SDK
+	
+## macOS
+
+### 环境变量
+
+### 
+	sudo vi /etc/profile
+	
+	export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre
+	export ANDROID_HOME=/User/Lay/Works/SDK
 
 ## 参考资料
 
