@@ -29,6 +29,9 @@
 #### 替换 vmdk 文件
 	cp Mojave *.vmdk macOS 10.14/macOS 10.14.vmdk
 	
+#### mac 无限重启错误
+	cpuid.1.eax = "00000000000000010000011010100101"
+	
 ## 相关链接
 
 - [[Windows] unlocker3.0+VMware Workstation 15 Pro+Key](https://www.52pojie.cn/thread-801784-1-1.html)
