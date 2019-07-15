@@ -29,18 +29,26 @@
 
 	/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-### 配置变量
+### 配置 .bashrc 变量
 
 	sudo vi ~/.bashrc
 	
 	export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/jdk/Contents/Home
 	export PATH=$PATH:$JAVA_HOME
-	export ANDROID_HOME=/Users/lay/Library/Android/sdk
+
+	export GRADLE_HOME=/Applications/Android\ Studio.app/Contents/gradle/gradle-5.1.1
+	export PATH=$PATH:$GRADLE_HOME/bin
+
+	export ANDROID_HOME=/Users/Lay/Library/Android/sdk
+	export PATH=$PATH:$ANDROID_HOME/tools
+	export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+### 配置 .bash_profile 变量
 
 	sudo vi ~/.bash_profile
 
 	if [ -f ~/.bashrc ]; then
-	source ~/.bashrc
+		source ~/.bashrc
 	fi
 
 ## 参考资料

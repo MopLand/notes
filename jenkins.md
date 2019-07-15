@@ -3,7 +3,6 @@
 ## Windows
 
 ### 修改端口号
-
 	java -jar jenkins.war --ajp13Port=-1 --httpPort=9090
 
 ### 启动服务
@@ -16,6 +15,9 @@
 
 ### 启动服务
 	java -jar /Applications/Jenkins/jenkins.war --ajp13Port=-1 --httpPort=9090
+
+### 密钥文件
+	cat /Users/Lay/.jenkins/secrets/initialAdminPassword
 
 ### 停止服务
 	Command + C
