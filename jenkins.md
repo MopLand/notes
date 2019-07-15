@@ -11,3 +11,11 @@
 
 ### 停止服务
 	net stop jenkins
+
+## Mac
+
+### 启动服务
+	java -jar /Applications/Jenkins/jenkins.war --ajp13Port=-1 --httpPort=9090
+
+### 停止服务
+	Command + C

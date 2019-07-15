@@ -31,13 +31,21 @@
 
 ### 配置变量
 
-	sudo vi /etc/profile
+	sudo vi ~/.bashrc
 	
-	export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre
+	export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/jdk/Contents/Home
+	export PATH=$PATH:$JAVA_HOME
 	export ANDROID_HOME=/Users/lay/Library/Android/sdk
+
+	sudo vi ~/.bash_profile
+
+	if [ -f ~/.bashrc ]; then
+	source ~/.bashrc
+	fi
 
 ## 参考资料
 
 - [Android Studio 中文社区-安卓开发者工具集](http://www.android-studio.org/)
 - [第一次使用Android Studio时你应该知道的一切配置](https://www.cnblogs.com/smyhvae/p/4390905.html)
 - [移动设备占有率统计](https://mtj.baidu.com/data/mobile/device/)
+- [Mac配置环境变量](https://www.jianshu.com/p/71017354de15)

@@ -60,3 +60,6 @@
 	Control => Command
 	Command => Control
 
+## 相关链接
+
+- [mac下~/.bashrc不起作用](https://www.mobibrw.com/2017/6029)
