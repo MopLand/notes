@@ -21,3 +21,11 @@
 
 ### 停止服务
 	Command + C
+	
+	
+## 相关链接
+
+- [Setup Jenkins for private GitHub repository](https://medium.com/facademy/setup-jenkins-for-private-repository-9060f54eeac9)
+- [iOS：使用jenkins实现xcode自动打包（最新）](https://www.jianshu.com/p/3668979476ad)
+- [使用 Jenkins 实现持续集成 (Android)](http://www.pgyer.com/doc/view/jenkins)
+- [使用 Jenkins 实现持续集成 (iOS)](http://www.pgyer.com/doc/view/jenkins_ios)
