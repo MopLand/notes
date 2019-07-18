@@ -37,6 +37,9 @@
 	# 安装 Tuxera NTFS	
 [Tuxera NTFS 安装包下载](https://share.weiyun.com/5QqqT4V)
 
+	# Mounty for NTFS
+[Mounty for NTFS](https://mounty.app/)
+
 ### 外接显示亮度调节
 
 	# Shades For Mac

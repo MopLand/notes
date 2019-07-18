@@ -11,14 +11,14 @@
 	# 位置 bin / idea.properties
 	disable.android.first.run=true
 	
-## 环境变量
+### 环境变量
 
 > 设置后未生效时，或需要重启服务/CMD
 
-### JAVA_HOME
+	# JAVA_HOME
 	D:\Android\Android Studio\jre
-	
-### ANDROID_HOME
+
+	# ANDROID_HOME
 	D:\Android\SDK
 	
 ## macOS
