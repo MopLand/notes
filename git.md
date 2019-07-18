@@ -93,6 +93,12 @@
 	# 生产环境打包部署
 	
 	npm install && npm run build
+	
+## 常见错误
+
+### packet_write_wait: Connection to 192.168.1.11 port 22: Broken pipe
+
+	echo IPQoS lowdelay throughput >> ~/.ssh/config
 
 ## 常用命令
 
@@ -579,5 +585,7 @@
 - [Git Book 中文文档](https://git-scm.com/book/zh/v2/)
 - [Git History](https://githistory.xyz/)
 - [Git Hooks / Git 钩子](http://www.php.cn/manual/view/35078.html)
+- [How to prevent “Write Failed: broken pipe” on SSH connection?](https://askubuntu.com/questions/127369/how-to-prevent-write-failed-broken-pipe-on-ssh-connection)
+- [SSH服务：packet_write_wait: Connection to 67.218.143.160 port 22: Broken pipe错误处理](https://www.cnblogs.com/zlgxzswjy/p/9796671.html)
 
 	
