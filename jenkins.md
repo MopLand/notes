@@ -6,7 +6,8 @@
 [https://jenkins.io/zh/download/](https://jenkins.io/zh/download/)
 
 ### 重要提示
-安装快完成时，直接使用 Admin 用户，不要创建新用户，会有很多权限问题
+
+- 安装快完成时，直接使用 Admin 用户，不要创建新用户，会有很多权限问题
 
 ### 插件安装
 
@@ -171,6 +172,9 @@
 
 ### 停止服务
 	Command + C
+	
+### Workspace
+	ln -s /Users/Lay/.jenkins/workspace/ ~/Desktop/Workspace
 
 ## 相关链接
 
