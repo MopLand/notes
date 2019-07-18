@@ -33,17 +33,25 @@
 
 ![](notes/image/env.android.png)
 
+--------------------------------
+
 #### Xcode Builder
 
 ![](notes/image/env.xcode.png)
+
+--------------------------------
 
 #### Jenkins Location
 
 ![](notes/image/env.jenkins.png)
 
+--------------------------------
+
 #### Extended E-mail Notification
 
 ![](notes/image/env.email.png)
+
+--------------------------------
 
 ### SSH 凭据
 
@@ -51,9 +59,19 @@
 
 ![](notes/image/ssh_add.png)
 
+--------------------------------
+
 #### 查看 SSH 私钥
 
 ![](notes/image/ssh_credentials.png)
+
+--------------------------------
+
+### Keychains and Provisioning Profiles Management
+
+![](notes/image/xcode.keychains.png)
+
+--------------------------------
 
 ## Windows
 
@@ -85,5 +103,6 @@
 
 - [Setup Jenkins for private GitHub repository](https://medium.com/facademy/setup-jenkins-for-private-repository-9060f54eeac9)
 - [iOS：使用jenkins实现xcode自动打包（最新）](https://www.jianshu.com/p/3668979476ad)
+- [macOS 上使用 Jenkins 实现 iOS 自动化打包](https://www.jianshu.com/p/d46100612551)
 - [使用 Jenkins 实现持续集成 (Android)](http://www.pgyer.com/doc/view/jenkins)
 - [使用 Jenkins 实现持续集成 (iOS)](http://www.pgyer.com/doc/view/jenkins_ios)
