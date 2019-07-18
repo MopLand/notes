@@ -73,6 +73,70 @@
 
 --------------------------------
 
+## Xcode 项目
+
+### 源码管理
+
+![](notes/image/git.project.png)
+
+### 构建触发器
+
+![](notes/image/git.pull.png)
+
+### 构建环境
+
+![](notes/image/xcode.gen.key.png)
+
+### 构建
+
+#### 使用 shell 方案
+
+> Execute shell
+
+![](notes/image/xcode.shell.gen.png)
+
+#### 使用 Xcode integration 方案
+
+> General build settings
+
+![](notes/image/xcode.build.set.png)
+
+> Code signing & OS X keychain options
+
+![](notes/image/xcode.code.sign.png)
+
+> Advanced Xcode build options
+
+![](notes/image/xcode.build.opts.png)
+
+### 构建后操作
+
+> Editable Email Notification
+
+![](notes/image/email.notify.png)
+
+> Upload to pgyer with apiV2
+
+![](notes/image/pgyer.upload.png)
+
+## Android 项目
+
+### 源码管理
+
+	参考 Xcode 项目
+
+### 构建触发器
+
+	参考 Xcode 项目
+	
+### 构建后操作
+
+![](notes/image/android.integration.png)	
+
+### 构建后操作
+
+	参考 Xcode 项目
+
 ## Windows
 
 ### 修改端口号
