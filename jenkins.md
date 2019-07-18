@@ -25,15 +25,33 @@
 #### Android
 - Gradle Plugin
 
-## 全局配置
+## 准备工作
+
+### 全局配置
+
+#### 环境变量
+
+![](notes/image/env.android.png)
+
+#### Xcode Builder
+
+![](notes/image/env.xcode.png)
+
+#### Jenkins Location
+
+![](notes/image/env.jenkins.png)
+
+#### Extended E-mail Notification
+
+![](notes/image/env.email.png)
 
 ### SSH 凭据
 
-### 添加 SSH 私钥
+#### 添加 SSH 私钥
 
 ![](notes/image/ssh_add.png)
 
-### 查看 SSH 私钥
+#### 查看 SSH 私钥
 
 ![](notes/image/ssh_credentials.png)
 
