@@ -87,15 +87,19 @@
 
 ![](notes/image/xcode.gen.key.png)
 
+--------------------------------
+
 ### 构建
 
-#### 使用 shell 方案
+#### 使用 Shell 方案
 
 > Execute shell
 
 ![](notes/image/xcode.shell.gen.png)
 
-#### 使用 Xcode integration 方案
+--------------------------------
+
+#### 使用 Xcode 方案
 
 > General build settings
 
@@ -109,15 +113,21 @@
 
 ![](notes/image/xcode.build.opts.png)
 
+--------------------------------
+
 ### 构建后操作
 
 > Editable Email Notification
 
 ![](notes/image/email.notify.png)
 
+--------------------------------
+
 > Upload to pgyer with apiV2
 
 ![](notes/image/pgyer.upload.png)
+
+--------------------------------
 
 ## Android 项目
 
@@ -162,11 +172,25 @@
 ### 停止服务
 	Command + C
 
-	
 ## 相关链接
 
 - [Setup Jenkins for private GitHub repository](https://medium.com/facademy/setup-jenkins-for-private-repository-9060f54eeac9)
 - [iOS：使用jenkins实现xcode自动打包（最新）](https://www.jianshu.com/p/3668979476ad)
 - [macOS 上使用 Jenkins 实现 iOS 自动化打包](https://www.jianshu.com/p/d46100612551)
+- [【Jenkins】Jenkins集成IOS全自动打包专题](https://www.jianshu.com/p/6a3a009da35b)
+- [Jenkins For iOS安装](https://www.jianshu.com/p/5cad74906159)
+- [iOS 使用 Jenkins 自动化打包](https://www.jianshu.com/p/8ba3c73e3f1c)
+- [关于配置Jenkins自动打包错误总结](https://www.jianshu.com/p/bf056faf89e3)
+- [Jenkins一：iOS自动打包完整实践](https://www.jianshu.com/p/d6fdd13a7201)
 - [使用 Jenkins 实现持续集成 (Android)](http://www.pgyer.com/doc/view/jenkins)
 - [使用 Jenkins 实现持续集成 (iOS)](http://www.pgyer.com/doc/view/jenkins_ios)
+- [iOS命令行构建-xcodebuild](http://www.devopsroom.com/autobuild/246.html)
+- [Jenkins里邮件触发器配置Send to Developers](https://blog.csdn.net/hwhua1986/article/details/47975257)
+
+
+
+
+
+
+
+
