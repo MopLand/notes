@@ -17,6 +17,7 @@
 - Localization: Chinese (Simplified)
 - SSH Agent Plugin
 - SSH Credentials Plugin
+- Environment Injector
 - Upload to pgyer
 
 #### Xcode
@@ -140,13 +141,34 @@
 
 	参考 Xcode 项目
 	
-### 构建后操作
+### 构建
 
-![](notes/image/android.integration.png)	
+![](notes/image/android.shell.env.png)
+
+![](notes/image/android.integration.png)
 
 ### 构建后操作
 
 	参考 Xcode 项目
+
+![](notes/image/android.used.env.png)
+
+## 参考模板
+
+### 最近一次 Git Commit Message
+	echo GIT_COMMIT_MESSAGE=$(git show -s $GIT_COMMIT --format="format:%s") > env.properties
+	
+### 使用环境变量
+	${ENV,var="GIT_COMMIT_MESSAGE"}
+	
+### 蒲公英打包后邮件通知内容
+	应用：${buildName} <br />
+	版本：${buildVersion} <br />
+	大小：${buildFileSize} <br />
+	下载：${appPgyerURL} <br /><br />
+	${ENV,var="GIT_COMMIT_MESSAGE"} <br />
+	<hr />
+	<a href="${appBuildURL}"><img src="${appQRCodeURL}" /></a>
 
 ## Windows
 
@@ -190,6 +212,7 @@
 - [使用 Jenkins 实现持续集成 (iOS)](http://www.pgyer.com/doc/view/jenkins_ios)
 - [iOS命令行构建-xcodebuild](http://www.devopsroom.com/autobuild/246.html)
 - [Jenkins里邮件触发器配置Send to Developers](https://blog.csdn.net/hwhua1986/article/details/47975257)
+- [Passing variable from shell script to jenkins](https://stackoverflow.com/questions/30110876/passing-variable-from-shell-script-to-jenkins)
 
 
 
