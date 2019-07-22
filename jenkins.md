@@ -89,6 +89,8 @@
 
 ![](notes/image/xcode.gen.key.png)
 
+选择 Keychain 和 Provisioning Profile 后，需要保存设置，再刷新，相关的选项才会出现（可能是 Bug）
+
 --------------------------------
 
 ### 构建
