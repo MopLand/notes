@@ -1714,6 +1714,7 @@
 		 * @label 产品搜索
 		 * @cache 缓存结果，0 || second
 		 * @action product
+		 * @replay 请求重放，默认允许 true || 禁止重放 false
 		 * @method GET
 		 * @param integer size 每页数量
 		 * @param integer page 当前页码
