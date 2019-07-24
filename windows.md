@@ -59,6 +59,49 @@
 
 	exFAT 文件系统是微软在 Windows Embeded 5.0 以上引入的一种适合于闪存的文件系统，主要是为了解决 FAT32 不支持 4G 或更大文件的问题而推出的。
 	
+
+## 注册为 Windows 服务
+
+### 下载 winsw
+
+[https://github.com/kohsuke/winsw/releases](https://github.com/kohsuke/winsw/releases)
+
+### 重命名
+	
+	# *.exe 和 *.xml 文件名要保持一致
+	rename WinSW.NET4.exe myapp.exe
+
+### myapp.xml 格式
+
+	<?xml version="1.0" encoding="UTF-8" ?>
+	<service>
+	  <id>nginx</id>
+	  <name>nginx</name>
+	  <description>nginx</description>
+	  <executable>F:\nginx-0.9.4\nginx.exe</executable>
+	  <logpath>F:\nginx-0.9.4\</logpath>
+	  <logmode>roll</logmode>
+	  <depend></depend>
+	  <startargument>-p F:\nginx-0.9.4</startargument>
+	  <stopargument>-p F:\nginx-0.9.4 -s stop</stopargument>
+	</service>
+
+### 可用命令
+
+#### 安装服务
+	CMD:\> myapp.exe install
+
+#### 卸载服务
+	CMD:\> myapp.exe uninstall
+
+#### 启动服务
+	CMD:\> myapp.exe start
+
+#### 停止服务
+	CMD:\> myapp.exe stop
+	
 ## 相关链接
 
 - [bat命令入门与高级技巧详解](https://www.jb51.net/article/97204.htm)
+- [为nginx创建windows服务自启动](https://www.cnblogs.com/JayK/p/3429795.html)
+- [更强力的Windows Service Wrapper工具 -- WinSW](https://my.oschina.net/pierrecai/blog/895336)

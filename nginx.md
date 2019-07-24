@@ -749,37 +749,6 @@
 	echo Stopping PHP FastCGI...
 	taskkill /F /IM php-cgi.exe > nul
 	exit
-
-## 注册为 Windows 服务
-
-### myapp.xml 格式
-
-	<?xml version="1.0" encoding="UTF-8" ?>
-	<service>
-	  <id>nginx</id>
-	  <name>nginx</name>
-	  <description>nginx</description>
-	  <executable>F:\nginx-0.9.4\nginx.exe</executable>
-	  <logpath>F:\nginx-0.9.4\</logpath>
-	  <logmode>roll</logmode>
-	  <depend></depend>
-	  <startargument>-p F:\nginx-0.9.4</startargument>
-	  <stopargument>-p F:\nginx-0.9.4 -s stop</stopargument>
-	</service>
-
-### 可用命令
-
-#### 安装服务
-	CMD:\> myapp.exe install
-
-#### 卸载服务
-	CMD:\> myapp.exe uninstall
-
-#### 启动服务
-	CMD:\> myapp.exe start
-
-#### 停止服务
-	CMD:\> myapp.exe stop
 	
 ### 常见问题
 
