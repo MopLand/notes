@@ -63,10 +63,19 @@
 	Control => Command
 	Command => Control
 
+## 快捷键
+
+### 切换输入法
+	command + space
+
+### 显示/隐藏文件（.example）
+	command + shift + .
+
 ## 相关链接
 
 - [mac下~/.bashrc不起作用](https://www.mobibrw.com/2017/6029)
 - [Apple 开发者中心下载工具](https://developer.apple.com/download/more/)
+- [Mac 键盘快捷键](https://support.apple.com/zh-cn/HT201236)
 
 
 
