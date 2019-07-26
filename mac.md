@@ -76,6 +76,8 @@
 - [mac下~/.bashrc不起作用](https://www.mobibrw.com/2017/6029)
 - [Apple 开发者中心下载工具](https://developer.apple.com/download/more/)
 - [Mac 键盘快捷键](https://support.apple.com/zh-cn/HT201236)
+- [mac开机登录后自动运行shell脚本](https://blog.csdn.net/enjoyinwind/article/details/86470674)
+- [让Mac OS X系统启动时执行脚本的方法](https://www.jb51.net/os/MAC/387487.html)
 
 
 
