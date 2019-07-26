@@ -32,6 +32,9 @@
 #### mac 无限重启错误
 	cpuid.1.eax = "00000000000000010000011010100101"
 	
+#### VMware 意外关机异常
+	disk.locking = "FALSE"
+	
 #### 压缩 vmdk 镜像
 	vmware-vdiskmanager.exe -k "E:\macOS 10.14.vmdk"
 	

@@ -76,8 +76,11 @@
 - [mac下~/.bashrc不起作用](https://www.mobibrw.com/2017/6029)
 - [Apple 开发者中心下载工具](https://developer.apple.com/download/more/)
 - [Mac 键盘快捷键](https://support.apple.com/zh-cn/HT201236)
+- [将 Mac 设置为在启动期间自动登录](https://support.apple.com/zh-cn/HT201476)
 - [mac开机登录后自动运行shell脚本](https://blog.csdn.net/enjoyinwind/article/details/86470674)
 - [让Mac OS X系统启动时执行脚本的方法](https://www.jb51.net/os/MAC/387487.html)
+- [Mac中的定时任务利器：launchctl](https://www.jianshu.com/p/4addd9b455f2)
+- [mac设置shell脚本开机自启动](https://www.cnblogs.com/dongfangzan/p/5976791.html)
 
 
 
