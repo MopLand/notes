@@ -100,6 +100,11 @@
 #### 停止服务
 	CMD:\> myapp.exe stop
 	
+## 实用技巧
+
+### 来电时自动启动
+	BIOS > POWER MANAGEMENT SETUP > Turn On
+	
 ## 相关链接
 
 - [bat命令入门与高级技巧详解](https://www.jb51.net/article/97204.htm)
