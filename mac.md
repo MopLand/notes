@@ -71,6 +71,9 @@
 ### 显示/隐藏文件（.example）
 	command + shift + .
 
+### 实现 Chrome F5 刷新
+	系统偏好设置 > 键盘 > 快捷键 > 应用快捷键 > Add > Google Chrome / 重新加载此页 / F5
+
 ## 相关链接
 
 - [mac下~/.bashrc不起作用](https://www.mobibrw.com/2017/6029)
