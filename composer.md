@@ -19,11 +19,16 @@
 
 ## 常用命令
 
-### 中国镜像
-	
-	composer config repo.packagist composer https://packagist.laravel-china.org
+### 国内镜像
 
-	composer config -g repo.packagist composer https://packagist.phpcomposer.com
+	# 腾讯云镜像
+	composer config -g repos.packagist composer https://mirrors.cloud.tencent.com/composer/
+
+	# 阿里云镜像
+	composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
+	
+	# 取消配置
+	composer config -g --unset repos.packagist
 
 ### 查看版本号
 	composer -V

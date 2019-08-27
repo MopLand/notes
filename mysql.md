@@ -123,6 +123,9 @@
 #### 同时使用 GROUP BY 和 ORDER BY
 	SELECT * FROM ( select id, agent_id, agent_name , sum(money) AS total FROM `pre_agent_trade` WHERE money > 0 AND `status` > 0 GROUP BY agent_id ) as t ORDER BY total DESC LIMIT 10;
 
+#### 多个字段 GROUP BY
+	SELECT SUM(total) FROM ( SELECT * FROM `pre_jingdong_deduct` WHERE id > 0 GROUP BY trade_id, sku_id) AS t;
+
 #### 取分组第一条记录
 	SELECT * FROM `pre_market_version` WHERE id IN( SELECT MAX(id) FROM `pre_market_version` GROUP BY `appid` );
 

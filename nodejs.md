@@ -44,6 +44,7 @@
 
 ### 更改为国内服务器，可以提高更快的下载速度
 	npm set registry=http://r.cnpmjs.org/
+	npm config set registry http://mirrors.cloud.tencent.com/npm/
 
 ## 常用命令
 
