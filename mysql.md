@@ -177,11 +177,11 @@
 #### 中文字符排序
 	SELECT * FROM `tblname` ORDER BY CONVERT(vender_abbrev USING gbk) ASC;
 
-#### Where IN 同时保持排序（IN 适合于外表数据量大而内表数据小的情况）
+#### WHERE IN 同时保持排序（IN 适合于外表数据量大而内表数据小的情况）
 	SELECT * FROM `tblname` WHERE id IN(5,2,6,8,12,1) ORDER BY FIELD(id,5,2,6,8,12,1);
 
-#### Where EXISTS（EXISTS 适合于外表小而内表大的情况）
-	SELECT num FROM `tblname` AS t where EXISTS( SELECT 1 FROM `tblmisc` WHERE num = t.num );
+#### WHERE EXISTS（EXISTS 适合于外表小而内表大的情况）
+	SELECT num FROM `tblname` AS t WHERE EXISTS( SELECT 1 FROM `tblmisc` WHERE num = t.num );
 
 #### 查找以逗号分隔的值，IN 效率更好
 	SELECT COUNT(*) FROM `pre_member_client` WHERE FIND_IN_SET(`app_id`, '20860,20859,20858,20857,20856');
@@ -240,6 +240,12 @@
 	
 	SELECT DATE_FORMAT( CURRENT_DATE - INTERVAL 15 DAY, '%Y%m%d' );
 	# 15天前的格式化时间
+
+#### 使用 LEAST 函数找到多个字段的最小值
+	SELECT LEAST( ord.commission, ord.pub_share_pre_fee );
+
+#### 使用 GREATEST 函数找到多个字段的最大值
+	SELECT GREATEST( ord.commission, ord.pub_share_pre_fee );
 
 ----------
 
