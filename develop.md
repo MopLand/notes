@@ -1606,6 +1606,7 @@
 	 * @navbar 导航状态，默认可见 visible || 隐藏 hidden
 	 * @manual 文档状态，默认可见 visible || 隐藏 hidden
 	 * @access 访问限制，默认允许 allowed || 关闭 closed
+	 * @module 组件标识，用于组件状态控制页面
 	 */
 	class Admin extends Common {
 
@@ -1715,6 +1716,7 @@
 		 * @cache 缓存结果，0 || second
 		 * @action product
 		 * @replay 请求重放，默认允许 true || 禁止重放 false
+		 * @active 活跃级别，一般服务 normal || 低频服务 low
 		 * @method GET
 		 * @param integer size 每页数量
 		 * @param integer page 当前页码
