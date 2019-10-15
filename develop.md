@@ -1724,6 +1724,7 @@
 		 * @param mobile phone 手机号码
 		 * @param json object 数据对象
 		 * @param string keyword 搜索关键字 required
+		 * @notice 描述说明信息
 		 * @access limited
 		 * @example
 		 * {

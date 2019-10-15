@@ -331,6 +331,8 @@
 
 ### 更新 Ymd 日期
 	UPDATE `pre_member_upgrade` SET `datetime` = FROM_UNIXTIME(`dateline`, '%Y%m%d');
+	
+	UPDATE `pre_order_deduct` SET settle_date = DATE_FORMAT( settle_time, '%Y%m%d') WHERE `settle_time` IS NOT NULL AND `settle_date` = '0';
 
 ----------
 
@@ -772,6 +774,7 @@ Collate 校对规则
 
 ### 相关链接
 
+- [mysql explain 用法和结果的含义](https://www.cnblogs.com/qiudongxu/p/10312777.html)
 - [实战mysql存储程序与定时器](http://lobert.iteye.com/blog/1953827)
 - [mysql中的事件](http://www.jianshu.com/p/8faa7dadd073)
 - [项目中常用的19条MySQL优化](https://segmentfault.com/a/1190000012155267)
