@@ -731,6 +731,10 @@ Collate 校对规则
 
 ## 常见错误
 
+#### MYSQL REPLACE INTO 和 INSERT INTO 的区别
+	1. 表必须有主键或者是唯一索引,否则没有什么不同；
+	2. 如果有主键或者是唯一索引，则REPLACE发现重复的先删除再插入，如果记录有多个字段，在插入的时候如果有的字段没有赋值，那么新插入的记录这些字段为空，且返回的值为删除的条数和插入的条数之和；而insert 发现重复的则报错。
+
 #### Table 'performance_schema.session_status' doesn't exist
 	mysql_upgrade -u root -p --force
 
@@ -775,6 +779,7 @@ Collate 校对规则
 ### 相关链接
 
 - [mysql explain 用法和结果的含义](https://www.cnblogs.com/qiudongxu/p/10312777.html)
+- [重现并分析在MySQL中使用replace into 的坑](https://blog.csdn.net/yangchunlu0101/article/details/80255537)
 - [实战mysql存储程序与定时器](http://lobert.iteye.com/blog/1953827)
 - [mysql中的事件](http://www.jianshu.com/p/8faa7dadd073)
 - [项目中常用的19条MySQL优化](https://segmentfault.com/a/1190000012155267)

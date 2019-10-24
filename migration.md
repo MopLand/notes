@@ -2,6 +2,22 @@
 
 > Project DORA 升级和迁移指导
 
+## 控制器
+
+	Response::callback\( (.+),(.+)\);
+	return $1;
+
+	Response::callback\((.+),(.+)\);
+	return $1;
+	
+## Ajax
+
+	\$this->notice\((.+), (.+)\);
+	return array( 'status' => -1001, 'result' => $1, 'target' => $2);
+
+	\$this->notice\((.+)\);
+	return array( 'status' => -1001, 'result' => $1);
+
 ## PHP
 
 	$this->getnum

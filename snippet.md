@@ -105,6 +105,13 @@
     padding-right: 10px;
     display: inline-block;
     box-shadow: inset 0 -8px 0 #b0d3ff;
+	
+### 文字颜色渐变
+	background: linear-gradient(to right,#ff8a00,#e52e71);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-box-decoration-break: clone;
+	font-weight: 700;
 
 
 
