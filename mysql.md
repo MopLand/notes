@@ -12,20 +12,20 @@
 
 #### 显示当前进程列表
 	SHOW PROCESSLIST;
-	
+
 #### 显示会话变量
 	SHOW VARIABLES;
 	SHOW SESSION VARIABLES;
 	SHOW SESSION VARIABLES LIKE 'event_scheduler';
-	
+
 #### 设置会话变量
 	SET wait_timeout = 10;
 	SET SESSION wait_timeout = 10;
-	
+
 #### 显示系统变量
 	SHOW GLOBAL VARIABLES;
 	SHOW GLOBAL VARIABLES LIKE 'event_scheduler';
-	
+
 #### 设置全局变量
 	SET GLOBAL wait_timeout = 10;
 
@@ -49,18 +49,18 @@
 
 #### 刷新权限
 	FLUSH PRIVILEGES;
-	
+
 ## 表操作
 
 #### 分析表
 	ANALYZE TABLE `tblname`;
-	
+
 #### 优化表（会锁定表）
 	OPTIMIZE TABLE `tblname`;
 
 #### 检查表
 	CHECK TABLE `tblname`;
-	
+
 #### 校验表
 	CHECKSUM TABLE `tblname`;
 
@@ -163,7 +163,10 @@
 	SELECT t.agent_id, t.agent_name, l.qq, sum(t.money) as stat FROM `pre_trade_list` as t LEFT JOIN `pre_agent_list` as l on t.agent_id = l.agent_id group by t.agent_id ORDER BY stat DESC limit 100;
 
 #### 连接多个字段
-	SELECT CONCAT(name,' ',surname) AS complete_name FROM users;
+	SELECT CONCAT(first_name,' ',last_name) AS full_name FROM `tblname`;
+
+#### 重复的渠道+广告位组合
+	SELECT CONCAT( relation_id, '_', adzone_id ) AS idx, COUNT(*) AS q FROM `pre_member_relation` WHERE relation_id > 0 GROUP BY idx HAVING q > 1
 
 #### 移除小数后面的零
 	SELECT (TRIM(attr_price) + 0 ) AS attr_price;
@@ -194,11 +197,20 @@
 
 #### 使用正则匹配
 	SELECT * FROM `pre_wechat_account` WHERE 'www.example.com' REGEXP domain;
-	
+
+#### 按时段统计订单数量和金额
+	SELECT COUNT(*), SUM(pub_share_pre_fee), FROM_UNIXTIME( UNIX_TIMESTAMP( create_time ), '%H' ) AS hour FROM pre_order_shadow WHERE create_date >= 20191010 GROUP BY hour
+
 #### 两时间比较
 	SELECT TIMESTAMPDIFF(DAY, '2018-03-20 23:59:00', '2015-03-22 00:00:00');
 	
 	SELECT DATEDIFF('2018-03-22 09:00:00', '2018-03-20 07:00:00');
+
+#### 使用 LEAST 函数找到多个字段的最小值
+	SELECT LEAST( ord.commission, ord.pub_share_pre_fee );
+
+#### 使用 GREATEST 函数找到多个字段的最大值
+	SELECT GREATEST( ord.commission, ord.pub_share_pre_fee );
 
 #### 当前时间戳
 	SELECT UNIX_TIMESTAMP();
@@ -241,12 +253,6 @@
 	SELECT DATE_FORMAT( CURRENT_DATE - INTERVAL 15 DAY, '%Y%m%d' );
 	# 15天前的格式化时间
 
-#### 使用 LEAST 函数找到多个字段的最小值
-	SELECT LEAST( ord.commission, ord.pub_share_pre_fee );
-
-#### 使用 GREATEST 函数找到多个字段的最大值
-	SELECT GREATEST( ord.commission, ord.pub_share_pre_fee );
-
 ----------
 
 ## JOIN 优化
@@ -283,6 +289,9 @@
 ### 插入数据
 	INSERT INTO `tblname` VALUES ('a','b');
 
+### 插入多条记录
+	INSERT INTO `tblname` (`order_sn`) VALUES ('190730035448751133473'), ('190730386700411711658');
+
 ### 从一个表插入另外一个表
 	INSERT INTO `tblname` (field1,field2,field3) SELECT newfield1,newfield2,'fixed value' FROM `tblname2`;
 
@@ -316,7 +325,7 @@
 
 ### 更新订单表来源字段
 	UPDATE `pre_order_list` SET source = ( SELECT IF ( EXISTS( SELECT 1 FROM `pre_goods_list` WHERE goods_id = `pre_order_list`.num_iid ), 1, 2) ) WHERE source = 0;
-	
+
 ### 同时 JOIN 更新多个字段
 	UPDATE `pre_member_upgrade` AS upg JOIN `pre_member_relation` AS rel ON rel.`member_id` = upg.member_id SET upg.source_id = rel.source_id, upg.source_name = rel.source_name WHERE upg.source_id IS NULL;
 
@@ -530,7 +539,7 @@ Collate 校对规则
 
 ### 任何主机
 	GRANT ALL PRIVILEGES ON *.* TO qcloud@'%' IDENTIFIED BY 'password' WITH GRANT OPTION;
-	
+
 ### 修改用户密码
 	ALTER USER test_user IDENTIFIED BY 'password';
 
@@ -649,6 +658,9 @@ Collate 校对规则
 
 	DELETE FROM logs WHERE log_date <= '2009-11-01' LIMIT 1000;
 
+### 按季度拆分大数据表，参考 backup_order
+	7月备份 1~3 月，10月备份 4~6 月，1月备份 7~9 月，4月备份 10~12 月
+
 ## 配置说明
 
 #### 配置文件
@@ -689,7 +701,7 @@ Collate 校对规则
 
 #### 禁止DNS反向解析（只使用IP连接，可以提升远程连接速度）
 	skip-name-resolve = 1
-	
+
 #### 跳过权限验证表（常用于修改 root 密码）
 	skip-grant-tables = 1
 
@@ -740,7 +752,7 @@ Collate 校对规则
 
 #### SQLSTATE[HY000] [1129] is blocked because of many connection errors
 	mysqladmin -uroot -p flush-hosts
-	
+
 #### Plugin '*81F5E21E35407D884A6CD4A731AEBFB6AF209E1B' is not loaded
 
 	# 配置并重启 MySQL
@@ -756,10 +768,10 @@ Collate 校对规则
 	
 	# 移除配置后重启 MySQL
 	#skip-grant-tables = 1
-	
+
 #### ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement.
 	SET authentication_string = password('my_password') WHERE user = 'root';	
-	
+
 #### ERROR 1819 (HY000): Your password does not satisfy the current policy requirements
 	SET password = password('!XXXXX);
 

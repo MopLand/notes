@@ -4,6 +4,9 @@
 
 ## 控制器
 
+	Response::callback\( (.+) \);
+	return $1;
+
 	Response::callback\( (.+),(.+)\);
 	return $1;
 
