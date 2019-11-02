@@ -568,7 +568,6 @@
 ### Auth_Basic 认证
 
 	# htpasswd 文件生成
-	
 	printf "newbie:$(openssl passwd -crypt 123456)\n" >> /disk/certs/htpasswd
 	
 	printf "username:$(openssl passwd -crypt 123456):comment\n" >> /disk/certs/htpasswd
@@ -599,7 +598,7 @@
 	    
 	    # 取子域名作为参数
 	    if ($host ~* (\d+)\.example\.com) {
-			return 301 http://rj.example.com/trade/$1;
+			return 301 http://client.example.com/trade/$1;
 		}
 	}
 
@@ -700,8 +699,8 @@
 	
 	server {
 		listen 80;
-		server_name proxy.baohe.com;
-		set $doc /disk/www/baohe.com;
+		server_name proxy.example.com;
+		set $doc /disk/www/example.com;
 		root $doc;
 		
 		# 后端 PHP
@@ -714,6 +713,59 @@
 		location / {
 			root $doc/html;
 			try_files $uri $uri/ /index.html;
+		}
+
+	}
+	
+### 代理需要跨域的请求
+
+	server {
+		listen 80;
+		server_name www.example.com;
+		root /disk/www/example.com;
+		index index.htm index.html index.php;
+		
+		location ~ ^(.+\.php)(.*)$ {
+			include ../rules/phpcgi.conf;
+		}
+
+		location ~ \.php$ {
+			fastcgi_index index.php;
+			include fastcgi_params;
+		}
+		
+		# 前端视图
+		location / {
+			if (!-e $request_filename) {
+				rewrite ^/(.+).txt$ /fn/verify/$1;
+				rewrite ^/attach/(.+)!(.+).(gif|jpg|jpeg|png)$ /fn/resized?file=$1&size=$2&mime=$3;
+				rewrite ^/(.*\.(ico|gif|jpg|jpeg|png|swf|flv|css|js)$) 404;
+				rewrite ^/(.*) /index.php/$1 last;
+			}
+		}
+		
+		# API 服务
+		location ^~ /backend/ {
+		
+			valid_referers server_names;
+			
+			if ($invalid_referer) {
+				return 406 '"{ "status" : "-406", "result" : "Invalid request source" }"';
+			}
+			
+			if ($http_x_appid = "") {
+				return 406 '"{ "status" : "-407", "result" : "Invalid application information" }"';
+			}
+			
+			if ($http_x_agent = "") {
+				return 407 '"{ "status" : "-407", "result" : "Invalid agent information" }"';
+			}
+		
+			proxy_set_header Host proxy.example.com;
+			proxy_set_header X-Mode "proxy";
+			proxy_set_header X-Real-IP  $remote_addr;
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+			proxy_pass http://127.0.0.1:80/;
 		}
 
 	}

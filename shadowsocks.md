@@ -61,8 +61,19 @@
 	user=nobody
 	autostart=true
 	autorestart=true
+	
+### 守护进程
 
-### 常用命令
+	# 开机启动 supervisord
+	systemctl enable supervisord
+	
+	# 启动 supervisor 进程
+	systemctl enable supervisord
+
+	# 关闭supervisor进程
+	systemctl stop supervisord
+
+### 服务命令
 
 	supervisorctl status                # 查看状态
 	supervisorctl stop shadowsocks      # 停止 shadowsocks

@@ -1717,6 +1717,8 @@
 		 * @action product
 		 * @replay 请求重放，默认允许 true || 禁止重放 false
 		 * @active 活跃级别，一般服务 normal || 低频服务 low
+		 * @access 访问限制，默认允许 allowed || 验证 limited || 关闭 closed
+		 * @signed 签名验证, 默认严格 strict || 松散 loosed
 		 * @method GET
 		 * @param integer size 每页数量
 		 * @param integer page 当前页码
