@@ -177,6 +177,11 @@
 #### 使用全文索引
 	SELECT * FROM articles WHERE MATCH(content_column) AGAINST ('music');
 
+#### 严格比较两个 NULL 值是否相等
+	SELECT * FROM `tbl_a` A LEFT JOIN `tbl_b` B ON A.ID = B.ID WHERE A.column <=> B.column;
+	
+	SELECT * FROM `tbl_a` A LEFT JOIN `tbl_b` B ON A.ID = B.ID WHERE NOT( A.column <=> B.column );
+
 #### 中文字符排序
 	SELECT * FROM `tblname` ORDER BY CONVERT(vender_abbrev USING gbk) ASC;
 
@@ -342,6 +347,9 @@
 	UPDATE `pre_member_upgrade` SET `datetime` = FROM_UNIXTIME(`dateline`, '%Y%m%d');
 	
 	UPDATE `pre_order_deduct` SET settle_date = DATE_FORMAT( settle_time, '%Y%m%d') WHERE `settle_time` IS NOT NULL AND `settle_date` = '0';
+	
+### 借助临时字段交换两列的值
+	UPDATE `pre_widget_data` SET tmp = extend, extend = link, link = tmp, tmp = NULL WHERE extend like '%:%';
 
 ----------
 
