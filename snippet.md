@@ -97,6 +97,13 @@
 
 ## CSS
 
+### 带阴影的浮动条
+	width: 100%;
+    height: auto;
+    background-color: #fff;
+    position: fixed;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+
 ### 文字下方颜色条
 
 	margin: 1.5rem 0;

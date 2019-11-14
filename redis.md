@@ -83,7 +83,7 @@
     save 300 10
     save 60 10000
     分别表示900秒（15分钟）内有1个更改，300秒（5分钟）内有10个更改以及60秒内有10000个更改。
- 
+
 10. 指定存储至本地数据库时是否压缩数据，默认为yes，Redis采用LZF压缩，如果为了节省CPU时间，可以关闭该选项，但会导致数据库文件变的巨大
     rdbcompression yes
 11. 指定本地数据库文件名，默认值为dump.rdb
@@ -109,7 +109,7 @@
     always：表示每次更新操作后手动调用fsync()将数据写到磁盘（慢，安全） 
     everysec：表示每秒同步一次（折衷，默认值）
     appendfsync everysec
- 
+
 21. 指定是否启用虚拟内存机制，默认值为no，简单的介绍一下，VM机制将数据分页存放，由Redis将访问量较少的页即冷数据swap到磁盘上，访问多的页面由磁盘自动换出到内存中（在后面的文章我会仔细分析Redis的VM机制）
      vm-enabled no
 22. 虚拟内存文件路径，默认值为/tmp/redis.swap，不可多个Redis实例共享
@@ -131,3 +131,7 @@
     activerehashing yes
 30. 指定包含其它的配置文件，可以在同一主机上多个Redis实例之间使用同一份配置文件，而同时各个实例又拥有自己的特定配置文件
     include /path/to/local.conf
+	
+## 参考链接
+
+- [Redis 命令参考](http://redisdoc.com/)

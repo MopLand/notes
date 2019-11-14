@@ -42,8 +42,13 @@
 	systemctl start shadowsocks
 
 ### 查看 shadowsocks 服务状态
-
 	systemctl status shadowsocks -l
+	
+### 查看所有已启动的服务
+	systemctl list-units --type=service
+	
+### 查看每个服务的启动耗时
+	systemd-analyze blame
 
 ## 使用 supervisor 管理
 
@@ -77,6 +82,7 @@
 
 	supervisorctl status                # 查看状态
 	supervisorctl stop shadowsocks      # 停止 shadowsocks
+	supervisorctl remove shadowsocks    # 删除 shadowsocks
 	supervisorctl start shadowsocks     # 打开 
 	supervisorctl restart shadowsocks   # 重启
 
