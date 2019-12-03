@@ -50,10 +50,6 @@
 
 [shadowsocks-mac](https://github.com/shadowsocks/ShadowsocksX-NG/releases)
 
-### VPN 科学上网
-
-[Lantern - 全局 VPN 科学上网工具，支持 PC、MAC 和 Android](https://www.getlantern.org/)
-
 ## 常用服务
 
 ### 在线正则测试
