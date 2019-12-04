@@ -42,13 +42,9 @@
 
 [Fiddler 网络监控](https://www.telerik.com/download/fiddler)
 
-### ShadowSocks 客户端（Windows）
+### Mac 抓包工具 Charles
 
-[shadowsocks-windows](https://github.com/shadowsocks/shadowsocks-windows/releases)
-
-### ShadowSocks 客户端（Mac）
-
-[shadowsocks-mac](https://github.com/shadowsocks/ShadowsocksX-NG/releases)
+[Charles](https://www.charlesproxy.com/)
 
 ## 常用服务
 
