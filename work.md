@@ -237,7 +237,7 @@
 
 	pm.status_path = /phpfpm_status
 
-## GIT 常用命令
+## Git 常用命令
 
 ### 重置单个文件状态
 
@@ -247,3 +247,8 @@
 
 	git reset --hard
 	
+## 运维经验
+
+### 使用 cname 同步多个 IP 指向（在多负载均衡、多域名时尤为有用）
+
+![](notes/image/cname_address_sync.png)
