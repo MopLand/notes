@@ -36,16 +36,6 @@
 
 [Xshell是一个功能强大的终端模拟器，支持SSH、SFTP、telnet，rlogin和串行](https://pc.qq.com/detail/4/detail_2644.html)
 
-## 网络工具
-
-### Fiddler 网络请求抓包
-
-[Fiddler 网络监控](https://www.telerik.com/download/fiddler)
-
-### Mac 抓包工具 Charles
-
-[Charles](https://www.charlesproxy.com/)
-
 ## 常用服务
 
 ### 在线正则测试

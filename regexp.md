@@ -5,6 +5,9 @@
 ### 银行卡号格式化显示
 	<code><?php echo preg_replace('/(\d{4})(?=\d)/','$1</code><code>', $bankcard);?></code>
 	
+### Ymd 格式日期填充 -
+	<?php echo preg_replace('/(\d{4})(\d{2})(\d{2})/', '$1-$2-$3', $start_date);?>
+	
 ### 使用 \n 或 || 分解字符串
 	preg_split('/(\n|,|(\|\|))/', $text );
 	
