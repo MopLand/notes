@@ -7,6 +7,10 @@
 
 ### 使用 Brew
 	brew install wget
+
+### 安装常用工具
+	xcode-select --install
+	brew install autoconf automake libtool
 	
 ## 更新 Git
 	
@@ -21,6 +25,20 @@
 	
 ### 查看 Git 版本
 	git --version
+
+## XAMPP - PHP集成开发环境
+
+## 安装 XAMPP
+	https://www.apachefriends.org/download.html
+
+## 安装 PHP Redis 扩展
+	cd /Applications/XAMPP/bin
+	sudo ./pecl install redis
+	php.ini: extension="redis.so"
+
+## 安装 Redis 服务
+	brew install redis
+	brew services start redis
 	
 ## Mac 调优
 
@@ -76,6 +94,7 @@
 
 ## 相关链接
 
+- [mac os 安装 redis](https://www.jianshu.com/p/3bdfda703552)
 - [mac下~/.bashrc不起作用](https://www.mobibrw.com/2017/6029)
 - [Apple 开发者中心下载工具](https://developer.apple.com/download/more/)
 - [Mac 键盘快捷键](https://support.apple.com/zh-cn/HT201236)
@@ -84,6 +103,5 @@
 - [让Mac OS X系统启动时执行脚本的方法](https://www.jb51.net/os/MAC/387487.html)
 - [Mac中的定时任务利器：launchctl](https://www.jianshu.com/p/4addd9b455f2)
 - [mac设置shell脚本开机自启动](https://www.cnblogs.com/dongfangzan/p/5976791.html)
-
-
-
+- [简单的Mac设置ChromeF5刷新F12打开控制台](https://www.jianshu.com/p/1d7545bb585e)
+- [XAMPP - Macos 上的 PHP 集成开发环境](https://www.apachefriends.org/)

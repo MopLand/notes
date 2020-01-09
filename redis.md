@@ -134,4 +134,5 @@
 	
 ## 参考链接
 
+- [Redis](https://redis.io/)
 - [Redis 命令参考](http://redisdoc.com/)
