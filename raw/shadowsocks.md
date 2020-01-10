@@ -3,7 +3,8 @@
 ## Shadowsocks 安装
 
 ### 安装 pip
-	yum install python-pip
+	yum install epel-release -y
+	yum install python-pip -y
 
 ### 安装 shadowsocks
 	pip install --upgrade pip

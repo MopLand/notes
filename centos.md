@@ -318,8 +318,29 @@
 
 		make install
 
+## AWS EC2 配置 root 登录
 
+一、在控制台的左边面板选择“实例”，再点击“启动实例”，在“选择一个Amazon系统镜像”步骤中，点击“AWS Marketplace”，再搜索centos，选择需要的版本，接下来一直continue即可，其中有一个步骤会生成一个密钥文件，这个很重要，保存好，直到完全启动一个实例。
+二、在控制台左边面板中选择“弹性IP”，分配一个新地址，再在ip地址上右键“关联地址”，此时即可通过该IP访问实例。
+
+### 先使用默认账户和密钥登录
+	ssh centos@ip
+	
+### 设置root密码
+	passwd root
+	
+### 切换到 root
+	sudo root
+	
+### 配置 ssh
+	vi /etc/ssh/sshd_config
+	PermitRootLogin yes
+	PasswordAuthentication yes
+	
+### 重启 ssh
+	service sshd restart
 
 ## 参考链接
 
 - [systemd.service 中文手册](http://www.jinbuguo.com/systemd/systemd.service.html)
+- [AWS EC2启动Centos实例以及设置root密码登录](https://blog.csdn.net/hhhzua/article/details/79452875)

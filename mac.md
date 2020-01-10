@@ -28,15 +28,15 @@
 
 ## XAMPP - PHP集成开发环境
 
-## 安装 XAMPP
+### 安装 XAMPP
 	https://www.apachefriends.org/download.html
 
-## 安装 PHP Redis 扩展
+### 安装 PHP Redis 扩展
 	cd /Applications/XAMPP/bin
 	sudo ./pecl install redis
 	php.ini: extension="redis.so"
 
-## 安装 Redis 服务
+### 安装 Redis 服务
 	brew install redis
 	brew services start redis
 	
