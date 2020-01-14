@@ -219,6 +219,10 @@
 
 #### 当前时间戳
 	SELECT UNIX_TIMESTAMP();
+	
+#### 某月总天数
+	SELECT DAY(LAST_DAY(CONCAT(months,'-01')));
+	SELECT DAY(LAST_DAY(DATE_FORMAT( create_time, '%Y%m01')));
 
 #### 格式化时间
 

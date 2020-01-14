@@ -40,8 +40,6 @@
 	
 ## vmrun 命令行
 
-### 常用命名
-
 	# 启动无图形界面虚拟机  
 	#（-T 是区分宿主机的类型，ws|server|server1|fusion|esx|vc|player，比较常用的是ws、esx和player）
 	vmrun -T ws start "/opt/VMware/win2k8r2.vmx" nogui
@@ -82,15 +80,25 @@
 	# 删除一个快照（snapshotName 快照名）
 	vmrun -T ws deleteSnapshot "/opt/VMware/win2k8r2.vmx" snapshotName
 	
+## Windows 批处理
+	
 ### 启动脚本.bat
 	@echo off
-		"D:/VMware/VMware Workstation/vmrun.exe" start "D:\VMware\Space\macOS 10.14\macOS 10.14.vmx"
+		"D:/VMware/VMware Workstation/vmrun.exe" start "D:\VMware\Space\macOS 10.14\macOS 10.14.vmx" nogui
 	@exit
 	
 ### 关机脚本.bat
 	@echo off
 		"D:/VMware/VMware Workstation/vmrun.exe" stop "D:\VMware\Space\macOS 10.14\macOS 10.14.vmx" hard
 	@exit
+	
+### 随机启动
+
+	# Windows 7
+	C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+	
+	# Windows 10
+	C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup
 	
 ## 相关链接
 
