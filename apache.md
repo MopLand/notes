@@ -119,6 +119,20 @@
 ### 404
 
 	# 通常为 DocumentRoot 配置有误
+	
+### MPM 优化
+	vi conf/extra/httpd-mpm.conf
+	
+	<IfModule mpm_prefork_module>
+		StartServers             10		#启动时进程数
+		MinSpareServers          10		#最小空闲进程数
+		MaxSpareServers         20		#最大空闲进程数
+		MaxRequestWorkers      500		#最大并发进程数
+		MaxConnectionsPerChild   0		#最大连接数限制
+	</IfModule>
+	
+### 本地请求很慢
+	将数据库 localhost 修改为 127.0.0.1 试试
 
 ## AB 测试
 
@@ -138,5 +152,8 @@
 	p.txt 是和ab.exe在一个目录 
 	p.txt 中可以写参数，如  p=wdp&fq=78
 
-### AB 测试相关文章
-	http://www.cnblogs.com/zengxiangzhan/archive/2012/12/07/2807141.html
+## 参考资料
+
+- [apache2三种模式及参数调优](https://blog.csdn.net/dreamer2020/article/details/52849773)
+- [apache-ab并发负载压力测试](http://www.cnblogs.com/zengxiangzhan/archive/2012/12/07/2807141.html)
+- [windows下装apache、iis访问速度慢的问题](https://www.jianshu.com/p/881c4002b594)
