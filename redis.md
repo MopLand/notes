@@ -21,9 +21,17 @@
 
 [https://windows.php.net/downloads/pecl/releases/igbinary/](https://windows.php.net/downloads/pecl/releases/igbinary/)
 
-### 配置
+### PHP 配置
 
-- php.ini
+> 拷贝以下文件至 php/ext
+
+- php_redis.dll
+- php_redis.pdb
+- php_igbinary.dll
+- php_igbinary.pdb
+
+> php.ini 中增加以下配置
+
 - extension=php_igbinary.dll
 - extension=php_redis.dll
 
