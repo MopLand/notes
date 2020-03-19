@@ -19,12 +19,6 @@
 			model						# 模型
 			views						# 视图
 
-	attach								# 上传附件
-		image							# 图片
-		flash							# Flash
-		media							# 多媒体
-		mixed							# 其它文件
-
 	config								# 配置文件
 		attach.php						# 附件上传
 		config.php						# 常规配置
@@ -37,36 +31,9 @@
 		licence.php						# 授权文件
 		...								# 其它配置
 
-	cached								# 缓存目录
-		compile							# 编译缓存
-		dataset							# 数据缓存
-		memorys							# 临时缓存
-		modules							# 模块配置
-		backlog							# 运行日志
 
 	library								# 公共类库
 		...								# 各种类库
-
-	public								# 公共资源
-		js								# JS 类库
-		vue								# Vue 类库
-		jquery							# jQuery 类库
-		fonts							# 字体资源
-		charts							# 报表组件
-		errors							# 错误视图
-		editor							# 编辑器资源、脚本
-		awesome							# 字符图标
-		location						# 位置数据
-		lightbox						# LightBox 图片展示插件
-		template						# 公共模板，包含设置和邮件模板
-		bootstarp						# Bootstarp CSS 框架
-
-	static								# 项目资源
-		js								# JS 类库
-		admin							# 后台资源
-		style							# CSS 样式
-		sprite							# CSS 图片
-		images							# 图片资源
 
 	views								# master 视图
 		index							# indexController 视图目录
@@ -79,17 +46,53 @@
 		optimize.php					# Composer 优化脚本
 		initialize.php					# 项目配置初始化脚本
 		composer						# Composer 核心文件
+		
+	run									# WEB 部署目录
+		index.php						# 入口文件
+		crossdomain.xml					# Flash 跨域配置
+		robots.txt						# 搜索引擎规则
+		.htacess						# Apache 规则
 
-	index.php							# 入口文件
-	crossdomain.xml						# Flash 跨域配置
+		attach							# 上传文件目录
+			image						# 图片
+			flash						# Flash
+			media						# 多媒体
+			mixed						# 其它文件
+		
+		cached							# 缓存目录
+			compile						# 编译缓存
+			dataset						# 数据缓存
+			memorys						# 临时缓存
+			modules						# 模块配置
+			backlog						# 运行日志
+		
+		public							# 公共资源
+			js							# JS 类库
+			vue							# Vue 类库
+			jquery						# jQuery 类库
+			fonts						# 字体资源
+			charts						# 报表组件
+			errors						# 错误视图
+			editor						# 编辑器资源、脚本
+			awesome						# 字符图标
+			location					# 位置数据
+			lightbox					# LightBox 图片展示插件
+			template					# 公共模板，包含设置和邮件模板
+			bootstarp					# Bootstarp CSS 框架
+			
+		static							# 项目资源
+			js							# JS 类库
+			admin						# 后台资源
+			style						# CSS 样式
+			sprite						# CSS 图片
+			images						# 图片资源
+		
 	composer.json						# Composer 配置
-	robots.txt							# 搜索引擎规则
 	README.md							# ReadMe 文件
-	.htacess							# Apache 规则
 	.gitignore							# Git 忽略规则
 
 ### 特殊目录
-	_doc				项目数据字典、文档和其他
+	.doc				项目数据字典、文档和其他
 	cron				任务脚本相关（通常是 Nodejs）
 
 ### 目录权限
@@ -99,10 +102,10 @@
 	./*
 
 	# 可读可写 0755
-	# chmod -R 0755 ./attach/ ./config/ ./cached/
-	./attach/
+	# chmod -R 0755 ./config/ ./run/attach/ ./run/cached/
 	./config/
-	./cached/
+	./run/attach/
+	./run/cached/
 
 ### 书写规范
 
@@ -1618,6 +1621,7 @@
 		 * 导航菜单
 		 * @label  导航名称
 		 * @action 入口地址，通常与 Action 同名
+		 * @crumbs 关联地址，导航条 Action 名称
 		 * @navbar 导航状态，默认显示 visible || 隐藏 hidden
 		 * @manual 文档状态，默认可见 visible || 隐藏 hidden
 		 * @access 访问限制，默认允许 allowed || 验证 limited || 关闭 closed
