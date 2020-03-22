@@ -33,6 +33,11 @@
 
 
 	library								# 公共类库
+		helper							# 命令行工具
+			init.php					# 项目配置初始化脚本
+			git-build.php				# Git 提交自动版本号
+			git-merge.php				# Git 自动刷新模块缓存
+			optimize.php				# Composer 优化脚本
 		...								# 各种类库
 
 	views								# master 视图
@@ -41,10 +46,6 @@
 
 	vendor								# 依赖类库
 		autoload.php					# 类库自动加载脚本
-		gitbuild.php					# Git 提交自动版本号
-		gitmerge.php					# Git 自动刷新模块缓存
-		optimize.php					# Composer 优化脚本
-		initialize.php					# 项目配置初始化脚本
 		composer						# Composer 核心文件
 		
 	run									# WEB 部署目录
@@ -87,6 +88,7 @@
 			sprite						# CSS 图片
 			images						# 图片资源
 		
+	dora								# 命令行工具
 	composer.json						# Composer 配置
 	README.md							# ReadMe 文件
 	.gitignore							# Git 忽略规则
@@ -221,7 +223,7 @@
 
 	#!/bin/sh
 	# 自动更新版本号
-	php vendor/gitbuild.php
+	php dora git-build
 
 	2. 将在每次提交时，自动更新 config/project.php
 
@@ -230,7 +232,7 @@
 ### 项目初始化
 
 	# 命令行执行
-	php vendor/initialize.php
+	php dora init
 
 	# 主要工作项
 	将自动完成 config/config.php 中的各种秘钥生成，创建 cached 子目录
