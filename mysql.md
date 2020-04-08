@@ -100,6 +100,9 @@
 
 #### 区分大小写查询
 	SELECT * from `tblname` WHERE BINARY columnA = 'abc';
+	
+#### 截取部分字符串，查询超长文本会显著提高效率
+	SELECT event_id, taking_time, memory_usage, SUBSTR(result, 1, 200) as result FROM `pre_cron_event`;
 
 #### 分组查询并去重复
 	SELECT admin_id, SUM( money ) FROM pre_tasks_list GROUP BY admin_id;
@@ -176,6 +179,10 @@
 
 #### 指定使用索引
 	SELECT id FROM data USE INDEX(type) WHERE type = 12345 AND level > 3 ORDER BY id;
+	
+	SELECT * FROM `pre_order_list` USE INDEX(PRIMARY, create_date,settle_date,member_id,tk_status) WHERE `create_date` BETWEEN 20200301 AND 20200331  ORDER BY order_id DESC LIMIT 0,20;
+	
+	SELECT SUM(money) AS money, COUNT(*) AS amount FROM `pre_order_deduct` USE INDEX(member_id,create_date) WHERE `member_id` = 355052 AND `create_date` BETWEEN 20200301 AND 20200331 AND `freeze` = 0;
 
 #### 使用全文索引
 	SELECT * FROM articles WHERE MATCH(content_column) AGAINST ('music');
