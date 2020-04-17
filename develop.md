@@ -1638,9 +1638,9 @@
 		 * API 接口
 		 * @label  导航名称
 		 * @action 入口地址，通常与 Action 同名
-		 * @param  定义参数，type name summary {required=1}
 		 * @method  请求方式，GET / POST / GET&POST
 		 * @access 访问限制，默认允许 allowed || 验证 limited || 关闭 closed
+		 * @param  定义参数，type name summary {required=1}
 		 * @linkup 相关链接
 		 * @example 代码示例，必需是最后一个属性
 		 */
@@ -1687,15 +1687,14 @@
 
 	}
 
-
 ### 通过控制器中的注释生成 API 校验
 
 	/**
 	 * 文件描述
 	 * @name   页面名称
-	 * @access 访问限制，默认允许 allowed || 关闭 closed
 	 * @cross  是否允许跨域访问，true || false
 	 * @cache  是否缓存返回数据，0 || second
+	 * @access 访问限制，默认允许 allowed || 关闭 closed
 	 * @verify 需校验的请求信息，可选 appid, token, client, format
 	 * @require 检查客户端版本，例如 JellyBox/1.2
 	 */
@@ -1714,6 +1713,11 @@
 
 			//回调方法
 			$this->callback = $this->ajax;
+
+			//读取缓存
+			if( $data = $this->caching( Request::get() ) ){
+				$this->respond( $data );
+			}
 			
 		}
 		
@@ -1752,6 +1756,16 @@
 			//获取参数值或默认值
 			$page = $this->arg('page', 1);
 		
+		}
+	
+		public function __destruct() {
+
+			//写入缓存
+			if( isset( $this->dataset ) ){
+				$this->caching( Request::get(), $this->dataset );
+			}
+
+			parent::__destruct();
 		}
 
 	}
