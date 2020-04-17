@@ -1638,7 +1638,7 @@
 		 * API 接口
 		 * @label  导航名称
 		 * @action 入口地址，通常与 Action 同名
-		 * @param  定义参数，type name summary [required]
+		 * @param  定义参数，type name summary {required=1}
 		 * @method  请求方式，GET / POST / GET&POST
 		 * @access 访问限制，默认允许 allowed || 验证 limited || 关闭 closed
 		 * @linkup 相关链接
@@ -1718,9 +1718,10 @@
 		}
 		
 		/**
-		 * @label 产品搜索
-		 * @cache 缓存结果，0 || second
+		 * @label  产品搜索
 		 * @action product
+		 * @cache  缓存结果，0 || second
+		 * @cross  是否允许跨域访问，true || false
 		 * @replay 请求重放，默认允许 true || 禁止重放 false
 		 * @active 活跃级别，一般服务 normal || 低频服务 low
 		 * @access 访问限制，默认允许 allowed || 验证 limited || 关闭 closed
@@ -1729,9 +1730,12 @@
 		 * @param integer size 每页数量
 		 * @param integer page 当前页码
 		 * @param number money 金额限定
-		 * @param mobile phone 手机号码
+		 * @param mobile phone 手机号码 {required=1}
+		 * @param string field 搜索类型 {optional=trade_id,item_id}
+		 * @param string start 开始日期 {regexp=/^([\d\-]+)$/}
+		 * @param string final 结束日期 {regexp=/^([\d\-]+)$/}
 		 * @param json object 数据对象
-		 * @param string keyword 搜索关键字 required
+		 * @param string keyword 关键字 {required=1, filter=\Library\StrExt::removeExtra}
 		 * @notice 描述说明信息
 		 * @access limited
 		 * @example
@@ -1744,6 +1748,9 @@
 		
 			//获取通过验证的参数
 			$text = $this->arg('keyword');
+		
+			//获取参数值或默认值
+			$page = $this->arg('page', 1);
 		
 		}
 
