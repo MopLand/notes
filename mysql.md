@@ -755,6 +755,14 @@ Collate 校对规则
 
 ## 常见错误
 
+#### 使用 source 导入数据报错 ERROR:Unknown command '\U'. ERROR:Unknown command '\A'. ERROR:Unknown command '\D'.
+
+	# 指定默认编码
+	mysql -uroot -p --default-character-set=utf8
+	
+	# 指定编码和库
+	mysql -uroot -p --default-character-set=utf8 dbname < test_service.sql
+
 #### MYSQL REPLACE INTO 和 INSERT INTO 的区别
 	1. 表必须有主键或者是唯一索引,否则没有什么不同；
 	2. 如果有主键或者是唯一索引，则REPLACE发现重复的先删除再插入，如果记录有多个字段，在插入的时候如果有的字段没有赋值，那么新插入的记录这些字段为空，且返回的值为删除的条数和插入的条数之和；而insert 发现重复的则报错。
