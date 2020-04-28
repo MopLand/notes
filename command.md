@@ -346,6 +346,9 @@
 
 ### 更改密码
 	passwd staff
+	
+### 查看所有用户的列表
+	cat /etc/passwd
 
 ## 用户权限
 
@@ -371,6 +374,12 @@
 
 ### 删除组
 	groupdel test2
+	
+### 查看当前登录用户的组内成员
+	groups
+	
+### 查看用户组
+	cat /etc/group
 
 ## 压缩文件
 
@@ -478,3 +487,32 @@
 	
 	# 关闭选项
 	shopt -u globstar
+	
+## 修改 nginx 用户和组ID
+
+	# 查看 nginx 用户详细信息
+	# 输出用户名、密码、用户 ID、群组 ID、用户 ID 信息、用户Home目录和 Shell
+	# nginx:x:995:993:nginx user:/var/cache/nginx:/sbin/nologin
+	cat /etc/passwd|grep nginx
+	
+	# 停止 nginx 服务
+	systemctl stop nginx
+	
+	# 修改 nginx 新用户和组ID
+	usermod -u 993 nginx; groupmod -g 991 nginx;
+	
+	# 修改文件权限
+	find / -user 995 -exec chown -h nginx {} \;
+	find / -group 993 -exec chgrp -h nginx {} \;
+	
+	# 启动 nginx 服务
+	systemctl start nginx
+	
+
+## 参考链接
+
+- [Linux系统修改已有用户(组)的uid和gid](http://blog.itpub.net/29734436/viewspace-2218707/)
+- [修改用户ID和用户组ID](https://blog.csdn.net/kongxx/article/details/84674068)
+- [Linux中修改用户UID和组GID的方法](https://blog.csdn.net/train006l/article/details/79007483)
+
+	

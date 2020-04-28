@@ -17,27 +17,27 @@
 
 ----------
 
-## 核心进程统计
+## 分析工具
 
-### 安装 pip
-	yum install python-pip
+	# 资源监控工具 glances
+	yum install glances
 
-### 安装 ngxtop（Nginx 分析）
-	pip install ngxtop
-
-### 安装 iftop（IP 流量分析）
+	# IP 流量分析 iftop
 	yum install iftop
 
-### 安装 GoAccess（Nginx 日志分析）
-	yum install goaccess
+	# Nginx 分析工具 ngxtop
+	yum install python-pip
+	pip install ngxtop
 
+	# Nginx 日志分析 GoAccess
+	yum install goaccess
 	goaccess -f /var/log/nginx/access.log
 
-### 安装 iostat
+	# 磁盘活动统计 iostat
 	yum install sysstat
-
-### 使用 iostat
 	iostat -x
+
+## 进程统计
 
 ### CPU最高的进程的id
 	top -c
@@ -58,6 +58,15 @@
 	watch -d 'netstat -antlp | grep 80 | grep ESTABLISHED | wc -l'
 
 ## 进程分析
+
+### 查看当前php-fpm总进程数，RSS就是占用的内存情况
+	ps -ylC php-fpm --sort:rss
+
+### 查看当前php-fpm进程的内存占用情况及启动时间
+	ps -e -o 'pid,comm,args,pcpu,rsz,vsz,stime,user,uid'|grep www|sort -nrk5
+
+### 查看当前php-fpm进程平均占用内存情况
+	ps --no-headers -o "rss,cmd" -C php-fpm | awk '{ sum+=$1 } END { printf ("%d%s\n", sum/NR/1024,"M") }'
 
 ### 通过进程名查看进程信息
 	ps -ef | grep memcached
@@ -86,8 +95,8 @@
 	yum install nload -y
 
 ### 使用
-	nload -h
 	# 左右键可以在多个网卡之间切换
+	nload -h
 
 ## wrk 压力测试
 
@@ -123,6 +132,9 @@
 	/etc/php-fpm.d/www.conf
 
 ### 参数说明
+
+	# 如何控制子进程?
+	# 动态适合小内存机器，灵活分配进程，省内存。静态适用于大内存机器，动态创建回收进程对服务器资源也是一种消耗
 	pm = dynamic | static
 	
 	# 静态方式下开启的 php-fpm 进程数量
@@ -136,8 +148,10 @@
 	
 	# 动态方式下的最大 php-fpm 进程数量
 	pm.max_spare_servers
-	
-	# 动态适合小内存机器，灵活分配进程，省内存。静态适用于大内存机器，动态创建回收进程对服务器资源也是一种消耗
+
+	# 设置每个子进程能处理的最大请求数，达到数量后自动重启该进程
+	# 对于可能存在内存泄漏的第三方模块来说是非常有用的. 如果设置为 '0′ 则一直接受请求. 等同于 PHP_FCGI_MAX_REQUESTS 环境变量. 默认值: 0
+	pm.max_requests
 	
 	# 如果 pm 设置为 static，那么其实只有 pm.max_children 这个参数生效。
 	# 系统会开启设置数量的 php-fpm 进程。
@@ -151,7 +165,7 @@
 	pm.start_servers = 32
 	pm.min_spare_servers = 32
 	pm.max_spare_servers = 1024
-	pm.max_requests = 102400
+	pm.max_requests = 10240
 	rlimit_files = 65535
 
 ### 大文件上传
@@ -263,3 +277,11 @@
 	max active process	从php-fpm启动到现在最多有几个进程处于活动状态
 	max children reached	当pm试图启动更多的children进程时，却达到了进程数的限制，达到一次记录一次，如果不为0，需要增加php-fpm pool进程的最大数
 	slow requests	当启用了php-fpm slow-log功能时，如果出现php-fpm慢请求这个计数器会增加，一般不当的Mysql查询会触发这个值
+
+
+## 相关链接
+
+- [基于php-fpm的配置详解](https://www.jb51.net/article/37749.htm)
+- [Linux的php-fpm优化心得-php-fpm进程占用内存大和不释放内存问题](https://wzfou.com/php-fpm/)
+- [Linux iostat 命令详解](https://www.cnblogs.com/ftl1012/p/iostat.html)
+- [资源监控工具 glances](https://www.jianshu.com/p/639581a96512)

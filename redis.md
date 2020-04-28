@@ -11,15 +11,27 @@
 ### 测试
 	redis-cli.exe -h 127.0.0.1 -p 6379
 
-### 扩展下载
+### Redis 扩展下载
 
 > 根据 phpinfo > Architecture & PHP Extension Build 下载对应版本
 
 [http://pecl.php.net/package/redis](http://pecl.php.net/package/redis)
 
-### 配置
+### igbinary 扩展下载
 
-- php.ini
+[https://windows.php.net/downloads/pecl/releases/igbinary/](https://windows.php.net/downloads/pecl/releases/igbinary/)
+
+### PHP 配置
+
+> 拷贝以下文件至 php/ext
+
+- php_redis.dll
+- php_redis.pdb
+- php_igbinary.dll
+- php_igbinary.pdb
+
+> php.ini 中增加以下配置
+
 - extension=php_igbinary.dll
 - extension=php_redis.dll
 

@@ -2,11 +2,14 @@
 
 ## 连接 MySQL
 
-#### 连接本机 MySQL
+#### 连接本机
 	mysql -u root -p
 
-#### 连接远程 MySQL
-	mysql -h110.110.110.110 -u root -p
+#### 连接远程
+	mysql -h 110.110.110.110 -u root -p
+	
+#### 指定字符集
+	mysql -u root -p --default-character-set=utf8mb4
 
 ## 常用命令
 
@@ -97,6 +100,9 @@
 
 #### 区分大小写查询
 	SELECT * from `tblname` WHERE BINARY columnA = 'abc';
+	
+#### 截取部分字符串，查询超长文本会显著提高效率
+	SELECT event_id, taking_time, memory_usage, SUBSTR(result, 1, 200) as result FROM `pre_cron_event`;
 
 #### 分组查询并去重复
 	SELECT admin_id, SUM( money ) FROM pre_tasks_list GROUP BY admin_id;
@@ -173,6 +179,10 @@
 
 #### 指定使用索引
 	SELECT id FROM data USE INDEX(type) WHERE type = 12345 AND level > 3 ORDER BY id;
+	
+	SELECT * FROM `pre_order_list` USE INDEX(PRIMARY, create_date,settle_date,member_id,tk_status) WHERE `create_date` BETWEEN 20200301 AND 20200331  ORDER BY order_id DESC LIMIT 0,20;
+	
+	SELECT SUM(money) AS money, COUNT(*) AS amount FROM `pre_order_deduct` USE INDEX(member_id,create_date) WHERE `member_id` = 355052 AND `create_date` BETWEEN 20200301 AND 20200331 AND `freeze` = 0;
 
 #### 使用全文索引
 	SELECT * FROM articles WHERE MATCH(content_column) AGAINST ('music');
@@ -823,7 +833,6 @@ Collate 校对规则
 - [DCDB开发指南](https://cloud.tencent.com/document/product/557/7714)
 - [mysql5.7系列修改root默认密码](https://www.cnblogs.com/activiti/p/7810166.html)
 - [MySQL 5.7 忘记root密码，使用--skip-grant-tables重置root密码的通用方法](https://majing.io/posts/10000005451184)
-
-
+- [解决mysql source 命令导入数据库 乱码](https://blog.csdn.net/xuz0917/article/details/51746207)
 
 

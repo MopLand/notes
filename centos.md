@@ -94,6 +94,8 @@
 	chown -R nginx /disk/www/assets.baohe.com/
 
 	# 自动挂载
+	# 多服务器挂载，需要考虑读、写用户一致的属主属组（可参考 command.md 修改 nginx 用户和组ID）
+	# 配置文件 /etc/php-fpm.d/www.conf 中的 user 和 group 参数建议与 nginx 保持一致
 	echo '172.16.16.16:/ /disk/www/assets.baohe.com nfs  vers=4 0 0' >> /etc/fstab
 	
 ### 文档说明

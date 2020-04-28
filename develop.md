@@ -19,12 +19,6 @@
 			model						# 模型
 			views						# 视图
 
-	attach								# 上传附件
-		image							# 图片
-		flash							# Flash
-		media							# 多媒体
-		mixed							# 其它文件
-
 	config								# 配置文件
 		attach.php						# 附件上传
 		config.php						# 常规配置
@@ -37,36 +31,14 @@
 		licence.php						# 授权文件
 		...								# 其它配置
 
-	cached								# 缓存目录
-		compile							# 编译缓存
-		dataset							# 数据缓存
-		memorys							# 临时缓存
-		modules							# 模块配置
-		backlog							# 运行日志
 
 	library								# 公共类库
+		helper							# 命令行工具
+			init.php					# 项目配置初始化脚本
+			git-build.php				# Git 提交自动版本号
+			git-merge.php				# Git 自动刷新模块缓存
+			optimize.php				# Composer 优化脚本
 		...								# 各种类库
-
-	public								# 公共资源
-		js								# JS 类库
-		vue								# Vue 类库
-		jquery							# jQuery 类库
-		fonts							# 字体资源
-		charts							# 报表组件
-		errors							# 错误视图
-		editor							# 编辑器资源、脚本
-		awesome							# 字符图标
-		location						# 位置数据
-		lightbox						# LightBox 图片展示插件
-		template						# 公共模板，包含设置和邮件模板
-		bootstarp						# Bootstarp CSS 框架
-
-	static								# 项目资源
-		js								# JS 类库
-		admin							# 后台资源
-		style							# CSS 样式
-		sprite							# CSS 图片
-		images							# 图片资源
 
 	views								# master 视图
 		index							# indexController 视图目录
@@ -74,22 +46,55 @@
 
 	vendor								# 依赖类库
 		autoload.php					# 类库自动加载脚本
-		gitbuild.php					# Git 提交自动版本号
-		gitmerge.php					# Git 自动刷新模块缓存
-		optimize.php					# Composer 优化脚本
-		initialize.php					# 项目配置初始化脚本
 		composer						# Composer 核心文件
+		
+	run									# WEB 部署目录
+		index.php						# 入口文件
+		crossdomain.xml					# Flash 跨域配置
+		robots.txt						# 搜索引擎规则
+		.htacess						# Apache 规则
 
-	index.php							# 入口文件
-	crossdomain.xml						# Flash 跨域配置
+		attach							# 上传文件目录
+			image						# 图片
+			flash						# Flash
+			media						# 多媒体
+			mixed						# 其它文件
+		
+		cached							# 缓存目录
+			compile						# 编译缓存
+			dataset						# 数据缓存
+			memorys						# 临时缓存
+			modules						# 模块配置
+			backlog						# 运行日志
+		
+		public							# 公共资源
+			js							# JS 类库
+			vue							# Vue 类库
+			jquery						# jQuery 类库
+			fonts						# 字体资源
+			charts						# 报表组件
+			errors						# 错误视图
+			editor						# 编辑器资源、脚本
+			awesome						# 字符图标
+			location					# 位置数据
+			lightbox					# LightBox 图片展示插件
+			template					# 公共模板，包含设置和邮件模板
+			bootstarp					# Bootstarp CSS 框架
+			
+		static							# 项目资源
+			js							# JS 类库
+			admin						# 后台资源
+			style						# CSS 样式
+			sprite						# CSS 图片
+			images						# 图片资源
+		
+	dora								# 命令行工具
 	composer.json						# Composer 配置
-	robots.txt							# 搜索引擎规则
 	README.md							# ReadMe 文件
-	.htacess							# Apache 规则
 	.gitignore							# Git 忽略规则
 
 ### 特殊目录
-	_doc				项目数据字典、文档和其他
+	.doc				项目数据字典、文档和其他
 	cron				任务脚本相关（通常是 Nodejs）
 
 ### 目录权限
@@ -99,10 +104,10 @@
 	./*
 
 	# 可读可写 0755
-	# chmod -R 0755 ./attach/ ./config/ ./cached/
-	./attach/
+	# chmod -R 0755 ./config/ ./run/attach/ ./run/cached/
 	./config/
-	./cached/
+	./run/attach/
+	./run/cached/
 
 ### 书写规范
 
@@ -218,7 +223,7 @@
 
 	#!/bin/sh
 	# 自动更新版本号
-	php vendor/gitbuild.php
+	php dora git-build
 
 	2. 将在每次提交时，自动更新 config/project.php
 
@@ -227,7 +232,7 @@
 ### 项目初始化
 
 	# 命令行执行
-	php vendor/initialize.php
+	php dora init
 
 	# 主要工作项
 	将自动完成 config/config.php 中的各种秘钥生成，创建 cached 子目录
@@ -1618,6 +1623,7 @@
 		 * 导航菜单
 		 * @label  导航名称
 		 * @action 入口地址，通常与 Action 同名
+		 * @crumbs 关联地址，导航条 Action 名称
 		 * @navbar 导航状态，默认显示 visible || 隐藏 hidden
 		 * @manual 文档状态，默认可见 visible || 隐藏 hidden
 		 * @access 访问限制，默认允许 allowed || 验证 limited || 关闭 closed
@@ -1632,9 +1638,9 @@
 		 * API 接口
 		 * @label  导航名称
 		 * @action 入口地址，通常与 Action 同名
-		 * @param  定义参数，type name summary [required]
 		 * @method  请求方式，GET / POST / GET&POST
 		 * @access 访问限制，默认允许 allowed || 验证 limited || 关闭 closed
+		 * @param  定义参数，type name summary {required=1}
 		 * @linkup 相关链接
 		 * @example 代码示例，必需是最后一个属性
 		 */
@@ -1681,15 +1687,14 @@
 
 	}
 
-
 ### 通过控制器中的注释生成 API 校验
 
 	/**
 	 * 文件描述
 	 * @name   页面名称
-	 * @access 访问限制，默认允许 allowed || 关闭 closed
 	 * @cross  是否允许跨域访问，true || false
 	 * @cache  是否缓存返回数据，0 || second
+	 * @access 访问限制，默认允许 allowed || 关闭 closed
 	 * @verify 需校验的请求信息，可选 appid, token, client, format
 	 * @require 检查客户端版本，例如 JellyBox/1.2
 	 */
@@ -1708,13 +1713,19 @@
 
 			//回调方法
 			$this->callback = $this->ajax;
+
+			//读取缓存
+			if( $data = $this->caching( Request::get() ) ){
+				$this->respond( $data );
+			}
 			
 		}
 		
 		/**
-		 * @label 产品搜索
-		 * @cache 缓存结果，0 || second
+		 * @label  产品搜索
 		 * @action product
+		 * @cache  缓存结果，0 || second
+		 * @cross  是否允许跨域访问，true || false
 		 * @replay 请求重放，默认允许 true || 禁止重放 false
 		 * @active 活跃级别，一般服务 normal || 低频服务 low
 		 * @access 访问限制，默认允许 allowed || 验证 limited || 关闭 closed
@@ -1723,9 +1734,12 @@
 		 * @param integer size 每页数量
 		 * @param integer page 当前页码
 		 * @param number money 金额限定
-		 * @param mobile phone 手机号码
+		 * @param mobile phone 手机号码 {required=1}
+		 * @param string field 搜索类型 {optional=trade_id,item_id}
+		 * @param string start 开始日期 {regexp=/^([\d\-]+)$/}
+		 * @param string final 结束日期 {regexp=/^([\d\-]+)$/}
 		 * @param json object 数据对象
-		 * @param string keyword 搜索关键字 required
+		 * @param string keyword 关键字 {required=1, filter=\Library\StrExt::removeExtra}
 		 * @notice 描述说明信息
 		 * @access limited
 		 * @example
@@ -1739,6 +1753,19 @@
 			//获取通过验证的参数
 			$text = $this->arg('keyword');
 		
+			//获取参数值或默认值
+			$page = $this->arg('page', 1);
+		
+		}
+	
+		public function __destruct() {
+
+			//写入缓存
+			if( isset( $this->dataset ) ){
+				$this->caching( Request::get(), $this->dataset );
+			}
+
+			parent::__destruct();
 		}
 
 	}
