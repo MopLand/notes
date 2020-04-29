@@ -619,6 +619,19 @@ Collate 校对规则
 
 ## 性能优化
 
+### mysql 数据按条件导出
+
+	# 仅导出部分数据
+	mysqldump -hlocalhost -uuser -p --skip-triggers --no-create-info dbname tbname -w "id < 1000"  > /path/to/filename.sql
+
+	# 仅导出结构
+	mysqldump -uuser -ppass dbname -d --skip-add-drop-table --skip-comments --add-drop-database > /path/to/dbname.sql
+	mysqldump -uuser -ppass dbname -d --skip-add-drop-table --skip-comments > /path/to/dbname.sql
+	
+	# 参数说明
+	-d 只生成创建表结构的语句
+	-t 只生成插入数据的语句
+
 ### 为查询缓存优化你的查询
 
 	<?php
@@ -817,6 +830,9 @@ Collate 校对规则
 	AND     `ENGINE` = 'MyISAM'
 	AND     `TABLE_TYPE` = 'BASE TABLE'
 	ORDER BY table_name DESC;
+	
+#### 生成删除所有表语句间接现实清空数据库表
+	SELECT CONCAT('DROP TABLE IF EXISTS `', table_name, '`;') FROM information_schema.tables WHERE table_schema = 'dbname';
 
 ### 相关链接
 

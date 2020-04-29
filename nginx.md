@@ -215,7 +215,42 @@
 		}
 	
 	}
+	
+## GZIP压缩
 
+	server{
+
+		# 开启和关闭gzip模式
+		gzip on;
+
+		# gizp压缩起点，文件大于1k才进行压缩
+		gzip_min_length 1k;
+		
+		# 设置用于处理请求压缩的缓冲区数量和大小
+		gzip_buffers 32 4k | 16 8k;
+
+		# gzip 压缩级别，1-9，数字越大压缩的越好，也越占用CPU时间
+		gzip_comp_level 6;
+
+		# 进行压缩的文件类型。
+		gzip_types text/plain application/javascript application/x-javascript text/css application/xml text/xml text/javascript application/json image/png image/gif image/jpeg;
+
+		# nginx 对于静态文件的处理模块，开启后会寻找以.gz结尾的文件，直接返回
+		gzip_static on | off;
+
+		# 是否在http header中添加Vary: Accept-Encoding，建议开启
+		gzip_vary on | off;
+
+		# 设置压缩所需要的缓冲区大小，以4k为单位，如果文件为7k则申请2*4k的缓冲区 
+		gzip_buffers 4 16k;
+		
+		# 配置禁用gzip条件，支持正则
+		gzip_disable "MSIE [1-6]\.";
+
+		# 设置gzip压缩针对的HTTP协议版本
+		gzip_http_version 1.1;
+			
+	}
 
 ## 正向代理
 
