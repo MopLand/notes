@@ -1692,8 +1692,9 @@
 	/**
 	 * 文件描述
 	 * @name   页面名称
-	 * @cross  是否允许跨域访问，true || false
-	 * @cache  是否缓存返回数据，0 || second
+	 * @cross  跨域访问，true || false
+	 * @cache  缓存响应数据，0 || second
+	 * @expire 页面过期时间，0 || second
 	 * @access 访问限制，默认允许 allowed || 关闭 closed
 	 * @verify 需校验的请求信息，可选 appid, token, client, format
 	 * @require 检查客户端版本，例如 JellyBox/1.2
@@ -1724,8 +1725,9 @@
 		/**
 		 * @label  产品搜索
 		 * @action product
-		 * @cache  缓存结果，0 || second
-		 * @cross  是否允许跨域访问，true || false
+		 * @cross  跨域访问，true || false
+		 * @cache  缓存响应数据，0 || second
+		 * @expire 页面过期时间，0 || second
 		 * @replay 请求重放，默认允许 true || 禁止重放 false
 		 * @active 活跃级别，一般服务 normal || 低频服务 low
 		 * @access 访问限制，默认允许 allowed || 验证 limited || 关闭 closed
