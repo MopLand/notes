@@ -458,6 +458,20 @@
 
 ### 编辑器对象
 	Hybrid.Editor
+	
+### 日志上报
+
+	# 暂存一条记录
+	Hybrid.Context( 'foo', 'abc' );
+
+	# 清空上下文
+	Hybrid.Context();
+
+	# 暂存多条记录
+	Hybrid.Context( 'foo', '123', 'bar', '456' );
+	
+	# 上报日志信息
+	Hybrid.Report( message, source, lineno, colno, error );
 
 ### 提示样式
 
