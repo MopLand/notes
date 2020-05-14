@@ -1624,6 +1624,7 @@
 		 * @label  导航名称
 		 * @action 入口地址，通常与 Action 同名
 		 * @crumbs 关联地址，导航条 Action 名称
+		 * @cloned 复制配置，从其他 Action 引用并合并配置
 		 * @navbar 导航状态，默认显示 visible || 隐藏 hidden
 		 * @manual 文档状态，默认可见 visible || 隐藏 hidden
 		 * @access 访问限制，默认允许 allowed || 验证 limited || 关闭 closed

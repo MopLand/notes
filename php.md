@@ -123,6 +123,36 @@
 	[环境变量 > 系统变量 > Path] 中加入 PHP 执行文件目录，如：
 	;D:\EasyPHP\eds-binaries\php\php713vc14
 
+## 用 phpize 编译共享 PECL 扩展库
+
+	# 需要先安装 php-devel
+	yum install php-devel
+
+	# 进入 PHP 扩展目录
+	cd extname
+	phpize
+	./configure
+	make && make install
+
+## 安装 pcntl
+
+	# 下载当前版本 PHP 源码
+	wget https://www.php.net/distributions/php-7.2.30.tar.gz
+
+	# 解压文件
+	tar -zxvf php-7.2.30.tar.gz
+
+	# 进入目录
+	cd ./php-7.2.30/ext/pcntl
+
+	# 执行编译
+	/usr/bin/phpize
+	./configure
+	make && make install
+
+	# 写入配置
+	echo "extension=pcntl.so" > /etc/php.d/40-pcntl.ini
+
 ## 安装 Opcache
 
 	yum install php-pecl-zendopcache
@@ -217,3 +247,9 @@
 	 
 	; 防止共享内存在脚本执行期间被意外写入, 仅用于内部调试.
 	;opcache.protect_memory=0
+	
+## 常见错误
+
+### 无法保存登录状态（session 不能写入）
+	
+	chmod 0777 /var/lib/php/session
