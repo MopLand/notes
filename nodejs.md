@@ -84,6 +84,9 @@
 	# 查看全局的包的安装路径
 	npm root -g
 	
+	# 查看全局安装模块
+	npm list -g --depth 0
+	
 	# 查看帮助
 	npm help <command>
 

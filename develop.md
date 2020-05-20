@@ -18,6 +18,14 @@
 			controller					# 控制器
 			model						# 模型
 			views						# 视图
+			
+	assets								# 模板资源
+		config							# 系统设置
+		option							# 功能选项
+		widget							# 服务组件
+		hooks							# GIT 钩子
+		service							# 服务模板
+		...								# 其它配置
 
 	config								# 配置文件
 		attach.php						# 附件上传
@@ -75,15 +83,15 @@
 			charts						# 报表组件
 			errors						# 错误视图
 			editor						# 编辑器资源、脚本
+			service						# 公共服务资源
 			awesome						# 字符图标
-			location					# 位置数据
+			location					# 位置数据			
 			lightbox					# LightBox 图片展示插件
-			template					# 公共模板，包含设置和邮件模板
+			template					# 公共模板，包含设置和邮件模板			
 			bootstarp					# Bootstarp CSS 框架
 			
 		static							# 项目资源
 			js							# JS 类库
-			admin						# 后台资源
 			style						# CSS 样式
 			sprite						# CSS 图片
 			images						# 图片资源
@@ -824,6 +832,12 @@
 
 ### Config 配置
 
+	# 获取解析配置
+	Config::get( $conf, $key = NULL, $simplify = FALSE )
+
+	# 更改配置信息（临时改变，不会持久存储）
+	Config::set( &$conf, $key, $val = NULL )
+
 	# 获取配置
 	Config::fetch( $module, $key, $raw = FALSE )
 
@@ -994,10 +1008,10 @@
 	# 运行状态
 	Service::$runtime
 
-	# 获取全局配置
+	# 获取全局配置，基于 Config::get
 	Service::getConfig( $key = NULL )
 
-	# 设置全局配置（临时改变，不会持久存储）
+	# 设置全局配置，基于 Config::set
 	Service::setConfig( $key, $val = NULL )
 
 	# 获取缓存数据
@@ -1051,11 +1065,13 @@
 	# 更新纯真数据库文件
 	Location::upgrade( $filename = NULL )
 
+	# 通过 IP 判断是否异地 
+	Location::isLocal( $oldIp, $newIp )
+
 	# 返回 IP 所在地
 	# IP 数据库配置位置：global.module.ipdata
 	# IP 数据库下载地址：http://www.cz88.net/
 	Location::convert( $ip )
-
 ### Request 请求
 
 	# 当前模块名称
@@ -1433,11 +1449,18 @@
 
 >  基本日志记录
 
-	Service::writeLog( 'EVENT_NAME', var_export( $data, TRUE ) );
+	Log::info( 'EVENT_NAME', [ 'type' => '一般信息', 'data' => $data ] );
+	Log::warn( 'EVENT_NAME', [ 'type' => '警告信息', 'data' => $data ] );
+	Log::debug( 'EVENT_NAME', [ 'type' => 'DEBUG信息', 'data' => $data ] );
+	Log::error( 'EVENT_NAME', [ 'type' => '错误日志', 'data' => $data ] );
 
 >  带用户信息的日志记录
 
-	Service::writeLog( 'MEMBER_PROFILE', var_export( $data, TRUE ), array( 'userid' => 12345, 'username' => 'TEST' ) );
+	Log::debug( 'MEMBER_PROFILE', $data, ['userid' => 12345, 'username' => 'TEST'] );
+
+>  一定机率写入日志信息，0.0 ~ 1.0
+
+	Log::error( 'MEMBER_PROFILE', var_export( $data, TRUE ), array( 'userid' => 12345, 'username' => 'TEST' ), 0.5 );
 
 ### 表格下载
 
