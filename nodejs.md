@@ -46,6 +46,36 @@
 	npm set registry=http://r.cnpmjs.org/
 	npm config set registry http://mirrors.cloud.tencent.com/npm/
 
+## 升级 GCC
+
+### 获取安装包并解压
+	cd /
+	wget https://ftp.gnu.org/gnu/gcc/gcc-5.4.0/gcc-5.4.0.tar.bz2
+	tar -jxvf gcc-5.4.0.tar.bz2
+
+### 进入解压后的gcc文件夹，下载供编译需求的依赖项
+	cd gcc-build-5.4.0
+	./contrib/download_prerequisites
+
+### 执行配置
+	./configure --enable-checking=release --enable-languages=c,c++ --disable-multilib
+
+### 生成 Makefile 文件
+	make && make install
+
+### 解决 `GLIBCXX_3.4.21' not found
+
+	1.查找编译gcc时生成的最新动态库
+	find / -name "libstdc++.so*"
+
+	2.将找到的动态库libstdc++.so.6.0.21复制到/usr/lib64
+	cp /gcc-5.4.0/prev-x86_64-unknown-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6.0.21 /usr/lib64
+
+	3.删除原来的软连接，创建新的软连接
+	cd /usr/lib64
+	rm -rf libstdc++.so.6
+	ln -s libstdc++.so.6.0.21 libstdc++.so.6
+
 ## 常用命令
 
 ### 查看版本
