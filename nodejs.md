@@ -213,13 +213,6 @@
 	# 监视界面
 	pm2 monit
 
-	# 参考链接
-	https://segmentfault.com/a/1190000002539204
-	http://pm2.keymetrics.io/docs/usage/cluster-mode/
-	http://blog.csdn.net/billfeller/article/details/40711309
-	https://doesnotscale.com/deploying-node-js-with-pm2-and-nginx/
-	https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-centos-7
-
 ### PM2 升级
 
 	# 保存当前进程
@@ -325,3 +318,11 @@
 > **启动服务**
 
 	service jingdong start
+	
+
+# 参考链接
+- [PM2 使用介绍](https://segmentfault.com/a/1190000002539204)
+- [PM2 Cluster Mode](http://pm2.keymetrics.io/docs/usage/cluster-mode/)
+- [Node.js进程管理器PM2浅析](http://blog.csdn.net/billfeller/article/details/40711309)
+- [Deploying Node.js with PM2 and Nginx](https://doesnotscale.com/deploying-node-js-with-pm2-and-nginx/)
+- [How To Set Up a Node.js Application for Production on CentOS 7](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-centos-7)
