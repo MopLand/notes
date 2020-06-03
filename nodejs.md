@@ -223,6 +223,32 @@
 
 	# 更新内存中的进程
 	pm2 update
+	
+### PM2 运行配置
+
+	# app.json	
+	{
+	  "name"			: "MM_Groups",
+	  "script"			: "app.js",
+	  "args"			: "groups",
+	  "cwd"				: "/disk/www/Messager",
+	  "error_file"		: "./logs/wx_groups_err.log",
+	  "out_file"		: "./logs/wx_groups_out.log",
+	  "merge_logs"		: true,
+	  "autorestart"		: true,
+	  "watch"			: true,
+	  "ignore_watch"	: [".git","logs"],
+	  "watch_options"	: {
+		"followSymlinks": false
+	  },
+	  "log_date_format" : "YYYY-MM-DD HH:mm Z"
+	}
+	
+	# run
+	pm2 start app.json
+	
+	# 注意事项
+	watch 参数可以指定文件或目录名（支持数组），同时文件的 chmod 和 chgrp 也会被监测到，可以创建 .nochmod 来避免 gitpull.sh 执行 chmod 等命令
 
 ### puppeteer 安装
 
