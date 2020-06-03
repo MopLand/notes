@@ -42,6 +42,17 @@
 	\cp -r -f -p /disk/www/rj.shihuizhu.com/config/ /disk/www/rj.shz.com/
 	\cp -r -f -p /disk/www/rj.shihuizhu.com/cached/ /disk/www/rj.shz.com/
 
+### 撤销已经推送(push)至远端仓库的提交(commit)
+
+	# 查看提交信息，获取要回退的版本号
+	git log
+
+	# 重置至指定版本的提交
+	git reset –soft <版本号>
+
+	# 强制提交当前版本号
+	git push origin master –force
+
 ## 生产环境定时拉取项目
 
 ### cron 脚本
@@ -587,5 +598,4 @@
 - [Git Hooks / Git 钩子](http://www.php.cn/manual/view/35078.html)
 - [How to prevent “Write Failed: broken pipe” on SSH connection?](https://askubuntu.com/questions/127369/how-to-prevent-write-failed-broken-pipe-on-ssh-connection)
 - [SSH服务：packet_write_wait: Connection to 67.218.143.160 port 22: Broken pipe错误处理](https://www.cnblogs.com/zlgxzswjy/p/9796671.html)
-
-	
+- [Git撤销已经推送(push)至远端仓库的提交(commit)信息](https://blog.csdn.net/hanchao5272/article/details/79435730)
