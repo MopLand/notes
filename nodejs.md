@@ -212,6 +212,21 @@
 
 	# 监视界面
 	pm2 monit
+	
+### PM2 日志
+	
+	# 清空所有日志
+	pm2 flush
+
+	# 显示所有应用程序的日志
+	pm2 logs
+
+	# 显示指定应用程序的日志
+	pm2 logs [app-name]
+	
+	# pm2日志切割，使用说明：https://github.com/keymetrics/pm2-logrotate
+	pm2 install pm2-logrotate
+
 
 ### PM2 升级
 

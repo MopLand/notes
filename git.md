@@ -176,6 +176,10 @@
 	# 差异比较
 	git diff
 	
+	# 最近一个版本比较
+	git diff HEAD~1
+	git diff HEAD~1 --name-only
+	
 	# 调用图形化差异比较工具
 	git difftool
 	
@@ -598,4 +602,5 @@
 - [Git Hooks / Git 钩子](http://www.php.cn/manual/view/35078.html)
 - [How to prevent “Write Failed: broken pipe” on SSH connection?](https://askubuntu.com/questions/127369/how-to-prevent-write-failed-broken-pipe-on-ssh-connection)
 - [SSH服务：packet_write_wait: Connection to 67.218.143.160 port 22: Broken pipe错误处理](https://www.cnblogs.com/zlgxzswjy/p/9796671.html)
-- [Git撤销已经推送(push)至远端仓库的提交(commit)信息](https://blog.csdn.net/hanchao5272/article/details/79435730)
+
+	
