@@ -1752,6 +1752,7 @@
 		 * @cross  跨域访问，true || false
 		 * @cache  缓存响应数据，0 || second
 		 * @expire 页面过期时间，0 || second
+		 * @locked 执行加锁时间，0 || second
 		 * @replay 请求重放，默认允许 true || 禁止重放 false
 		 * @active 活跃级别，一般服务 normal || 低频服务 low
 		 * @access 访问限制，默认允许 allowed || 验证 limited || 关闭 closed

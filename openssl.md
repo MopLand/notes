@@ -40,6 +40,9 @@
 
 #### 多个域名
 	certbot certonly --email admin@veryide.com --agree-tos --webroot -w /disk/www/veryide.net -d veryide.net -d www.veryide.net -w /disk/www/veryide.com -d veryide.com -d www.veryide.com
+	
+#### 证书目录
+	/etc/letsencrypt/live/
 
 #### 通配符证书
 
