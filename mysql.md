@@ -274,6 +274,19 @@
 
 ----------
 
+## 标志位运算（1,2,4,8,16,32）
+
+### 查询语句
+	SELECT * FROM `pre_member_relation` WHERE locked & 2;
+
+### 增加标志
+	UPDATE `pre_member_relation` SET locked = locked | 4 WHERE locked & 4 = 0;
+
+### 移除标志
+	UPDATE `pre_member_relation` SET locked = locked ^ 8 WHERE locked & 8;
+
+----------
+
 ## JOIN 优化
 
 ### LEFT JOIN
@@ -850,5 +863,6 @@ Collate 校对规则
 - [mysql5.7系列修改root默认密码](https://www.cnblogs.com/activiti/p/7810166.html)
 - [MySQL 5.7 忘记root密码，使用--skip-grant-tables重置root密码的通用方法](https://majing.io/posts/10000005451184)
 - [解决mysql source 命令导入数据库 乱码](https://blog.csdn.net/xuz0917/article/details/51746207)
+- [数据库状态标识位flag设计](https://www.cnblogs.com/gouyg/p/mysql-flag-php.html)
 
 
