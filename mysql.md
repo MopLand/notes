@@ -116,6 +116,8 @@
 	SELECT COALESCE(NULL, NULL, 1);
 
 #### 返回一个字符串结果，该结果由分组中的值连接组合而成
+>	注意：mysql 的 group_concat_max_len 参数会影响运行结果
+	
 	SELECT GROUP_CONCAT(id) AS ids FROM pre_portal_category WHERE status > 0 AND parent = 10;
 	
 	SELECT GROUP_CONCAT(id SEPARATOR '|') AS ids FROM pre_portal_category WHERE status > 0 AND parent = 10;
