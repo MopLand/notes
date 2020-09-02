@@ -1645,11 +1645,13 @@
 		/**
 		 * 导航菜单
 		 * @label  导航名称
+		 * @badge  导航标记
 		 * @action 入口地址，通常与 Action 同名
 		 * @crumbs 关联地址，导航条 Action 名称
 		 * @cloned 复制配置，从其他 Action 引用并合并配置
-		 * @navbar 导航状态，默认显示 visible || 隐藏 hidden
+		 * @tester 测试方法，默认不是 false || 启用 true
 		 * @manual 文档状态，默认可见 visible || 隐藏 hidden
+		 * @navbar 导航状态，默认显示 visible || 隐藏 hidden
 		 * @access 访问限制，默认允许 allowed || 验证 limited || 关闭 closed
 		 * @markup 样式标识
 		 * @remark 备注说明
@@ -1708,6 +1710,17 @@
 		public function deleteAction( $id = NULL ) {
 		
 		}
+		
+		/**
+		 * @label 订单拉取
+		 * @badge API
+		 * @action orders
+		 * @tester true
+		 * @access limited
+		 */
+		public function ordersAction( ) {
+		
+		}
 
 	}
 
@@ -1758,6 +1771,7 @@
 		 * @access 访问限制，默认允许 allowed || 验证 limited || 关闭 closed
 		 * @signed 签名验证, 默认严格 strict || 松散 loosed
 		 * @method GET
+		 * @input string type 产品类型
 		 * @param integer size 每页数量
 		 * @param integer page 当前页码
 		 * @param number money 金额限定
@@ -1775,7 +1789,7 @@
 		 *	"result":[]
 		 * }
 		 */
-		public function searchAction( ) {
+		public function searchAction( $type = NULL ) {
 		
 			//获取通过验证的参数
 			$text = $this->arg('keyword');
