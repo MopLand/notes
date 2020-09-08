@@ -1631,6 +1631,7 @@
 	 * 文件描述
 	 * @name   页面名称
 	 * @weight 排序权重，从小到大，范围 1~255
+	 * @source 代码来源，指定代码解析目标文件
 	 * @navbar 导航状态，默认可见 visible || 隐藏 hidden
 	 * @manual 文档状态，默认可见 visible || 隐藏 hidden
 	 * @access 访问限制，默认允许 allowed || 关闭 closed
