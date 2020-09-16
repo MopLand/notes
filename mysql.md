@@ -851,6 +851,7 @@ Collate 校对规则
 
 ### 相关链接
 
+- [面试问烂的 MySQL 四种隔离级别](https://mp.weixin.qq.com/s/gkfzOtYWWhMgMgcRB32BoA)
 - [mysql explain 用法和结果的含义](https://www.cnblogs.com/qiudongxu/p/10312777.html)
 - [重现并分析在MySQL中使用replace into 的坑](https://blog.csdn.net/yangchunlu0101/article/details/80255537)
 - [实战mysql存储程序与定时器](http://lobert.iteye.com/blog/1953827)
@@ -868,5 +869,6 @@ Collate 校对规则
 - [数据库状态标识位flag设计](https://www.cnblogs.com/gouyg/p/mysql-flag-php.html)
 - [MySQL索引的类型](https://www.cnblogs.com/Aiapple/p/5693239.html)
 - [MySQL索引失效的几种情况](https://www.cnblogs.com/binyue/p/4058931.html)
+- [MySQL表的碎片整理和空间回收小结](https://www.cnblogs.com/kerrycode/p/10943122.html)
 
 

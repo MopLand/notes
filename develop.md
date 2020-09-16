@@ -1630,6 +1630,7 @@
 	/**
 	 * 文件描述
 	 * @name   页面名称
+	 * @author 文档作者署名
 	 * @weight 排序权重，从小到大，范围 1~255
 	 * @source 代码来源，指定代码解析目标文件
 	 * @navbar 导航状态，默认可见 visible || 隐藏 hidden
