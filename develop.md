@@ -1637,6 +1637,7 @@
 	 * @manual 文档状态，默认可见 visible || 隐藏 hidden
 	 * @access 访问限制，默认允许 allowed || 关闭 closed
 	 * @module 组件标识，用于组件状态控制页面
+	 * @switch 特性开关，用于细粒度的权限控制，格式："@switch key desc"
 	 */
 	class Admin extends Common {
 
