@@ -504,7 +504,7 @@
 
 	<input type="file" model="magick" name="image" config='{ "slice" : [ 200, 150 ], "thumb" : [ 200, 150 ] }' />
 
-	参考资料：http://www.veryide.com/projects/magick/
+	参考资料：[http://www.veryide.com/projects/magick/](http://www.veryide.com/projects/magick/)
 
 ### 上传参数
 
@@ -538,8 +538,10 @@
 	1. 图片延迟加载 img[raw] 如：<img raw="https://www.baidu.com/img/baidu.gif" />
 	2. 原生文件上传 input[model=native] 如：<input type="file" model="native" config="" />
 	3. 图片压缩上传 input[model=magick] 如：<input type="file" model="magick" storage="" preview="" />
-	4. 富文本编辑器 textarea[editor] 如：<textarea editor="" />
+	4. 富文本编辑器 textarea[editor] 如：<textarea editor="" /> <textarea editor='{ "filterMode": false }' />
 	5. 复制到剪贴板 [clipboard] 如：<input type="text" data-clipboard-target="#target" clipboard />
+
+	参考资料：[http://kindeditor.net/docs/option.html](http://kindeditor.net/docs/option.html)
 
 ## 已知问题
 
