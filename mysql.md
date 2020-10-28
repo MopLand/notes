@@ -235,6 +235,12 @@
 #### 某月总天数
 	SELECT DAY(LAST_DAY(CONCAT(months,'-01')));
 	SELECT DAY(LAST_DAY(DATE_FORMAT( create_time, '%Y%m01')));
+	
+#### 获取字符串的 ASCII 值
+	SELECT LENGTH(exp), ORD(CONVERT(exp USING ucs2));
+	
+#### 获取字符串的 UNICODE 值
+	SELECT LENGTH(exp), HEX(CONVERT(exp USING ucs2));
 
 #### 格式化时间
 
