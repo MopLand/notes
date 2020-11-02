@@ -14,6 +14,20 @@
 	vi /etc/sysctl.conf
 	fs.file-max = 200001
 	fs.nr_open  = 200001
+	
+## limit 资源查询
+
+	# 查看系统用户所有限制值
+	ulimit -a
+	
+	# 查看当前系统打开的文件数量
+	lsof | wc -l
+	
+	# 查看当前进程的打开文件数量（pid 进程PID）
+	lsof -p pid | wc -l
+	
+	# 查看系统总限制打开文件的最大数量
+	cat /proc/sys/fs/file-max
 
 ----------
 
@@ -39,54 +53,54 @@
 
 ## 进程统计
 
-### CPU最高的进程的id
+	# CPU最高的进程的id
 	top -c
 
-### 统计 80 端口的连接数
+	# 统计 80 端口的连接数
 	netstat -antlp | grep 80 | grep ESTABLISHED | wc -l
 
-### 统计服务器所有url被请求的数量
+	# 统计服务器所有url被请求的数量
 	netstat -pnt | grep :80 | wc -l
 
-### 统计PHP-FPM 进程数
+	# 统计PHP-FPM 进程数
 	netstat -anpo | grep "php-fpm" | wc -l
 
-### 统计等待中的进程
+	# 统计等待中的进程
 	netstat -an|grep WAIT
 
-### 定时执行查询
+	# 定时执行查询
 	watch -d 'netstat -antlp | grep 80 | grep ESTABLISHED | wc -l'
 
 ## 进程分析
 
-### 查看当前php-fpm总进程数，RSS就是占用的内存情况
+	# 查看当前php-fpm总进程数，RSS就是占用的内存情况
 	ps -ylC php-fpm --sort:rss
 
-### 查看当前php-fpm进程的内存占用情况及启动时间
+	# 查看当前php-fpm进程的内存占用情况及启动时间
 	ps -e -o 'pid,comm,args,pcpu,rsz,vsz,stime,user,uid'|grep www|sort -nrk5
 
-### 查看当前php-fpm进程平均占用内存情况
+	# 查看当前php-fpm进程平均占用内存情况
 	ps --no-headers -o "rss,cmd" -C php-fpm | awk '{ sum+=$1 } END { printf ("%d%s\n", sum/NR/1024,"M") }'
 
-### 通过进程名查看进程信息
+	# 通过进程名查看进程信息
 	ps -ef | grep memcached
 
-### 通过端口号查找进程 PID
+	# 通过端口号查找进程 PID
 	netstat -nap | grep 8080
 
-### 查看被占用端口的 PID
+	# 查看被占用端口的 PID
 	lsof -i:443
 
-### 根据进程id查看进程信息
+	# 根据进程PID查看进程信息
 	ps -ef | grep 13049
 
-### 查看进程完整信息
+	# 查看进程完整信息
 	ll /proc/13049
 
-### 特定进程运行状况
+	# 特定进程运行状况
 	top -H -p <pid>
 
-### 杀掉某一个进程
+	# 杀掉某一个进程
 	pkill node
 
 ## nload 实时网速查看
