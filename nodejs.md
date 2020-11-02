@@ -16,7 +16,7 @@
 	yum install gcc-c++ openssl-devel
 
 ### 安装最新版本Node.js
-	cd /usr/local/src
+	cd /root
 	wget https://nodejs.org/dist/node-latest.tar.gz
 	tar -zxvf node-latest.tar.gz
 
@@ -49,12 +49,12 @@
 ## 升级 GCC
 
 ### 获取安装包并解压
-	cd /
-	wget https://ftp.gnu.org/gnu/gcc/gcc-5.4.0/gcc-5.4.0.tar.bz2
+	cd /root
+	wget https://mirrors.cloud.tencent.com/gnu/gcc/gcc-5.4.0/gcc-5.4.0.tar.bz2
 	tar -jxvf gcc-5.4.0.tar.bz2
 
 ### 进入解压后的gcc文件夹，下载供编译需求的依赖项
-	cd gcc-build-5.4.0
+	cd gcc-5.4.0
 	./contrib/download_prerequisites
 
 ### 执行配置
