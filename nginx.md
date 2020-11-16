@@ -60,8 +60,8 @@
 	# 不存在的静态文件直接抛出 404
 	# 将路由交由 index.php 处理
 	if (!-e $request_filename) {
-		rewrite ^/(.+).txt$ /fn/verify/$1;
-		rewrite ^/attach/(.+)!(.+).(gif|jpg|jpeg|png)$ /fn/resized?file=$1&size=$2&mime=$3;
+		rewrite ^/(.+)\.txt$ /fn/verify/$1;
+		rewrite ^/attach/(.+)!(.+)\.(gif|jpg|jpeg|png)$ /fn/resized?file=$1&size=$2&mime=$3;
 		rewrite ^/(.*\.(ico|gif|jpg|jpeg|png|swf|flv|css|js)$) 404;
 		rewrite ^/(.*) /index.php/$1 last;
 	}
@@ -119,6 +119,18 @@
 	fastcgi_param  SCRIPT_NAME        $fastcgi_script_name;
 	fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
 
+### rules/gzip.conf
+
+	# Gzip
+	location ~ .*\.(jpg|gif|png|bmp|js|webp|css)$ {
+		gzip on;
+		gzip_disable "msie6";
+		gzip_min_length 50k;
+		gzip_buffers 4 16k;
+		gzip_comp_level 5;
+		gzip_types text/plain application/javascript application/x-javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png image/webp;
+	}
+
 ### rules/phpcgi.conf
 
 	#location ~ ^(.+\.php)(.*)$ {
@@ -152,8 +164,8 @@
 
 	# Dora 框架路由规则 
 	if (!-e $request_filename) {
-		rewrite ^/(.+).(txt|htm|html)$ /fn/verify/$1;
-		rewrite ^/attach/(.+)!(.+).(gif|jpg|jpeg|png)$ /fn/resized?file=$1&size=$2&mime=$3;
+		rewrite ^/(.+)\.(txt|htm|html)$ /fn/verify/$1;
+		rewrite ^/attach/(.+)!(.+)\.(gif|jpg|jpeg|png)$ /fn/resized?file=$1&size=$2&mime=$3;
 		rewrite ^/(.*\.(ico|gif|jpg|jpeg|png|swf|flv|css|js)$) 404;
 		rewrite ^/(.*) /index.php/$1 last;
 	}
@@ -177,7 +189,7 @@
 
 	# 将静态文件缓存7天，并允许跨域 
 	location ~ \.(js|css|webp|jpg|jpeg|png|gif|swf|ttf|otf|eot|svg|woff|woff2)$ {
-		expires 7d;
+		expires 14d;
 		add_header "Access-Control-Allow-Origin" "*";
 	}
 
@@ -742,7 +754,7 @@
 		}
 	
 		if (!-e $request_filename) {
-			rewrite ^/(.+).(txt|htm|html)$ /fn/verify/$1;
+			rewrite ^/(.+)\.(txt|htm|html)$ /fn/verify/$1;
 			rewrite ^/(.*\.(ico|gif|jpg|jpeg|png|swf|flv|css|js)$) 404;
 			rewrite ^/(.*) /index.php/$1 last;
 		}
@@ -791,8 +803,8 @@
 		# 前端视图
 		location / {
 			if (!-e $request_filename) {
-				rewrite ^/(.+).txt$ /fn/verify/$1;
-				rewrite ^/attach/(.+)!(.+).(gif|jpg|jpeg|png)$ /fn/resized?file=$1&size=$2&mime=$3;
+				rewrite ^/(.+)\.txt$ /fn/verify/$1;
+				rewrite ^/attach/(.+)!(.+)\.(gif|jpg|jpeg|png)$ /fn/resized?file=$1&size=$2&mime=$3;
 				rewrite ^/(.*\.(ico|gif|jpg|jpeg|png|swf|flv|css|js)$) 404;
 				rewrite ^/(.*) /index.php/$1 last;
 			}
@@ -821,6 +833,31 @@
 			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 			proxy_pass http://127.0.0.1:80/;
 		}
+
+	}
+	
+### 跨服务器文件缓存生成
+	
+	server {
+		listen 80;
+		
+		server_name cached.example.com;
+		root /disk/www/example.com/cached/;
+
+		# 支持 PHP
+		location ~ ^(.+\.php)(.*)$ {
+			include ../rules/phpcgi.conf;
+		}
+		
+		# Dora 静态缓存
+		location ^~ /compile/ {
+			if (!-e $request_filename) {
+				rewrite ^/compile/(.+)\.(css|js)$ /fn/combine?hash=$1;
+				rewrite ^/(.*) /dora.php/$1 last;
+			}
+		}
+
+		include ../rules/security.conf;
 
 	}
 
