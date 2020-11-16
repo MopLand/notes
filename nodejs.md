@@ -69,7 +69,7 @@
 	find / -name "libstdc++.so*"
 
 	2.将找到的动态库libstdc++.so.6.0.21复制到/usr/lib64
-	cp /gcc-5.4.0/prev-x86_64-unknown-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6.0.21 /usr/lib64
+	cp /root/gcc-5.4.0/prev-x86_64-unknown-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6.0.21 /usr/lib64
 
 	3.删除原来的软连接，创建新的软连接
 	cd /usr/lib64
