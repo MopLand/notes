@@ -962,10 +962,12 @@
 	$sent_http_transfer_encoding
 
 ## 参考内容
+
 - [Nginx 官方文档](https://nginx.org/en/docs/)
 - [Nginx 中文文档](http://www.nginx.cn/doc/)
 - [Nginx Config 生成](https://nginxconfig.io/)
 - [前端开发者必备的Nginx知识](https://segmentfault.com/a/1190000018454271)
 - [快速上手Nginx](https://juejin.im/post/5ce68c3c5188253386140fa9)
 - [彻底弄懂 Nginx location 匹配](https://juejin.im/post/5ce5e1f65188254159084141)
+- [解Bug之路-Nginx 502 Bad Gateway](https://mp.weixin.qq.com/s/WM8YMJQ-1x7HDjE0d-8uTw)
 	
