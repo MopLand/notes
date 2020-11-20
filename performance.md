@@ -299,3 +299,4 @@
 - [Linux的php-fpm优化心得-php-fpm进程占用内存大和不释放内存问题](https://wzfou.com/php-fpm/)
 - [Linux iostat 命令详解](https://www.cnblogs.com/ftl1012/p/iostat.html)
 - [资源监控工具 glances](https://www.jianshu.com/p/639581a96512)
+- [PHP -fpm 服务器内存占用陡坡式上涨，请问如何彻底解决？](https://www.v2ex.com/t/727028)

@@ -75,6 +75,10 @@
 	
 ## JavaScript
 
+### 修正 JSON.parse 不支持 int64 的问题
+
+	body.replace(/:([0-9]{15,}),/g, ':"$1",');
+
 ### 随机指定长度字符
 
 	Math.random().toString(36).substr(2);
