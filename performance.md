@@ -292,6 +292,37 @@
 	max children reached	当pm试图启动更多的children进程时，却达到了进程数的限制，达到一次记录一次，如果不为0，需要增加php-fpm pool进程的最大数
 	slow requests	当启用了php-fpm slow-log功能时，如果出现php-fpm慢请求这个计数器会增加，一般不当的Mysql查询会触发这个值
 
+## 高性能 Web
+
+### DNS
+
+	# 针对较多域名解析至同一 IP 时，可以先创建一个解析，其他域名 CNAME 此域名即可
+	# 当需要更新 IP 时，只需要修改第一个解析，其他 DNS 记录会陆续同步
+
+	;; A Records
+	app.example.com.	1	IN	A	114.114.114.114
+
+	;; CNAME Records
+	da1.aliqin.com.	300	IN	CNAME	app.example.com.
+	da2.aliqin.com.	300	IN	CNAME	app.example.com.
+
+### 静态资源
+
+	# 尽量使用不同的域名部署静态资源，尽可能使用 CDN 加速
+	# 不同的域名可以突破连接数限制，也可以减少不必要的 Cookie 传输
+
+	;; Web 服务
+	www.example.com
+
+	;; 静态资源
+	assets.amzdns.com
+
+### 网络访问
+
+	# 能使用内网访问的服务，优先使用内网 IP，可以指定 Host 主机头来指定域名
+
+	curl -H 'Host: gateway.example.com' http://192.168.1.123/
+
 
 ## 相关链接
 

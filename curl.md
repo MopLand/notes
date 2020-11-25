@@ -171,3 +171,11 @@
 	# curl -f http://www.linux.com/error
 
 
+## 常见问题
+
+### cURL error 28: Operation timed out after 5000 milliseconds with 0 out of 0 bytes received
+	先排除是网络问题导致的超时，比如外网带宽到达上限，导致不能正常接收数据
+
+## 相关链接
+
+- [libcurl error codes](http://curl.haxx.se/libcurl/c/libcurl-errors.html)
