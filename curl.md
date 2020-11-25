@@ -41,6 +41,10 @@
 	
 	# curl http://www.linux.com
 	执行后，www.linux.com 的html就会显示在屏幕上了
+
+#### 指定 DNS 解析
+
+	curl https://DOMAIN.EXAMPLE --resolve 'DOMAIN.EXAMPLE:443:192.0.2.17'
 	
 #### 2、保存访问的网页
 
