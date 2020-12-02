@@ -1784,6 +1784,8 @@
 		 * @param string final 结束日期 {regexp=/^([\d\-]+)$/}
 		 * @param json object 数据对象
 		 * @param string keyword 关键字 {required=1, filter=\Library\StrExt::removeExtra}
+		 * @field int category taobao 商品类型：taobao、jingdong
+		 * @intro 2020-12-02 Lay 变更说明
 		 * @notice 描述说明信息
 		 * @access limited
 		 * @example
