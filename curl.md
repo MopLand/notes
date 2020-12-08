@@ -41,6 +41,10 @@
 	
 	# curl http://www.linux.com
 	执行后，www.linux.com 的html就会显示在屏幕上了
+
+#### 指定 DNS 解析
+
+	curl https://DOMAIN.EXAMPLE --resolve 'DOMAIN.EXAMPLE:443:192.0.2.17'
 	
 #### 2、保存访问的网页
 
@@ -171,3 +175,11 @@
 	# curl -f http://www.linux.com/error
 
 
+## 常见问题
+
+### cURL error 28: Operation timed out after 5000 milliseconds with 0 out of 0 bytes received
+	先排除是网络问题导致的超时，比如外网带宽到达上限，导致不能正常接收数据
+
+## 相关链接
+
+- [libcurl error codes](http://curl.haxx.se/libcurl/c/libcurl-errors.html)
