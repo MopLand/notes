@@ -1779,13 +1779,15 @@
 		 * @param integer page 当前页码
 		 * @param number money 金额限定
 		 * @param mobile phone 手机号码 {required=1}
+		 * @param mobile lists 文件清单 {posted=1}
 		 * @param string field 搜索类型 {optional=trade_id,item_id}
 		 * @param string start 开始日期 {regexp=/^([\d\-]+)$/}
 		 * @param string final 结束日期 {regexp=/^([\d\-]+)$/}
 		 * @param json object 数据对象
-		 * @param string keyword 关键字 {required=1, filter=\Library\StrExt::removeExtra}
+		 * @param string keyword 关键字 {required=1; filter=\Library\StrExt::removeExtra}
 		 * @field int category taobao 商品类型：taobao、jingdong
-		 * @intro 2020-12-02 Lay 变更说明
+		 * @patch 2020-12-02 Lay 变更说明
+		 * @patch 2020-12-25 Lay 节日提示
 		 * @notice 描述说明信息
 		 * @access limited
 		 * @example

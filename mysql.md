@@ -87,10 +87,10 @@
 	SELECT * FROM `tblname`;
 
 #### 联合查询
-	SELECT a.*, b.* FROM `tbla` AS a LEFT JOIN `tblb` AS b ON a.id = b.id;
+	SELECT a.*, b.* FROM `tbl_a` AS a LEFT JOIN `tbl_b` AS b ON a.id = b.id;
 
 #### IF CASE 运算
-	SELECT IF (priv=1, admin, guest) AS usertype FROM privs WHERE username = joe;
+	SELECT IF (priv=1, admin, guest) AS usertype FROM privs WHERE username = 'joe';
 
 #### GROUP BY 分组查询
 	SELECT name, SUM(price) FROM `tblname` GROUP BY name;
@@ -165,7 +165,7 @@
 	SELECT t.sn, t.id, t.money, c.agent_id, c.agent_name from pre_agent_trade as t LEFT JOIN ( SELECT * FROM `pre_agent_cdkey` WHERE trade_id > 0 ORDER BY trade_id ASC group by trade_id ) AS c on t.id = c.trade_id WHERE t.sn != '';
 
 #### 商品搜索页排序显示
-	SELECT `id`, `gid`, `title`, stick, uid, `dateline`, `timeline`, from_unixtime( `timeline`, '%Y/%m/%d %T' ) FROM `pre_goods_list` WHERE 1 = 1 AND `status` > 0 ORDER BY stick DESC, timeline DESC limit 80, 40;
+	SELECT `id`, `gid`, `title`, stick, uid, `dateline`, `timeline`, FROM_UNIXTIME( `timeline`, '%Y/%m/%d %T' ) FROM `pre_goods_list` WHERE `status` > 0 ORDER BY stick DESC, timeline DESC limit 80, 40;
 
 #### 代理销售前100
 	SELECT t.agent_id, t.agent_name, l.qq, sum(t.money) as stat FROM `pre_trade_list` as t LEFT JOIN `pre_agent_list` as l on t.agent_id = l.agent_id group by t.agent_id ORDER BY stat DESC limit 100;

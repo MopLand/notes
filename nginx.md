@@ -2,6 +2,12 @@
 
 ## 必要配置
 
+### 查看模块
+	nginx -V
+
+### 查看版本
+	nginx -v
+
 ### 配置 PHP.ini
 	cgi.fix_pathinfo=1
 
@@ -71,6 +77,25 @@
 		expires 7d;
 		add_header "Access-Control-Allow-Origin" "*";
 	}
+	
+## 添加模块
+
+### 查看编译信息
+	nginx -V
+
+### 下载同版本源码
+	wget http://nginx.org/download/nginx-1.18.0.tar.gz
+	tar -zxvf nginx-1.18.0.tar.gz
+	
+### 下载模块源码
+	git clone https://github.com/evanmiller/mod_zip
+
+### 重新编译模块，千万不 install
+	./configure --prefix=... --add-module=/root/mod_zip
+	make
+	
+### 替换 nginx 文件
+	mv /root/nginx-1.18.0/objs/nginx /usr/sbin
 
 ## 相关命令
 
@@ -897,6 +922,10 @@
 
 #### 413 Request Entity Too Large
 	client_max_body_size 10m;
+	
+#### module "/usr/lib64/nginx/modules/ngx_http_geoip_module.so" version 1012002 instead of 1018000
+	yum remove nginx-mod*
+	yum install nginx-module-*
 
 ### Nginx 内置变量
 
@@ -970,4 +999,7 @@
 - [快速上手Nginx](https://juejin.im/post/5ce68c3c5188253386140fa9)
 - [彻底弄懂 Nginx location 匹配](https://juejin.im/post/5ce5e1f65188254159084141)
 - [解Bug之路-Nginx 502 Bad Gateway](https://mp.weixin.qq.com/s/WM8YMJQ-1x7HDjE0d-8uTw)
+- [利用Nginx第三方模块，实现附件打包下载](https://segmentfault.com/a/1190000000621313)
+- [NGINX mod_zip 扩展实现边打包边下载 zip 文件，PHP 实现以及途中踩过的坑](https://www.iuxiao.com/d/28)
+- [实践：Nginx的mod_zip模块安装和使用](https://www.leion.co/2018/03/03/Nginx-mod_zip/)
 	
