@@ -1767,6 +1767,7 @@
 		 * @action product
 		 * @cross  跨域访问，true || false
 		 * @cache  缓存响应数据，0 || second
+		 * @sense  是否缓存开关，key 来自 return 数据，支持路径表达式（ab.cd.ef）
 		 * @expire 页面过期时间，0 || second
 		 * @locked 执行加锁时间，0 || second
 		 * @replay 请求重放，默认允许 true || 禁止重放 false

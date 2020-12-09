@@ -14,6 +14,9 @@
 ### 过滤 ../ 等路径字符
 	preg_replace('/[\\\\\/]/ism', '', $file);
 	
+### 过滤文件扩展名
+	preg_replace('/\.[a-zA-Z]+$/', '', $file);
+	
 ### 移除图片 URL 上尺寸尾巴
 	preg_replace( '/_(\d+?)x(\d+?)\.jpg/', '', $string );
 
@@ -44,6 +47,15 @@
 	
 ### 取最字符串中最短路径
 	/a[^a]*b/.exec('...a...a...b..c..')
+	
+### 过滤文件扩展名
+	file.replace(/^.*[\\\/]/, '')
+	
+### 提取文件名称
+	file.match(/([^\\\/]*?)\./)[1]
+	
+### 过滤 base64 声明
+	imgData.replace(/^data:(.*);base64,/, '')
 	
 ### 取 xml 元素内容（CDATA 可有可无）
 	/<appid>(?:\<\!\[CDATA\[)?(.+?)(?:\]\]\>)?<\/appid>/.exec( '<appid><![CDATA[wxd1ba3d0937058e6f]]></appid>' )
