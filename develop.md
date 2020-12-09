@@ -1764,7 +1764,7 @@
 		
 		/**
 		 * @label  产品搜索
-		 * @action product
+		 * @action search
 		 * @cross  跨域访问，true || false
 		 * @cache  缓存响应数据，0 || second
 		 * @sense  是否缓存开关，key 来自 return 数据，支持路径表达式（ab.cd.ef）
@@ -1776,17 +1776,17 @@
 		 * @signed 签名验证, 默认严格 strict || 松散 loosed
 		 * @method GET
 		 * @input string type 产品类型
-		 * @param integer size 每页数量
 		 * @param integer page 当前页码
 		 * @param number money 金额限定
 		 * @param mobile phone 手机号码 {required=1}
-		 * @param mobile lists 文件清单 {posted=1}
+		 * @param string lists 文件清单 {posted=1}
 		 * @param string field 搜索类型 {optional=trade_id,item_id}
 		 * @param string start 开始日期 {regexp=/^([\d\-]+)$/}
 		 * @param string final 结束日期 {regexp=/^([\d\-]+)$/}
 		 * @param json object 数据对象
 		 * @param string keyword 关键字 {required=1; filter=\Library\StrExt::removeExtra}
 		 * @field int category taobao 商品类型：taobao、jingdong
+		 * @field float price 9.99 商品价格
 		 * @patch 2020-12-02 Lay 变更说明
 		 * @patch 2020-12-25 Lay 节日提示
 		 * @notice 描述说明信息
