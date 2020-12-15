@@ -32,6 +32,9 @@
 
 ### 查看版本号
 	composer -V
+	
+### 查看全局配置
+	composer config -gl
 
 ### 下载包，根据 composer.json 配置
 	composer install
