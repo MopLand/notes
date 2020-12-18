@@ -387,7 +387,24 @@
 	UPDATE `pre_order_deduct` SET settle_date = DATE_FORMAT( settle_time, '%Y%m%d') WHERE `settle_time` IS NOT NULL AND `settle_date` = '0';
 	
 ### 借助临时字段交换两列的值
-	UPDATE `pre_widget_data` SET tmp = extend, extend = link, link = tmp, tmp = NULL WHERE extend like '%:%';
+	UPDATE `pre_widget_data` SET tmp = extend, extend = link, link = tmp, tmp = NULL WHERE extend LIKE '%:%';
+
+----------
+
+## 批量更新
+
+### REPLACE INTO
+	REPLACE INTO tbl(id, dr) VALUES (1,’2′),(2,’3′),(n,’y’);
+	
+### INSERT INTO
+	INSERT INTO tbl (id, dr) VALUES (1,’2′),(2,’3′),…(x,’y’) ON DUPLICATE KEY UPDATE dr = VALUES(dr);
+
+### WHEN x THEN y
+	UPDATE tbl SET status = CASE id 
+	WHEN 1 THEN 3
+	WHEN 2 THEN 4
+	WHEN 3 THEN 5
+	END WHERE id IN (1,2,3);
 
 ----------
 
@@ -442,7 +459,7 @@
 	ALTER TABLE `tblname` MODIFY `field` VARCHAR(255) NULL DEFAULT NULL;
 
 ### 修改字段区分大小写
-	ALTER TABLE `tblname` MODIFY `url` varchar(700) BINARY NOT NULL;
+	ALTER TABLE `tblname` MODIFY `url` VARCHAR(700) BINARY NOT NULL;
 
 ### 同时修改字段名和类型
 	ALTER TABLE `tblname` CHANGE `new` `old` VARCHAR(255) NULL DEFAULT NULL;

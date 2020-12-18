@@ -447,7 +447,7 @@
 	
 	# 主机配置
 	server {
-		listen       80;
+		listen 80;
 		server_name  2;
 		location / {
 	
@@ -680,7 +680,7 @@
 ### 泛域名处理
 
 	server {
-	    listen       80;
+	    listen 80;
 	    server_name ~^(\d+)\.example\.com$;
 	    root /disk/www/agent.example.com;
 	    index  index.html index.php index.htm;
@@ -696,7 +696,7 @@
 ### 规则匹配域名
 
 	server {
-	    listen       80;
+	    listen 80;
 	    server_name weixin.example.com ~^sku\.([a-z0-9\.]+)\.(com|net|cn|so)$;
 	    root /disk/www/weixin.example.com;
 	    index  index.html index.php index.htm;
