@@ -69,7 +69,20 @@
 
 	echo '<table class="table table-striped">'. $thead . $tbody .'</table>';
 	
-
+### 修正 64位系统 JSON_BIGINT_AS_STRING 无效的问题
+	/**
+	 * 修正 64位系统 JSON_BIGINT_AS_STRING 无效的问题
+	 * https://github.com/firebase/php-jwt/blob/master/src/JWT.php
+	 * 32bit int_max 2147483647
+	 * 64bit int_max 9223372036854775807
+	 */
+	if (PHP_INT_SIZE == 8) {
+		$max = strlen((string) PHP_INT_MAX) - 1;
+		$txt = preg_replace('/:\s*(-?\d{' . $max . ',})/', ': "$1"', $txt);
+		$ret = json_decode($txt, TRUE);
+	} else {
+		$ret = json_decode($txt, TRUE, 512, JSON_BIGINT_AS_STRING);
+	}
 	
 ## HTML
 	
