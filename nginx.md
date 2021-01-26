@@ -77,6 +77,26 @@
 		expires 7d;
 		add_header "Access-Control-Allow-Origin" "*";
 	}
+
+## 编译安装
+
+### 安装依赖
+	yum -y install openssl openssl-devel pcre-devel gd-devel
+	yum -y install perl-devel perl-ExtUtils-Embed
+	yum -y install GeoIP GeoIP-devel GeoIP-data
+	yum install gperftools
+
+### 下载源码
+	wget http://nginx.org/download/nginx-1.18.0.tar.gz
+	tar -zxvf nginx-1.18.0.tar.gz
+	cd nginx-1.18.0/
+	
+### 下载模块
+	git clone https://github.com/nginx/njs
+
+### 重新编译模块
+	./configure --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --modules-path=/usr/lib64/nginx/modules --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --http-client-body-temp-path=/var/lib/nginx/tmp/client_body --http-proxy-temp-path=/var/lib/nginx/tmp/proxy --http-fastcgi-temp-path=/var/lib/nginx/tmp/fastcgi --http-uwsgi-temp-path=/var/lib/nginx/tmp/uwsgi --http-scgi-temp-path=/var/lib/nginx/tmp/scgi --pid-path=/run/nginx.pid --lock-path=/run/lock/subsys/nginx --user=nginx --group=nginx --with-file-aio --with-http_auth_request_module --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_addition_module --with-http_image_filter_module --with-http_geoip_module=dynamic --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_slice_module --with-http_stub_status_module --with-http_perl_module=dynamic --with-mail=dynamic --with-mail_ssl_module --with-pcre --with-pcre-jit --with-stream=dynamic --with-stream_ssl_module --with-google_perftools_module --with-debug --add-module=/root/njs/nginx
+	make && make install
 	
 ## 添加模块
 
@@ -1002,4 +1022,5 @@
 - [利用Nginx第三方模块，实现附件打包下载](https://segmentfault.com/a/1190000000621313)
 - [NGINX mod_zip 扩展实现边打包边下载 zip 文件，PHP 实现以及途中踩过的坑](https://www.iuxiao.com/d/28)
 - [实践：Nginx的mod_zip模块安装和使用](https://www.leion.co/2018/03/03/Nginx-mod_zip/)
+- [How to Install PHP 8 on CentOS 8 / RHEL 8](https://www.linuxtechi.com/install-php-8-centos-8-rhel-8/)
 	

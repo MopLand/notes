@@ -43,8 +43,8 @@
 	export NODE_PATH=/usr/local/lib/node_modules
 
 ### 更改为国内服务器，可以提高更快的下载速度
-	npm set registry=http://r.cnpmjs.org/
-	npm config set registry http://mirrors.cloud.tencent.com/npm/
+	npm set registry=https://r.cnpmjs.org/
+	npm config set registry https://mirrors.cloud.tencent.com/npm/
 
 ## 升级 GCC
 
