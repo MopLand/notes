@@ -360,6 +360,12 @@
 
 	service jingdong start
 	
+## 常见问题
+
+### npm: command not found 或 /usr/bin/env: ‘node’: No such file or directory
+	ln -s /usr/local/bin/node /usr/bin/node
+	ln -s /usr/local/bin/npm /usr/bin/npm
+	
 
 # 参考链接
 - [PM2 使用介绍](https://segmentfault.com/a/1190000002539204)

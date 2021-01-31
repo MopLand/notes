@@ -50,6 +50,12 @@
 
 ## 实际示例
 
+	#项目自动更新（每天9:00 - 22:00，间隔5分钟一次，输出标准错误）
+	*/10 9-22 * * * /disk/shell/gitpull.sh > /var/log/gitpull.log 2>&1
+	
+	# Cron 任务调度，每分钟执行
+	* * * * * php /disk/www/worker.com/index.php /cron/cron/run
+
 	# 每天8:00 - 22:00，每 15 分钟一次
 	*/15 8-22 * * * curl http://example.com/cron/mins > /dev/null 2>&1
 
@@ -91,5 +97,6 @@
 - [crontab 命令说明](http://man.linuxde.net/crontab)
 - [Crontab 表达式生成器](https://crontab.guru/)
 - [Crontab 表达式执行时间验证](http://www.atool.org/crontab.php)
+- [Linux shell中2>&1的含义解释](https://blog.csdn.net/zhaominpro/article/details/82630528)
 
 	
