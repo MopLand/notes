@@ -573,6 +573,32 @@
 		}
 
 	}
+	
+### 如何设置带通配符子域名的Access-Control-Allow-Origin
+
+	server {
+		root /path/to/your/stuff;
+		index index.html index.htm;
+		server_name yoursweetdomain.com;
+		
+		set $match "";
+		if ($http_origin ~* (.*\.yourdomain.com)) {
+			set $match "true";
+		}
+		
+		location / {
+			if ($match = "true") {
+				add_header 'Access-Control-Allow-Origin' "$http_origin”;
+				add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, DELETE, PUT';
+				add_header 'Access-Control-Allow-Credentials' 'true';
+				add_header 'Access-Control-Allow-Headers' 'User-Agent,Keep-Alive,Content-Type';
+			}
+			
+			if ($request_method = OPTIONS) {
+				return 204;
+			}
+		}
+	}
 
 ### 忽略请求正文（可以针对静态文件开启）
 

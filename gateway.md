@@ -10,6 +10,7 @@
 
 	@name   页面名称
 	@author 文档作者署名
+	@notice 描述说明
 	@weight 排序权重，从小到大，范围 1~255
 	@source 代码来源，指定代码解析目标文件
 	@navbar 导航状态，默认可见 visible || 隐藏 hidden
@@ -38,6 +39,7 @@
 	@navbar 导航状态，默认显示 visible || 隐藏 hidden
 	@signed 签名验证, 默认严格 strict || 松散 loosed
 	@access 访问限制，默认允许 allowed || 验证 limited || 关闭 closed
+	@method  请求方式，GET / POST / GET&POST
 	@param  定义参数，type name summary {options}
 	@field 响应参数，type name value summary
 	@patch 变更记录，date author summary

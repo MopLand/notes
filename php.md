@@ -250,6 +250,8 @@
 	
 ## 常见错误
 
-### 无法保存登录状态（session 不能写入）
+### 无法保存登录状态（session 不能写入）Session expired, please login again.
 	
+	# 推荐 chown
+	chown nginx /var/lib/php/session
 	chmod 0777 /var/lib/php/session
