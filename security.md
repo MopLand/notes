@@ -20,6 +20,9 @@
 	# RHSA-2016:2587: wget security and bug fix update (Moderate)
 	yum update wget
 	
+	# CVE-2021-3156: Heap-Based Buffer Overflow in Sudo (Baron Samedit)
+	yum update sudo
+	
 	# glibc security update (Important)
 	yum update glibc
 	yum update glibc-common

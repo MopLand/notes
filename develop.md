@@ -38,11 +38,18 @@
 		kernel.php						# 框架配置
 		licence.php						# 授权文件
 		...								# 其它配置
-
+		
+	cached							# 缓存目录
+		dataset						# 数据缓存
+		database					# 数据库
+		modules						# 模块配置
+		filelog						# 文件日志
+		options						# 配置选项
 
 	library								# 公共类库
 		helper							# 命令行工具
-			init.php					# 项目配置初始化脚本
+			init.php					# 项目初始化
+			caching.php					# 生成配置缓存
 			git-build.php				# Git 提交自动版本号
 			git-merge.php				# Git 自动刷新模块缓存
 			optimize.php				# Composer 优化脚本
@@ -58,7 +65,6 @@
 		
 	run									# WEB 部署目录
 		index.php						# 入口文件
-		crossdomain.xml					# Flash 跨域配置
 		robots.txt						# 搜索引擎规则
 		.htacess						# Apache 规则
 
@@ -112,15 +118,12 @@
 	./*
 
 	# 可读可写 0755
-	# chmod -R 0755 ./config/ ./run/attach/ ./run/cached/
+	# chmod -R 0755 ./config/ ./cached/ ./run/attach/ ./run/cached/
 	./config/
 	./run/attach/
 	./run/cached/
 
 ### 书写规范
-
-#### 工具推荐
-	Atom / VS Code
 
 #### 编码约定
 
@@ -182,12 +185,12 @@
 
 		字段类型
 		id			自增ID		int(11)	
-		sn			序列号		varchar(16)				#使用 Toolkit::getrandstr() 方法生成
+		sn			序列号		varchar(16)				#使用 StrExt::random(16) 方法生成
 		trade		支付流水号	varchar(32)
 		status		状态			tinyint(2)
 		receive		领取状态		tinyint(2) unsigned		#unsigned 表示不包含负值
-		dateline	时间			int(11)					#时间戳
-		datetime	YMD格式时间	int(11)					#为了加快索引
+		created_time	时间			int(11)				#时间戳
+		created_date	YMD格式时间	int(11)					#为了加快索引
 
 	6.数据表和字段采用小写加下划线方式命名，并注意字段名不要以下划线开头，例如 think_user 表和 user_name 字段
 	7.不建议使用驼峰和中文作为数据表字段命名
@@ -233,7 +236,7 @@
 	# 自动更新版本号
 	php dora git-build
 
-	2. 将在每次提交时，自动更新 config/project.php
+	2. 每次静态文变更件时，将自动更新 config/project.php
 
 	product.build
 
@@ -764,7 +767,7 @@
 	\Library\DateTime			# 日期与时间函数
 	\Library\Error				# 系统错误处理
 	\Library\Fs					# FileSystem 文件系统
-	\Library\Fn					# 公共功能服务控制器
+	\Library\Fx					# 公共功能服务控制器
 	\Library\Ftp				# FTP 文件上传操作
 	\Library\HTML				# HTML 模板类
 	\Library\HttpClient			# HTTP 类封装
