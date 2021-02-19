@@ -2,13 +2,14 @@
 
 ## Gateway
 
-	是 Dora 框架中专门处理接口验证的模块
+	Gateway 是 Dora 框架中专门处理接口验证的模块，位于 /app/admin/model
 
 ## 基本用法
 
 ### Controller
 
 	@name   页面名称
+	@cross  跨域访问，true || false
 	@author 文档作者署名
 	@notice 描述说明
 	@weight 排序权重，从小到大，范围 1~255
