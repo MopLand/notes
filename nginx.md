@@ -66,8 +66,8 @@
 	# 不存在的静态文件直接抛出 404
 	# 将路由交由 index.php 处理
 	if (!-e $request_filename) {
-		rewrite ^/(.+)\.txt$ /fn/verify/$1;
-		rewrite ^/attach/(.+)!(.+)\.(gif|jpg|jpeg|png)$ /fn/resized?file=$1&size=$2&mime=$3;
+		rewrite ^/(.+)\.txt$ /fx/verify/$1;
+		rewrite ^/attach/(.+)!(.+)\.(gif|jpg|jpeg|png)$ /fx/resized?file=$1&size=$2&mime=$3;
 		rewrite ^/(.*\.(ico|gif|jpg|jpeg|png|swf|flv|css|js)$) 404;
 		rewrite ^/(.*) /index.php/$1 last;
 	}
@@ -209,8 +209,8 @@
 
 	# Dora 框架路由规则 
 	if (!-e $request_filename) {
-		rewrite ^/(.+)\.(txt|htm|html)$ /fn/verify/$1;
-		rewrite ^/attach/(.+)!(.+)\.(gif|jpg|jpeg|png)$ /fn/resized?file=$1&size=$2&mime=$3;
+		rewrite ^/(.+)\.(txt|htm|html)$ /fx/verify/$1;
+		rewrite ^/attach/(.+)!(.+)\.(gif|jpg|jpeg|png)$ /fx/resized?file=$1&size=$2&mime=$3;
 		rewrite ^/(.*\.(ico|gif|jpg|jpeg|png|swf|flv|css|js)$) 404;
 		rewrite ^/(.*) /index.php/$1 last;
 	}
@@ -825,7 +825,7 @@
 		}
 	
 		if (!-e $request_filename) {
-			rewrite ^/(.+)\.(txt|htm|html)$ /fn/verify/$1;
+			rewrite ^/(.+)\.(txt|htm|html)$ /fx/verify/$1;
 			rewrite ^/(.*\.(ico|gif|jpg|jpeg|png|swf|flv|css|js)$) 404;
 			rewrite ^/(.*) /index.php/$1 last;
 		}
@@ -874,8 +874,8 @@
 		# 前端视图
 		location / {
 			if (!-e $request_filename) {
-				rewrite ^/(.+)\.txt$ /fn/verify/$1;
-				rewrite ^/attach/(.+)!(.+)\.(gif|jpg|jpeg|png)$ /fn/resized?file=$1&size=$2&mime=$3;
+				rewrite ^/(.+)\.txt$ /fx/verify/$1;
+				rewrite ^/attach/(.+)!(.+)\.(gif|jpg|jpeg|png)$ /fx/resized?file=$1&size=$2&mime=$3;
 				rewrite ^/(.*\.(ico|gif|jpg|jpeg|png|swf|flv|css|js)$) 404;
 				rewrite ^/(.*) /index.php/$1 last;
 			}
@@ -912,8 +912,8 @@
 	server {
 		listen 80;
 		
-		server_name cached.example.com;
-		root /disk/www/example.com/cached/;
+		server_name static.example.com;
+		root /disk/www/example.com/static/;
 
 		# 支持 PHP
 		location ~ ^(.+\.php)(.*)$ {
@@ -921,9 +921,9 @@
 		}
 		
 		# Dora 静态缓存
-		location ^~ /compile/ {
+		location ^~ /combine/ {
 			if (!-e $request_filename) {
-				rewrite ^/compile/(.+)\.(css|js)$ /fn/combine?hash=$1;
+				rewrite ^/combine/(.+)\.(css|js)$ /fx/combine?hash=$1;
 				rewrite ^/(.*) /dora.php/$1 last;
 			}
 		}

@@ -322,6 +322,10 @@
 	# 能使用内网访问的服务，优先使用内网 IP，可以指定 Host 主机头来指定域名
 
 	curl -H 'Host: gateway.example.com' http://192.168.1.123/
+	
+### 网络架构
+
+![](notes/image/server_arch.png)
 
 
 ## 相关链接

@@ -3,41 +3,41 @@
 ## 基础知识
 
 ### 目录结构
-	app									# 应用目录
-		master							# 默认应用
-			readme.md					# 说明文档（可选）
-			module.php					# 模块配置（可选）
-			controller					# 控制器
-				index.php				# index 控制器
-			model						# 模型
-			views						# 视图
-				index					# index 视图目录
-					index.php			# indexAction 对应视图
+	app								# 应用目录
+		master						# 默认应用
+			readme.md				# 说明文档（可选）
+			module.php				# 模块配置（可选）
+			controller				# 控制器
+				index.php			# index 控制器
+			model					# 模型
+			views					# 视图
+				index				# index 视图目录
+					index.php		# indexAction 对应视图
 		admin
-			module.php					# 模块配置（可选）
-			controller					# 控制器
-			model						# 模型
-			views						# 视图
+			module.php				# 模块配置（可选）
+			controller				# 控制器
+			model					# 模型
+			views					# 视图
 			
-	assets								# 模板资源
-		config							# 系统设置
-		option							# 功能选项
-		widget							# 服务组件
-		hooks							# GIT 钩子
-		service							# 服务模板
-		...								# 其它配置
+	assets							# 模板资源
+		config						# 系统设置
+		option						# 功能选项
+		widget						# 服务组件
+		hooks						# GIT 钩子
+		service						# 服务模板
+		...							# 其它配置
 
-	config								# 配置文件
-		attach.php						# 附件上传
-		config.php						# 常规配置
-		email.php						# 邮件配置
-		domain.php						# 域名配置
-		global.php						# 全局配置
-		project.php						# 项目配置
-		module.php						# 公共模块
-		kernel.php						# 框架配置
-		licence.php						# 授权文件
-		...								# 其它配置
+	config							# 配置文件
+		attach.php					# 附件上传
+		config.php					# 常规配置
+		email.php					# 邮件配置
+		domain.php					# 域名配置
+		global.php					# 全局配置
+		project.php					# 项目配置
+		module.php					# 公共模块
+		kernel.php					# 框架配置
+		licence.php					# 授权文件
+		...							# 其它配置
 		
 	cached							# 缓存目录
 		dataset						# 数据缓存
@@ -46,66 +46,66 @@
 		filelog						# 文件日志
 		options						# 配置选项
 
-	library								# 公共类库
-		helper							# 命令行工具
-			init.php					# 项目初始化
-			caching.php					# 生成配置缓存
-			git-build.php				# Git 提交自动版本号
-			git-merge.php				# Git 自动刷新模块缓存
-			optimize.php				# Composer 优化脚本
-		...								# 各种类库
+	library							# 公共类库
+		helper						# 命令行工具
+			init.php				# 项目初始化
+			caching.php				# 生成配置缓存
+			git-build.php			# Git 提交自动版本号
+			git-merge.php			# Git 自动刷新模块缓存
+			optimize.php			# Composer 优化脚本
+		...							# 各种类库
 
-	views								# master 视图
-		index							# indexController 视图目录
-			index.php					# indexAction 对应视图
+	views							# master 视图
+		index						# indexController 视图目录
+			index.php				# indexAction 对应视图
 
-	vendor								# 依赖类库
-		autoload.php					# 类库自动加载脚本
-		composer						# Composer 核心文件
+	vendor							# 依赖类库
+		autoload.php				# 类库自动加载脚本
+		composer					# Composer 核心文件
 		
-	run									# WEB 部署目录
-		index.php						# 入口文件
-		robots.txt						# 搜索引擎规则
-		.htacess						# Apache 规则
+	run								# WEB 部署目录
+		index.php					# 入口文件
+		robots.txt					# 搜索引擎规则
+		.htacess					# Apache 规则
 
-		attach							# 上传文件目录
-			image						# 图片
-			flash						# Flash
-			media						# 多媒体
-			mixed						# 其它文件
+		attach						# 上传文件目录
+			image					# 图片
+			flash					# Flash
+			media					# 多媒体
+			mixed					# 其它文件
 		
-		cached							# 缓存目录
-			compile						# 编译缓存
-			dataset						# 数据缓存
-			memorys						# 临时缓存
-			modules						# 模块配置
-			backlog						# 运行日志
+		cached						# 缓存目录
+			compile					# 编译缓存
+			dataset					# 数据缓存
+			memorys					# 临时缓存
+			modules					# 模块配置
+			backlog					# 运行日志
 		
-		public							# 公共资源
-			js							# JS 类库
-			vue							# Vue 类库
-			jquery						# jQuery 类库
-			fonts						# 字体资源
-			charts						# 报表组件
-			errors						# 错误视图
-			editor						# 编辑器资源、脚本
-			service						# 公共服务资源
-			awesome						# 字符图标
-			location					# 位置数据			
-			lightbox					# LightBox 图片展示插件
-			template					# 公共模板，包含设置和邮件模板			
-			bootstarp					# Bootstarp CSS 框架
+		public						# 公共资源
+			js						# JS 类库
+			vue						# Vue 类库
+			jquery					# jQuery 类库
+			fonts					# 字体资源
+			charts					# 报表组件
+			errors					# 错误视图
+			editor					# 编辑器资源、脚本
+			service					# 公共服务资源
+			awesome					# 字符图标
+			location				# 位置数据
+			lightbox				# LightBox 图片展示插件
+			template				# 公共模板，包含设置和邮件模板
+			bootstarp				# Bootstarp CSS 框架
 			
-		static							# 项目资源
-			js							# JS 类库
-			style						# CSS 样式
-			sprite						# CSS 图片
-			images						# 图片资源
+		static						# 项目资源
+			.htaccess				# Apache 规则
+			combine					# 编译缓存，存放 JS/CSS 文件缓存
+			dora.php				# 入口文件
+			...						# 其他资源
 		
-	dora								# 命令行工具
-	composer.json						# Composer 配置
-	README.md							# ReadMe 文件
-	.gitignore							# Git 忽略规则
+	dora							# 命令行工具
+	composer.json					# Composer 配置
+	README.md						# ReadMe 文件
+	.gitignore						# Git 忽略规则
 
 ### 特殊目录
 	.doc				项目数据字典、文档和其他
@@ -118,10 +118,11 @@
 	./*
 
 	# 可读可写 0755
-	# chmod -R 0755 ./config/ ./cached/ ./run/attach/ ./run/cached/
+	# chmod -R 0755 ./config/ ./cached/ ./run/attach/ ./run/static/combine/
 	./config/
+	./cached/
 	./run/attach/
-	./run/cached/
+	./run/static/combine/
 
 ### 书写规范
 
@@ -200,7 +201,7 @@
 	1.尽量不使用JQuery，如有必要请引用 /public/jquery/jquery.min.js
 	其中还包含 jquery.resize、jquery.validate、jquery.waterfall、jquery.zoom 等插件
 	
-	2.前端 MVVM 框架请使用 Vue.js
+	2.前端 MVVM 框架推荐使用 Vue.js
 	http://cn.vuejs.org/
 
 	3.优先使用 Webkit 渲染，针对 360、QQ 等双核浏览器有效：
@@ -1549,7 +1550,24 @@
 			'status' => '状态',
 		);
 
-		Response::excel( '用户数据 - '.date('Y-m-d'), $struct, $result );
+		//字段转换
+		$convert = function (&$v, $k) {
+			switch ($k) {
+				case 'refund_status':
+					$v = $v.'-'.Service::getConfig( 'refund.status' )[$v];
+					break;
+				case 'refund_time':
+				case 'refund_suit_time':
+				case 'settled_time':
+				case 'created_time':
+					$v = date( 'Y-m-d H:i:s', $v );
+					break;
+				default:
+					$v;
+			}
+		};
+
+		Response::excel( '用户数据 - '.date('Y-m-d'), $struct, $result, $convert );
 
 	}
 
