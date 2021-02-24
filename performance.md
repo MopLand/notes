@@ -325,7 +325,13 @@
 	
 ### 网络架构
 
+#### 基础架构
+
 ![](notes/image/server_arch.png)
+
+#### 带 CDN 附件架构
+
+![](notes/image/server_arch_files.png)
 
 
 ## 相关链接
