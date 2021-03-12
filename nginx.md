@@ -242,7 +242,7 @@
 
 	server {
 		listen 88;
-		server_name www.tps.dev;
+		server_name www.example.test;
 		root /Works/TPS/;
 		index index.htm index.html index.php;
 		
@@ -316,7 +316,7 @@
 	# 代理阿里图片
 	server {
 		listen 80;
-		server_name proxy.yqt.so;
+		server_name proxy.zhfile.com;
 		access_log off;
 		location / {
 			resolver 1.1.1.1 8.8.8.8;
@@ -329,7 +329,7 @@
 	# 代理任意资源
 	server {
 		listen 80;
-		server_name proxy.yqt.so proxy.zhfile.com;
+		server_name proxy.zhfile.com;
 		access_log off;
 		location / {
 			resolver 1.1.1.1 8.8.8.8;
@@ -350,7 +350,7 @@
 	# 代理任意资源
 	server {
 		listen 80;
-		server_name proxy.yqt.so proxy.zhfile.com;
+		server_name proxy.zhfile.com;
 		access_log off;
 		location / {
 			resolver 1.1.1.1 8.8.8.8;
@@ -373,10 +373,22 @@
 	
 	server {
 		listen 80;
-		server_name proxy.yqt.so proxy.zhfile.com;
+		server_name proxy.zhfile.com;
 		access_log off;
+	
+		# 淘宝图片
+		location ~* "imgextra" {
+			resolver 114.114.114.114 8.8.8.8;
+
+			proxy_cache imgcache;
+			proxy_pass $scheme://img.alicdn.com/$request_uri;
+			proxy_buffers   64 256k;
+
+			expires         7d;
+		}
 		
-		location ~* "qpic" {
+		# 微信图片
+		location ~* "(qpic|mmsns)" {
 			resolver 114.114.114.114 8.8.8.8;
 			
 			proxy_set_header referer "https://mp.weixin.qq.com/";
@@ -387,6 +399,7 @@
 			expires			7d;
 		}
 		
+		# 博客园
 		location ~* "cnblogs" {
 			resolver 114.114.114.114 8.8.8.8;
 			
@@ -398,6 +411,7 @@
 			expires			7d;
 		}
 		
+		# 其他主图
 		location ~* "goods/(\d+)" {
 			resolver 1.1.1.1 8.8.8.8;
 			
@@ -556,6 +570,7 @@
 	add_header "Access-Control-Allow-Origin" "*" "always";
 
 ### 跨域访问（高级）
+
 	location ~ \.php$ {
 
 		if ($request_method = 'OPTIONS') {
@@ -654,18 +669,31 @@
 		server_name example.com;
 		rewrite ^(.*)$  https://$host$1 permanent;
 	}
+	
+	server {
+		listen 80;
+		listen 443 ssl;
+		server_name www.example.com;
+		root /disk/www/example.com/run;
+		
+		# 仅在 / 上跳转
+		location = / {
+			if ($scheme = "http") {
+				rewrite ^(.*)$  https://$host$1 permanent;
+			}
+		}	
+	}
 
 ### SSL 配置
 
 	# 注意 iptables 中需要允许 443 端口
 	server {
-		listen 443;
+		listen 443 ssl;
 		server_name example.com;
 		root /disk/www/example.com;
 		index index.htm index.html index.php;
 		
-		# 启动 ssl
-		ssl on;
+		#SSL 证书
 		ssl_certificate /disk/certs/example.com.crt;
 		ssl_certificate_key /disk/certs/example.com.key;
 	
@@ -697,7 +725,7 @@
 		index index.html index.htm index.php;
 		root /disk/www/example.com/;
 		
-		#ssl on; 这里要注释掉
+		#SSL 证书
 		ssl_certificate /disk/certs/example.com.crt;
 		ssl_certificate_key /disk/certs/example.com.key;
 	}
@@ -840,16 +868,16 @@
 		set $doc /disk/www/example.com;
 		root $doc;
 		
-		# 后端 PHP
-		location ~ /backend {			
-			rewrite ^/backend/(.*) /index.php/$1 break;
-			include ../rules/phpcgi.conf;
-		}
-		
 		# 前端 VUE
 		location / {
 			root $doc/html;
 			try_files $uri $uri/ /index.html;
+		}
+		
+		# 后端 PHP
+		location ~ /backend {			
+			rewrite ^/backend/(.*) /index.php/$1 break;
+			include ../rules/phpcgi.conf;
 		}
 
 	}
