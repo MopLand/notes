@@ -695,7 +695,7 @@ Collate 校对规则
 
 	ALTER TABLE `pre_member_goods` ADD INDEX `status` (`status`);
 
-### 在Join表的时候使用相当类型的例，并将其索引
+### 在 JOIN 表的时候使用相当类型的例，并将其索引
 
 	<?php
 	$sql = "SELECT company_name FROM users LEFT JOIN companies ON (users.state = companies.state)
@@ -723,6 +723,38 @@ Collate 校对规则
 ### 永远为每张表设置一个ID
 
 	ALTER TABLE `test` ADD `id` int(11) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;
+
+### 可省略 ORDER BY id ASC
+	
+	# 加上 id ASC 可能触发索引
+	SELECT * FROM `pre_member_goods` WHERE `status` = 0 ORDER BY id ASC;
+	
+	# Mysql 默认使用 PRIMARY ASC 排序（升序），所以可以省略
+	SELECT * FROM `pre_member_goods` WHERE `status` = 0;
+	
+### 使用准确的 WHERE 条件
+	
+	# Bad
+	SELECT * FROM `pre_order_list` WHERE `order_code` != 13;
+	
+	# Good
+	SELECT * FROM `pre_order_list` WHERE `order_code` IN( 3, 12, 14 );
+	
+### 使用准确的字段类型
+	
+	# Bad
+	SELECT * FROM `pre_order_list` WHERE `trade_id` = 62465555;
+	
+	# Good
+	SELECT * FROM `pre_order_list` WHERE `trade_id` = '62465555';
+	
+### 多个字段参与排序，确保结果恒等于
+	
+	# Bad
+	SELECT item_id, count(*) AS stats FROM `pre_order_list` GROUP BY item_id ORDER BY stats DESC;
+	
+	# Good
+	SELECT item_id, count(*) AS stats FROM `pre_order_list` GROUP BY item_id ORDER BY stats DESC, create_time DESC;
 
 ### 把IP地址存成 UNSIGNED INT
 
@@ -897,5 +929,7 @@ Collate 校对规则
 - [MySQL索引失效的几种情况](https://www.cnblogs.com/binyue/p/4058931.html)
 - [MySQL表的碎片整理和空间回收小结](https://www.cnblogs.com/kerrycode/p/10943122.html)
 - [MySQL大表优化方案](https://mp.weixin.qq.com/s/fRfAEYqWsNhaJ6ZN8Y6Iew)
+- [炸裂！82张图进阶MySQL的高级玩法！](https://mp.weixin.qq.com/s/_jiTYpyqtasCZ25lVJ7waA)
+- [浅谈分库分表那些事儿](https://mp.weixin.qq.com/s/X6FI9Ci7ZXGDNDCkh2VnNA)
 
 

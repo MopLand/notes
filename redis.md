@@ -149,3 +149,5 @@
 - [Redis](https://redis.io/)
 - [Redis 命令参考](http://redisdoc.com/)
 - [Redis 命令参考](http://doc.redisfans.com/)
+- [什么是分布式锁](https://www.jianshu.com/p/a1ebab8ce78a)
+- [PHP使用redis中setnx防止大并发下二次写入](https://blog.csdn.net/qq_23564667/article/details/105871657)

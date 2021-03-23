@@ -105,6 +105,17 @@
 ### 来电时自动启动
 	BIOS > POWER MANAGEMENT SETUP > Turn On
 	
+### VSCode 终端颜色乱码
+
+	# 下载 ansicon
+	https://github.com/adoxa/ansicon
+	
+	# 解压 ansicon
+	C:\Program Files\ANSICON
+	
+	# 配置 vscoode
+	"terminal.integrated.shell.windows": "C:\\Program Files\\ANSICON\\x64\\ansicon.exe",
+	
 ## 相关链接
 
 - [bat命令入门与高级技巧详解](https://www.jb51.net/article/97204.htm)
