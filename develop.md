@@ -18,6 +18,9 @@
 			controller				# 控制器
 			model					# 模型
 			views					# 视图
+				index				# index 视图目录
+					index.php		# indexAction 对应视图
+					todo.tpl		# index 视图子模块
 			
 	assets							# 模板资源
 		config						# 系统设置
@@ -414,7 +417,7 @@
 	----------------------
 
 	# 命令
-	php /disk/www/example.com/index.php /debug/test
+	php dora /debug/test
 
 	# 对应方法
 	App\Master\Controller\Debug\testAction
@@ -422,7 +425,7 @@
 	----------------------
 
 	# 命令
-	php /disk/www/example.com/index.php /admin/cron
+	php dora /admin/cron
 
 	# 对应方法
 	App\Admin\Controller\Cron\indexAction
@@ -430,7 +433,7 @@
 ### 传入参数
 
 	# 命令
-	php /disk/www/example.com/index.php /cron/account/test -foo bar
+	php dora /cron/account/test -foo bar
 	
 	# 获取参数列表
 	func_get_args()
@@ -440,6 +443,29 @@
 	
 	# 获取指定的参数，省略 - 符号
 	Request::getArgv('foo')
+	
+### 内置命令
+
+	# 配置初始化
+	php dora init
+
+	# 从其他项目复制模块
+	php dora copy [-s , -m]
+
+	# 删除指定控制器和视图
+	php dora delete [-c, -f]
+
+	# 更新本地缓存
+	php dora caching
+
+	# Composer 脚本
+	php dora optimize
+
+	# Git 更新版本号
+	php dora git-build
+
+	# Git 刷新模块缓存
+	php dora git-merge
 
 ## Controller 控制器
 
