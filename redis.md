@@ -10,6 +10,20 @@
 
 ### 测试
 	redis-cli.exe -h 127.0.0.1 -p 6379
+	
+### 常用命令
+	
+	# 注册服务
+	redis-server --service-install redis.windows.conf --loglevel verbose
+		
+	# 卸载服务
+	redis-server --service-uninstall
+		
+	# 启动服务
+	redis-server --service-start
+		
+	# 停止服务
+	redis-server --service-stop
 
 ### Redis 扩展下载
 
@@ -151,3 +165,4 @@
 - [Redis 命令参考](http://doc.redisfans.com/)
 - [什么是分布式锁](https://www.jianshu.com/p/a1ebab8ce78a)
 - [PHP使用redis中setnx防止大并发下二次写入](https://blog.csdn.net/qq_23564667/article/details/105871657)
+- [Windows Service Documentation](https://raw.githubusercontent.com/MSOpenTech/redis/3.0/Windows%20Service%20Documentation.md)
