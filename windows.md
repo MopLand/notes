@@ -100,6 +100,41 @@
 #### 停止服务
 	CMD:\> myapp.exe stop
 	
+## .bat 批处理
+
+	CHCP 65001
+
+	@echo off
+		
+		@echo 淘宝订单
+		php dora /cron/tborder/fetchNewlyOrder
+		@echo ----------------
+		
+		@echo 京东订单
+		php dora /cron/jdorder/newlyOrder
+		@echo ----------------
+		
+		@echo 苏宁订单
+		php dora /cron/suning/fetchOrder
+		@echo ----------------
+		
+		@echo 拼多多订单
+		php dora /cron/pddorder/newlyOrder
+		@echo ----------------
+
+		@echo 唯品会订单
+		php dora /cron/viporder/newlyOrder
+		@echo ----------------
+
+		if %1 == "exit" ( exit )
+		
+	@pause
+
+## .vbs VB 脚本
+
+	Set ws = CreateObject("Wscript.Shell")
+	ws.run "cmd /c fetchOrder.bat",vbhide
+	
 ## 实用技巧
 
 ### 来电时自动启动

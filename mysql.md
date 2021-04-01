@@ -931,5 +931,4 @@ Collate 校对规则
 - [MySQL大表优化方案](https://mp.weixin.qq.com/s/fRfAEYqWsNhaJ6ZN8Y6Iew)
 - [炸裂！82张图进阶MySQL的高级玩法！](https://mp.weixin.qq.com/s/_jiTYpyqtasCZ25lVJ7waA)
 - [浅谈分库分表那些事儿](https://mp.weixin.qq.com/s/X6FI9Ci7ZXGDNDCkh2VnNA)
-
-
+- [SQL 性能起飞了！](https://mp.weixin.qq.com/s/YbZfp8UXODZ4V55dvRxJRw)
