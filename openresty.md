@@ -1,6 +1,7 @@
-## 下载 、安装openresty
-[openresty官网链接](http://openresty.org/cn/download.html)
-按照官网下载安装
+## 安装 openresty
+
+OpenResty 官网链接 [http://openresty.org/cn/download.html](http://openresty.org/cn/download.html)
+
 ```powershell
 tar -xzvf openresty-VERSION.tar.gz
 cd openresty-VERSION/
@@ -9,22 +10,35 @@ make
 make install
 ```
 
-## 运行
+## 运行 openresty
 
 ```powershell
+
 # 默认安装路径为 /usr/local/openresty
 # pwd 命令来查看"当前工作目录"的完整路径
+
 /usr/local/openresty/nginx/sbin/nginx -p `pwd`/ -c /usr/local/openresty/nginx/conf/nginx.conf
 
 # 启动
 /usr/local/openresty/nginx/sbin/nginx
+
 # 停止
 /usr/local/openresty/nginx/sbin/nginx -s stop
+
 # 重启
 /usr/local/openresty/nginx/sbin/nginx -s reload
+
 # 检验nginx配置是否正确
 /usr/local/openresty/nginx/sbin/nginx -t
 ```
+
+## 常用命令
+
+	systemctl enable openresty
+
+	systemctl status openresty
+
+	systemctl restart openresty
 
 ## nignx 配置
 启动文件为nginx.conf ，要支持多文件 需要加上 include conf.d/*.conf;
@@ -58,9 +72,6 @@ http {
 ··· 省略 ···
 ```
 
-## lua 编程
-[参考](https://blog.csdn.net/u013565163/article/details/105537199)
-
 ### set_by_lua
 执行指定脚本和输入的值返回一个结果
 
@@ -80,11 +91,9 @@ location /foo {
 ]]
 ```
 
-
 ## 让systemd 管理
 
- 1.   vim打开/usr/lib/systemd/system/nginx.service
-内容如下
+1.   vim打开 /usr/lib/systemd/system/nginx.service 内容如下
 ```powershell
 [Unit]
 Description=The nginx process manager
@@ -105,4 +114,8 @@ WantedBy=multi-user.target
 ```powershell
 systemctl daemon-reload
 ```
-[参考](https://blog.csdn.net/it_10/article/details/89057257)
+
+### 相关链接
+
+[Centos7.X配置Nginx+Lua（OpenResty）以及让systemd 管理nginx服务](https://blog.csdn.net/it_10/article/details/89057257)
+[使用openresty通过lua修改请求/响应头](https://blog.csdn.net/u013565163/article/details/105537199)

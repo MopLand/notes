@@ -774,80 +774,90 @@ Collate 校对规则
 #### 配置文件
 	/etc/my.cnf
 
-#### 等待超时（设置后会影响密集查询）
-	wait_timeout = 10
+#### [client]
 
-#### 启用事件调度器
-	event_scheduler = ON
+	# 客户端默认端口和密码
+	port = 3306
+	password=root
 
-#### 修复表进程
-	myisam_repair_threads = 8
-
-#### 最大连接数
-	max_connections = 10240
-
-#### 最大错误连接数（超过此值会导致拒绝连接请求）
-	max_connect_errors = 1024
-
-#### 连接的非NULL值的字符串长度
-	group_concat_max_len = 102400
-
-#### 慢查询时间限定
-	long_query_time = 1
-
-#### 开启慢查询日志
-	slow_query_log = 1
-
-#### 慢查询日志文件
-	slow_query_log_file = /var/log/mysql.slow.log
-
-#### 开启普通日志
-	general_log = ON
-
-#### 普通日志文件
-	general_log_file = /var/log/mysql.general.log
-
-#### 禁止DNS反向解析（只使用IP连接，可以提升远程连接速度）
-	skip-name-resolve = 1
-
-#### 跳过权限验证表（常用于修改 root 密码）
-	skip-grant-tables = 1
-
-#### 独立表空间
-	innodb_file_per_table = 1
-
-#### 缓冲池字节大小（内存的 70%-80%）
-	innodb_buffer_pool_size = 6G
-
-#### 日志组每个日志文件的字节大小
-	innodb_log_file_size = 256M
-
-#### 写入日志文件时的缓冲区大小
-	innodb_log_buffer_size = 8M
-
-#### 等待事务锁超时时间
-	innodb_lock_wait_timeout = 60
-
-#### 更改 Data 目录
-
-	# /etc/my.cnf
-	
-	[mysqld]
-	datadir=/disk/mysql
-	socket=/disk/mysql/mysql.sock
-
-#### 更改 sock 位置
-
-	# /etc/my.cnf
-	
-	[client]
+	# 更改 sock 位置
 	socket=/disk/mysql/mysql.sock
 	
-	# /etc/php.ini
-	
+	# 同时更新 /etc/php.ini	
 	mysql.default_socket = /disk/mysql/mysql.sock
 	mysqli.default_socket = /disk/mysql/mysql.sock
 	pdo_mysql.default_socket = /disk/mysql/mysql.sock
+	
+#### [mysqld]
+	
+	# 更改 Data 目录
+	datadir=/disk/mysql
+	
+	# 更改 Sock 文件
+	socket=/disk/mysql/mysql.sock
+
+	# 等待超时（设置后会影响密集查询）
+	wait_timeout = 10
+
+	# 启用事件调度器
+	event_scheduler = ON
+
+	# 修复表进程
+	myisam_repair_threads = 8
+
+	# 最大连接数
+	max_connections = 10240
+
+	# 最大错误连接数（超过此值会导致拒绝连接请求）
+	max_connect_errors = 1024
+
+	# 连接的非NULL值的字符串长度
+	group_concat_max_len = 102400
+
+	# 慢查询时间限定
+	long_query_time = 1
+
+	# 开启慢查询日志
+	slow_query_log = 1
+
+	# 慢查询日志文件
+	slow_query_log_file = /var/log/mysql.slow.log
+
+	# 开启普通日志
+	general_log = ON
+
+	# 普通日志文件
+	general_log_file = /var/log/mysql.general.log
+	
+	# 绑定 IP 地址
+	bind-address	= 127.0.0.1
+
+	# 禁止DNS反向解析（只使用IP连接，可以提升远程连接速度）
+	skip-name-resolve = 1
+
+	# 跳过权限验证表（常用于修改 root 密码）
+	skip-grant-tables = 1
+	
+	# 默认存储引擎
+	default-storage-engine = InnoDB
+
+	# 独立表空间
+	innodb_file_per_table = 1
+
+	# 缓冲池字节大小（内存的 70%-80%）
+	innodb_buffer_pool_size = 6G
+
+	# 日志组每个日志文件的字节大小
+	innodb_log_file_size = 256M
+
+	# 写入日志文件时的缓冲区大小
+	innodb_log_buffer_size = 8M
+
+	# 等待事务锁超时时间
+	innodb_lock_wait_timeout = 60
+	
+	# sql_mode 配置
+	sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
 	
 #### 常用 sql_mode
 
