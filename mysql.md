@@ -174,7 +174,7 @@
 	SELECT CONCAT(first_name,' ',last_name) AS full_name FROM `tblname`;
 
 #### 重复的渠道+广告位组合
-	SELECT CONCAT( relation_id, '_', adzone_id ) AS idx, COUNT(*) AS q FROM `pre_member_relation` WHERE relation_id > 0 GROUP BY idx HAVING q > 1
+	SELECT CONCAT( relation_id, '_', adzone_id ) AS idx, COUNT(*) AS q FROM `pre_member_relation` WHERE relation_id > 0 GROUP BY idx HAVING q > 1;
 
 #### 移除小数后面的零
 	SELECT (TRIM(attr_price) + 0 ) AS attr_price;
@@ -210,13 +210,16 @@
 	SELECT * FROM `pre_article_list` WHERE id NOT IN ( SELECT id FROM `pre_article_list` WHERE article_content LIKE '%>' );
 
 #### 查找没有店铺信息的店铺ID 
-	SELECT seller_id FROM `pre_goods_list` WHERE seller_id NOT IN ( SELECT seller_id FROM `pre_goods_shop` ) AND status = 1 AND seller_id > 0 ORDER BY id DESC LIMIT 100
+	SELECT seller_id FROM `pre_goods_list` WHERE seller_id NOT IN ( SELECT seller_id FROM `pre_goods_shop` ) AND status = 1 AND seller_id > 0 ORDER BY id DESC LIMIT 100;
 
 #### 使用正则匹配
 	SELECT * FROM `pre_wechat_account` WHERE 'www.example.com' REGEXP domain;
 
 #### 按时段统计订单数量和金额
-	SELECT COUNT(*), SUM(pub_share_pre_fee), FROM_UNIXTIME( UNIX_TIMESTAMP( create_time ), '%H' ) AS hour FROM pre_order_shadow WHERE create_date >= 20191010 GROUP BY hour
+	SELECT COUNT(*), SUM(pub_share_pre_fee), FROM_UNIXTIME( UNIX_TIMESTAMP( create_time ), '%H' ) AS hour FROM pre_order_shadow WHERE create_date >= 20191010 GROUP BY hour;
+	
+#### 实现资金余额
+	SELECT money, (SELECT SUM(money) FROM `pre_account_detail` WHERE id <= d.id and `member_id` = 10008) AS balance FROM `pre_account_detail` AS d WHERE `member_id` = 10008;
 
 #### 两时间比较
 	SELECT TIMESTAMPDIFF(DAY, '2018-03-20 23:59:00', '2015-03-22 00:00:00');
