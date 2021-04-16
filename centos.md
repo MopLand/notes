@@ -247,17 +247,24 @@
 ## CentOS 7 安装 Mysql
 
 1. 下载 mysql 的 repo 源
-
 		wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
 
 2. 安装 mysql-community-release-el7-5.noarch.rpm 包
-
 		rpm -ivh mysql-community-release-el7-5.noarch.rpm
 
 3. 安装 mysql
-
 		yum install mysql-server
 
+## CentOS 8 安装 Mysql
+
+1. 下载 mysql 的 repo 源
+		wget http://repo.mysql.com/mysql80-community-release-el8-1.noarch.rpm
+
+2. 安装 mysql80-community-release-el8-1.noarch.rpm 包
+		rpm -ivh mysql80-community-release-el8-1.noarch.rpm
+
+3. 安装 mysql
+		sudo dnf install mysql-server
 
 ## CentOS 7 安装 Memcahce
 

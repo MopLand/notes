@@ -36,6 +36,7 @@
 	@crumbs 关联地址，导航条 Action 名称
 	@cloned 复制配置，从其他 Action 引用并合并配置
 	@tester 测试方法，默认不是 false || 启用 true
+	@cancel 弃用标记，默认不是 false || 弃用 true || 迁移 path
 	@manual 文档状态，默认可见 visible || 隐藏 hidden
 	@navbar 导航状态，默认显示 visible || 隐藏 hidden
 	@signed 签名验证, 默认严格 strict || 松散 loosed
@@ -205,6 +206,7 @@
 		 * @active 活跃级别，一般服务 normal || 低频服务 low
 		 * @access 访问限制，默认允许 allowed || 验证 limited || 关闭 closed
 		 * @signed 签名验证, 默认严格 strict || 松散 loosed
+		 * @cancel jingdong/giftList
 		 * @method GET
 		 * @input string type 产品类型
 		 * @param integer page 当前页码
