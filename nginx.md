@@ -678,7 +678,14 @@
 		
 		# 仅在 / 上跳转
 		location = / {
+			
+			# 适用于自建负载
 			if ($scheme = "http") {
+				rewrite ^(.*)$  https://$host$1 permanent;
+			}
+
+			# 适用于腾讯云负载
+			if ($http_x_client_proto = "http") {
 				rewrite ^(.*)$  https://$host$1 permanent;
 			}
 		}	
