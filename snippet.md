@@ -84,6 +84,41 @@
 		$ret = json_decode($txt, TRUE, 512, JSON_BIGINT_AS_STRING);
 	}
 	
+### 随机分配并验证组合是否重复
+	function generate( $taobao_uid, $field ){
+
+		do {
+	
+			//随机出一个渠道PID
+			$adzone = $this->getAdzone( $taobao_uid );
+
+			//随机分配渠道关系ID
+			$beian = $this->getBeian( $taobao_uid );
+
+			//检查是否存在 PID + relation_id 组合
+			$count = $this->getCount( $beian['relation_id'], $adzone['adzone_id'] );
+	
+		//存在此组合，重新生成
+		} while ( $count > 0 );
+		
+		////////////////////////////
+
+		$field['taobao_uid']	= $taobao_uid;
+		$field['relation_id']	= $beian['relation_id'];
+		$field['promote_id']	= $adzone['promote_id'];
+		$field['adzone_id']		= $adzone['adzone_id'];
+
+		$field['created_time']	= time();
+		$field['created_date']	= date('Ymd');
+		$field['ip']			= Request::getIP();
+
+        // 写入关联表
+		$ret = $this->db->insert('pre_member_relation', $field);
+		
+		return $ret;
+		
+	}
+	
 ## HTML
 	
 ## JavaScript

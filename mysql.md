@@ -204,6 +204,8 @@
 	SELECT num FROM `tblname` AS t WHERE EXISTS( SELECT 1 FROM `tblmisc` WHERE num = t.num );
 
 #### 查找以逗号分隔的值，IN 效率更好
+	SELECT * FROM `pre_pinduoduo_goods` WHERE FIND_IN_SET(10700, opt_ids);
+	
 	SELECT COUNT(*) FROM `pre_member_client` WHERE FIND_IN_SET(`app_id`, '20860,20859,20858,20857,20856');
 
 #### 查找某字段不以某符号结尾的记录
