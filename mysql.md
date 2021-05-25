@@ -389,7 +389,7 @@
 ### 更新 Ymd 日期
 	UPDATE `pre_member_upgrade` SET `datetime` = FROM_UNIXTIME(`dateline`, '%Y%m%d');
 	
-	UPDATE `pre_order_deduct` SET settle_date = DATE_FORMAT( settle_time, '%Y%m%d') WHERE `settle_time` IS NOT NULL AND `settle_date` = '0';
+	UPDATE `pre_order_deduct` SET settle_date = DATE_FORMAT( settle_time, '%Y%m%d') WHERE `settle_time` IS NOT NULL AND `settle_date` = 0;
 	
 ### 借助临时字段交换两列的值
 	UPDATE `pre_widget_data` SET tmp = extend, extend = link, link = tmp, tmp = NULL WHERE extend LIKE '%:%';
@@ -545,45 +545,45 @@ Collate 校对规则
 
 ----------
 
-## 自定义函数
-
-### 定义方法
-	DELIMITER ;;
-	DROP FUNCTION IF EXISTS fetch_month;
-	CREATE FUNCTION fetch_month() RETURNS INT READS SQL DATA
-	BEGIN
-	
-		-- 上月时间
-		DECLARE m_begin INT DEFAULT( date_add(date_add(LAST_DAY(CURRENT_DATE),interval 1 DAY),interval -2 MONTH) );
-		DECLARE m_final INT DEFAULT( LAST_DAY(CURRENT_DATE - INTERVAL 1 MONTH) );
-	
-		RETURN( m_final - m_begin );
-	END;
-	;;
-
-### 调用方法
-	SELECT fetch_month();
-
-----------
-
 ## 存储过程
 
 ### 定义方法
-	DELIMITER //
-	DROP PROCEDURE IF EXISTS create_serial //
-	CREATE PROCEDURE create_serial()
-	BEGIN 
-		DECLARE init INT DEFAULT 1;
+	DELIMITER ;;
+	DROP PROCEDURE IF EXISTS `func_tasks_save`;;
+	CREATE PROCEDURE `func_tasks_save`(IN `task` varchar(64), IN `data` text, IN `stamp` INT(11))
+	BEGIN
 		
-		WHILE init < 200 DO
-			INSERT INTO pre_agent_serial(code) VALUES(replace(RAND(),'.',''));
-			SET init = init + 1;
-		END WHILE;
-	END;
-	//
+		-- 写入任务日志
+		INSERT INTO `pre_system_tasks`(`task`,`data`,`duration`,`started_time`,`created_time`,`created_date`) VALUES( task, data, UNIX_TIMESTAMP() - stamp, stamp, UNIX_TIMESTAMP(), DATE_FORMAT(NOW(),'%Y%m%d') );
 
+	END;;
+
+	DELIMITER ;
+	
 ### 调用方法
-	CALL create_serial();
+	CALL func_tasks_save( 'todo_minute_task', '', UNIX_TIMESTAMP() );
+	
+### 定时任务
+	DELIMITER ;;
+	CREATE EVENT `todo_fivemin_task`
+	ON SCHEDULE EVERY '5' MINUTE STARTS '2016-05-18 00:00:05' ON COMPLETION PRESERVE
+	ENABLE COMMENT '' DO
+	BEGIN
+
+		-- 任务开始时间
+		SET @start_time = UNIX_TIMESTAMP();
+
+		--
+
+		-- 更新备案渠道使用数
+		UPDATE `pre_taobao_beian` SET binding_num = ( SELECT COUNT(*) FROM `pre_member_relation` WHERE relation_id = `pre_taobao_beian`.relation_id );
+		SELECT ROW_COUNT() INTO @row_count;
+
+		-- 写入任务日志
+		CALL func_tasks_save( 'todo_fivemin_task', @row_count, @start_time );
+
+	END;;
+	DELIMITER ;
 
 ----------
 
@@ -737,6 +737,14 @@ Collate 校对规则
 	# Mysql 默认使用 PRIMARY ASC 排序（升序），所以可以省略
 	SELECT * FROM `pre_member_goods` WHERE `status` = 0;
 	
+### 将影响索引的 GROUP BY 稍后执行
+	
+	# Bad
+	SELECT `item_id` FROM `pre_order_list` WHERE platform = 'kaola' AND `created_date` >= 20210510 AND `item_pic` = '' GROUP BY item_id LIMIT 100;
+	
+	# Good
+	SELECT * FROM ( SELECT `item_id` FROM `pre_order_list` WHERE platform = 'kaola' AND `created_date` >= 20210510 AND `item_pic` = '' ) AS tmp GROUP BY item_id LIMIT 100;
+	
 ### 使用准确的 WHERE 条件
 	
 	# Bad
@@ -760,6 +768,14 @@ Collate 校对规则
 	
 	# Good
 	SELECT item_id, count(*) AS stats FROM `pre_order_list` GROUP BY item_id ORDER BY stats DESC, create_time DESC;
+	
+### 优先对 JOIN 的表进行条件过滤
+
+	# Bad
+	SELECT COUNT(ord.order_id) FROM `pre_order_list` AS ord LEFT JOIN `pre_taobao_token` AS tkl ON ord.member_id = tkl.member_id AND ord.item_id = tkl.goods_id WHERE ord.`platform` = 'taobao' AND ord.created_date = 20210513 AND tkl.created_date = 20210513;
+
+	# Good
+	SELECT COUNT(ord.order_id) FROM `pre_order_list` AS ord LEFT JOIN `pre_taobao_token` AS tkl ON tkl.created_date = 20210513 AND ord.member_id = tkl.member_id AND ord.item_id = tkl.goods_id WHERE ord.`platform` = 'taobao' AND ord.created_date = 20210513;
 
 ### 把IP地址存成 UNSIGNED INT
 
