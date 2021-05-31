@@ -399,16 +399,16 @@
 ## 批量更新
 
 ### REPLACE INTO
-	REPLACE INTO tbl(id, dr) VALUES (1,’2′),(2,’3′),(n,’y’);
+	REPLACE INTO tbl(id, dr) VALUES (1,'2′),(2,'3′),('n','y');
 	
 ### INSERT INTO
-	INSERT INTO tbl (id, dr) VALUES (1,’2′),(2,’3′),…(x,’y’) ON DUPLICATE KEY UPDATE dr = VALUES(dr);
+	INSERT INTO tbl (id, dr) VALUES (1,'2′),(2,'3′),…('x','y') ON DUPLICATE KEY UPDATE dr = VALUES(dr);
 
 ### WHEN x THEN y
 	UPDATE tbl SET status = CASE id 
-	WHEN 1 THEN 3
-	WHEN 2 THEN 4
-	WHEN 3 THEN 5
+		WHEN 1 THEN 3
+		WHEN 2 THEN 4
+		WHEN 3 THEN 5
 	END WHERE id IN (1,2,3);
 
 ----------
@@ -641,8 +641,7 @@ Collate 校对规则
 	    ON COMPLETION PRESERVE
 	DO
 	BEGIN
-		INSERT INTO `tblname`(`time`) VALUES (NOW());		
-	
+		INSERT INTO `tblname`(`time`) VALUES (NOW());
 	END $$	
 	DELIMITER ;
 
@@ -851,7 +850,7 @@ Collate 校对规则
 	general_log_file = /var/log/mysql.general.log
 	
 	# 绑定 IP 地址
-	bind-address	= 127.0.0.1
+	bind-address = 127.0.0.1
 
 	# 禁止DNS反向解析（只使用IP连接，可以提升远程连接速度）
 	skip-name-resolve = 1

@@ -90,6 +90,7 @@
 	net.ipv4.tcp_tw_recycle = 1  #tcp回收
 	net.ipv4.tcp_tw_reuse   = 1  #tcp复用
 	net.core.somaxconn   = 65535 #每一个端口最大的监听队列的长度
+	```
 
 ## PHP
 	# 将用户可操作的文件限制在某目录下（使用后性能会下降）
@@ -236,3 +237,8 @@
 ### 第三方域名绑定
 
 	提供 CNAME 域名来完成接入
+	
+### 相关链接
+
+- [PHP 远程代码执行漏洞复现（CVE-2019-11043）【反弹shell成功】](http://blog.leanote.com/post/snowming/9da184ef24bd)
+- [干货|CVE-2019-11043: PHP-FPM在Nginx特定配置下任意代码执行漏洞分析](https://blog.csdn.net/jdcdev_/article/details/103066483)
