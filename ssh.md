@@ -153,14 +153,14 @@
 	PermitRootLogin no
 
 ### 上传 id_rsa.pub 到 /root/
-	scp .ssh/id_rsa.pub root@192.168.1.181:/root/id_rsa.pub
+	scp .ssh/id_rsa.pub root@192.168.1.181:/root/.ssh/id_rsa.pub
 
 ### 复制 id_rsa.pub 到 .ssh/authorzied_keys
-	cat id_rsa.pub >> .ssh/authorized_keys
+	cat .ssh/id_rsa.pub >> .ssh/authorized_keys
 	chmod 600 .ssh/authorized_keys
 
 ### 删除 id_rsa.pub
-	rm ~/id_rsa.pub
+	rm ~/.ssh/id_rsa.pub
 
 ### Putty 配置
 	/Connection/SSH/Auth	加载私钥文件（Private key）

@@ -90,7 +90,10 @@
 	SELECT a.*, b.* FROM `tbl_a` AS a LEFT JOIN `tbl_b` AS b ON a.id = b.id;
 
 #### IF CASE 运算
-	SELECT IF (priv=1, admin, guest) AS usertype FROM privs WHERE username = 'joe';
+	SELECT IF (priv=1, admin, guest) AS usertype FROM `tblname` WHERE username = 'joe';
+	
+#### IF NULL 运算
+	SELECT IFNULL(SUM(money), 0) as total, COUNT(*) as stats FROM `tblname` WHERE category = 'referral'；
 
 #### GROUP BY 分组查询
 	SELECT name, SUM(price) FROM `tblname` GROUP BY name;
@@ -99,7 +102,7 @@
 	SELECT name, SUM(price) FROM `tblname` WHERE `month` BETWEEN 1 AND 12;
 
 #### 区分大小写查询
-	SELECT * from `tblname` WHERE BINARY columnA = 'abc';
+	SELECT * FROM `tblname` WHERE BINARY columnA = 'abc';
 	
 #### 截取部分字符串，查询超长文本会显著提高效率
 	SELECT event_id, taking_time, memory_usage, SUBSTR(result, 1, 200) as result FROM `pre_cron_event`;
@@ -138,7 +141,7 @@
 	SELECT * FROM `pre_market_version` WHERE id IN( SELECT MAX(id) FROM `pre_market_version` GROUP BY `appid` );
 
 #### 查询重复记录
-	SELECT email, COUNT(email) AS q FROM emails_table GROUP BY email HAVING q > 1 ORDER BY q DESC;
+	SELECT email, COUNT(email) AS q FROM `emails_table` GROUP BY email HAVING q > 1 ORDER BY q DESC;
 
 #### 销售额前100的代理
 	SELECT t.agent_id, t.agent_name, a.qq, sum(t.money) AS total FROM `pre_agent_trade` as t left join pre_agent_list as a on a.agent_id = t.agent_id WHERE t.money > 0 GROUP BY t.agent_id ORDER BY total DESC LIMIT 100;
@@ -150,19 +153,19 @@
 	SELECT c.*, g.goods_name, g.goods_short, g.goods_thumb, g.attr_price FROM `pre_goods_list` AS g INNER JOIN `pre_goods_comment` AS c ON c.goods_id = g.goods_id WHERE g.goods_id > 0 AND g.attr_comment > 0 AND c.comment_id = (SELECT MAX(comment_id) FROM `pre_goods_comment` WHERE goods_id = g.goods_id);
 
 #### 最近7天，每个时段查询
-	SELECT FROM_UNIXTIME(dateline,'%H') AS hh, appid, `version`, count(*) FROM pre_app_statis WHERE `datetime` > DATE_SUB(CURDATE(), INTERVAL 7 DAY) GROUP BY hh, appid, `version`;
+	SELECT FROM_UNIXTIME(dateline,'%H') AS hh, appid, `version`, COUNT(*) FROM pre_app_statis WHERE `datetime` > DATE_SUB(CURDATE(), INTERVAL 7 DAY) GROUP BY hh, appid, `version`;
 
 #### 最近7天，每个版本查询
-	SELECT `datetime`, appid, `version`, count(*) FROM pre_app_statis WHERE appid = 1 AND `datetime` > DATE_SUB(CURDATE(), INTERVAL 7 DAY) GROUP BY `datetime`, `version`;
+	SELECT `datetime`, appid, `version`, COUNT(*) FROM pre_app_statis WHERE appid = 1 AND `datetime` > DATE_SUB(CURDATE(), INTERVAL 7 DAY) GROUP BY `datetime`, `version`;
 
 #### 提现次数大于 2 笔的用户
-	SELECT agent_id, agent_name, `money`, `datetime`, count(*) as stat FROM `pre_agent_trade` WHERE `money` < 0 and `datetime` >= 20160720 group by agent_id HAVING stat > 1;
+	SELECT agent_id, agent_name, `money`, `datetime`, COUNT(*) as stat FROM `pre_agent_trade` WHERE `money` < 0 and `datetime` >= 20160720 group by agent_id HAVING stat > 1;
 
 #### 查找重复的卡密
-	SELECT agent_id, agent_name, code, count(*) as stat FROM `pre_agent_cdkey` GROUP BY code HAVING stat > 1;
+	SELECT agent_id, agent_name, code, COUNT(*) as stat FROM `pre_agent_cdkey` GROUP BY code HAVING stat > 1;
 
 #### 新注册代理付款金额
-	SELECT t.sn, t.id, t.money, c.agent_id, c.agent_name from pre_agent_trade as t LEFT JOIN ( SELECT * FROM `pre_agent_cdkey` WHERE trade_id > 0 ORDER BY trade_id ASC group by trade_id ) AS c on t.id = c.trade_id WHERE t.sn != '';
+	SELECT t.sn, t.id, t.money, c.agent_id, c.agent_name FROM pre_agent_trade as t LEFT JOIN ( SELECT * FROM `pre_agent_cdkey` WHERE trade_id > 0 ORDER BY trade_id ASC group by trade_id ) AS c on t.id = c.trade_id WHERE t.sn != '';
 
 #### 商品搜索页排序显示
 	SELECT `id`, `gid`, `title`, stick, uid, `dateline`, `timeline`, FROM_UNIXTIME( `timeline`, '%Y/%m/%d %T' ) FROM `pre_goods_list` WHERE `status` > 0 ORDER BY stick DESC, timeline DESC limit 80, 40;
@@ -178,9 +181,12 @@
 
 #### 移除小数后面的零
 	SELECT (TRIM(attr_price) + 0 ) AS attr_price;
+	
+#### 移除前后的符号
+	SELECT TRIM(BOTH ', ' FROM @member_ids);
 
 #### 指定使用索引
-	SELECT id FROM data USE INDEX(type) WHERE type = 12345 AND level > 3 ORDER BY id;
+	SELECT id FROM `tblname` USE INDEX(type) WHERE type = 12345 AND level > 3 ORDER BY id;
 	
 	SELECT * FROM `pre_order_list` USE INDEX(PRIMARY, create_date,settle_date,member_id,tk_status) WHERE `create_date` BETWEEN 20200301 AND 20200331  ORDER BY order_id DESC LIMIT 0,20;
 	
@@ -210,6 +216,9 @@
 
 #### 查找某字段不以某符号结尾的记录
 	SELECT * FROM `pre_article_list` WHERE id NOT IN ( SELECT id FROM `pre_article_list` WHERE article_content LIKE '%>' );
+	
+#### 查找错误的用户头像地址
+	SELECT * FROM `pre_member_list` WHERE `avatar` != '' AND ( `avatar` NOT LIKE 'http:%' AND `avatar` NOT LIKE 'https:%' );
 
 #### 查找没有店铺信息的店铺ID 
 	SELECT seller_id FROM `pre_goods_list` WHERE seller_id NOT IN ( SELECT seller_id FROM `pre_goods_shop` ) AND status = 1 AND seller_id > 0 ORDER BY id DESC LIMIT 100;
@@ -363,7 +372,7 @@
 	UPDATE `tblname` SET field = 1 - field;
 
 ### 带查询的更新
-	UPDATE pre_tasks_list SET payout_quantity =( SELECT count(*) FROM pre_tasks_order WHERE pre_tasks_order.status = 1 AND pre_tasks_list.id = pre_tasks_order.tasks_id );
+	UPDATE pre_tasks_list SET payout_quantity =( SELECT COUNT(*) FROM pre_tasks_order WHERE pre_tasks_order.status = 1 AND pre_tasks_list.id = pre_tasks_order.tasks_id );
 
 ### 更新订单表商品主图
 	UPDATE `pre_order_list` SET goods_thumb = ( SELECT goods_thumb FROM `pre_goods_list` WHERE goods_id = `pre_order_list`.num_iid ) WHERE goods_thumb IS NULL;
@@ -378,7 +387,7 @@
 	UPDATE `pre_member_upgrade` AS upg JOIN `pre_member_relation` AS rel ON rel.`member_id` = upg.member_id SET upg.source_id = rel.source_id, upg.source_name = rel.source_name WHERE upg.source_id IS NULL;
 
 ### 保留用户最新一条记录，其他删除
-	DELETE FROM `tblname` WHERE id NOT IN( SELECT ids FROM ( SELECT max(id) AS ids FROM `tblname` GROUP BY openid ) AS tmp );
+	DELETE FROM `tblname` WHERE id NOT IN( SELECT ids FROM ( SELECT MAX(id) AS ids FROM `tblname` GROUP BY openid ) AS tmp );
 
 ### 上架已通过审核的商品
 	UPDATE `pre_goods_list` SET status = 1 WHERE gid IN ( SELECT gid FROM `pre_member_goods` WHERE status = 1 );
@@ -399,10 +408,10 @@
 ## 批量更新
 
 ### REPLACE INTO
-	REPLACE INTO tbl(id, dr) VALUES (1,'2′),(2,'3′),('n','y');
+	REPLACE INTO `tblname`(id, dr) VALUES (1,'2'),(2,'3'),('n','y');
 	
 ### INSERT INTO
-	INSERT INTO tbl (id, dr) VALUES (1,'2′),(2,'3′),…('x','y') ON DUPLICATE KEY UPDATE dr = VALUES(dr);
+	INSERT INTO `tblname`(id, dr) VALUES (1,'2'),(2,'3'),…('x','y') ON DUPLICATE KEY UPDATE dr = VALUES(dr);
 
 ### WHEN x THEN y
 	UPDATE tbl SET status = CASE id 
@@ -714,7 +723,7 @@ Collate 校对规则
 	$r = mysql_query("SELECT username FROM user ORDER BY RAND() LIMIT 1");
 	 
 	// 这要会更好
-	$r = mysql_query("SELECT count(*) FROM user");
+	$r = mysql_query("SELECT COUNT(*) FROM user");
 	$d = mysql_fetch_row($r);
 	$rand = mt_rand(0,$d[0] - 1);
 	 
@@ -763,10 +772,10 @@ Collate 校对规则
 ### 多个字段参与排序，确保结果恒等于
 	
 	# Bad
-	SELECT item_id, count(*) AS stats FROM `pre_order_list` GROUP BY item_id ORDER BY stats DESC;
+	SELECT item_id, COUNT(*) AS stats FROM `pre_order_list` GROUP BY item_id ORDER BY stats DESC;
 	
 	# Good
-	SELECT item_id, count(*) AS stats FROM `pre_order_list` GROUP BY item_id ORDER BY stats DESC, create_time DESC;
+	SELECT item_id, COUNT(*) AS stats FROM `pre_order_list` GROUP BY item_id ORDER BY stats DESC, create_time DESC;
 	
 ### 优先对 JOIN 的表进行条件过滤
 
@@ -935,10 +944,10 @@ Collate 校对规则
 #### SQLSTATE[42000]: Syntax error or access violation: 1055 Expression #5 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'xxx' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by	
 	
 	# Mysql 5.6 以前
-	SELECT count(*) as `stats`,`action` as `name`,`module` FROM `pre_order_list` GROUP BY `module` ORDER BY `stats` DESC
+	SELECT COUNT(*) as `stats`,`action` as `name`,`module` FROM `pre_order_list` GROUP BY `module` ORDER BY `stats` DESC
 	
 	# Mysql 5.7 以后，需要将更多的参数参与 GROUP BY 分类
-	SELECT count(*) as `stats`,`action` as `name`,`module` FROM `pre_order_list` GROUP BY `action`, `module` ORDER BY `stats` DESC
+	SELECT COUNT(*) as `stats`,`action` as `name`,`module` FROM `pre_order_list` GROUP BY `action`, `module` ORDER BY `stats` DESC
 
 #### Plugin '*81F5E21E35407D884A6CD4A731AEBFB6AF209E1B' is not loaded
 

@@ -209,8 +209,10 @@
 		 * @cancel jingdong/giftList
 		 * @method GET
 		 * @input string type 产品类型
-		 * @param integer page 当前页码
+		 * @param integer uid 用户ID
 		 * @param number money 金额限定
+		 * @param pagenum page 当前页码
+		 * @param sorting extra 筛选排序 {optional=b.id,a.fans,a.income,b.income_yester,b.income_recent,b.income_month,a.logined_time; per=asc}
 		 * @param mobile phone 手机号码 {required=1}
 		 * @param string lists 文件清单 {posted=1}
 		 * @param string field 搜索类型 {optional=trade_id,item_id}

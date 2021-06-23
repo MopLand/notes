@@ -450,10 +450,12 @@
 	php dora init
 
 	# 从其他项目复制模块
-	php dora copy [-s , -m]
+	php dora copy [-m 模块路径, -s 项目来源]
+	php dora copy -m admin:service -s E:/Works/Baohe
 
 	# 删除指定控制器和视图
-	php dora delete [-c, -f]
+	php dora delete [-c 控制器, -f 是否强制]
+	php dora delete -c admin:service -f true
 
 	# 更新本地缓存
 	php dora caching

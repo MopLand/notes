@@ -62,6 +62,11 @@
 ### 一前年的时间
 	strtotime('last year')
 	
+### 上月16到下月15
+	$month = $month ?: DateTime::lastMonth('first', 'Ym');
+	$begin = (int) strtotime( $month . '16' );
+	$final = (int) strtotime( $month . DateTime::getDays( $month ) . ' +15 day' );
+	
 ### 将数组格式成表格显示
 	$tbody = array_reduce($res, function($a, $b){return $a.="<tr><td>".implode("</td><td>",$b)."</td></tr>";});
 
