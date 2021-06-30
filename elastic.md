@@ -167,21 +167,19 @@
 ### IK 分词
 
 	GET http://localhost:9200/index/_analyze?analyzer=ik_max_word&text=中华人民共和国
-
+	
+### 优化
+	我们可以在索引时使用 ik_max_word，在搜索时用 ik_smart
 
 ## 相关链接
 
-1. Elasticsearch教程: http://www.yiibai.com/elasticsearch/
-
-2. 拼音分词: https://github.com/medcl/elasticsearch-analysis-pinyin
-
-3. IK中文分词: https://github.com/medcl/elasticsearch-analysis-ik
-
-4. Elasticsearch 5 Ik+pinyin分词配置详解: http://blog.csdn.net/napoay/article/details/53907921
-
-5. 理解ElasticSearch的中文分词器【IK】（版本: 1.6.0）: http://blog.csdn.net/lougnib/article/details/50442276
-
-6. Chrome插件Sense: http://chrome.google.com/webstore/search/%20Sense?hl=zh-CN
-
-7. 解决 MySQL 与 Elasticsearch 数据不对称问题: https://my.oschina.net/neochen/blog/1518679
-
+- [ElasticSearch 官方下载](https://www.elastic.co/cn/start)
+- [kibana 官方下载](https://www.elastic.co/cn/downloads/kibana)
+- [Elasticsearch 与 Mysql 数据类型映射关系表](https://blog.csdn.net/qq6759/article/details/100121652)
+- [Elasticsearch教程](http://www.yiibai.com/elasticsearch/)
+- [拼音分词](https://github.com/medcl/elasticsearch-analysis-pinyin)
+- [IK中文分词](https://github.com/medcl/elasticsearch-analysis-ik)
+- [Elasticsearch 5 Ik+pinyin分词配置详解](http://blog.csdn.net/napoay/article/details/53907921)
+- [理解ElasticSearch的中文分词器【IK】（版本: 1.6.0）](http://blog.csdn.net/lougnib/article/details/50442276)
+- [Chrome插件Sense](http://chrome.google.com/webstore/search/%20Sense?hl=zh-CN)
+- [解决 MySQL 与 Elasticsearch 数据不对称问题](https://my.oschina.net/neochen/blog/1518679)

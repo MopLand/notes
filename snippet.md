@@ -14,6 +14,12 @@
 	
 	(expr1) ?? (expr3)
 	简写 ?? 等同于 isset(expr1) ? expr1 : expr3
+	
+### PHP 中关于 Integer 整型
+
+	PHP_INT_SIZE：表示整数 integer 值的字长
+	PHP_INT_MIN：表示整数 integer 值的最小值
+	PHP_INT_MAX：表示整数 integer 值的最大值
 
 ### 今天/明天/昨天的时间
 	strtotime('today')

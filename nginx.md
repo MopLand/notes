@@ -1076,6 +1076,7 @@
 - [Nginx 官方文档](https://nginx.org/en/docs/)
 - [Nginx 中文文档](http://www.nginx.cn/doc/)
 - [Nginx Config 生成](https://nginxconfig.io/)
+- [Nginx 最全操作总结](https://mp.weixin.qq.com/s/LmtHTOVOvdcnMBuxv7a9_A)
 - [前端开发者必备的Nginx知识](https://segmentfault.com/a/1190000018454271)
 - [快速上手Nginx](https://juejin.im/post/5ce68c3c5188253386140fa9)
 - [彻底弄懂 Nginx location 匹配](https://juejin.im/post/5ce5e1f65188254159084141)
