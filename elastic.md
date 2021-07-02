@@ -168,8 +168,57 @@
 
 	GET http://localhost:9200/index/_analyze?analyzer=ik_max_word&text=中华人民共和国
 	
-### 优化
+### 优化事项
 	我们可以在索引时使用 ik_max_word，在搜索时用 ik_smart
+	
+## SQL 支持
+
+### Match 语法
+	MATCH( field_exp, constant_exp [, options])
+
+### Match 简单查询
+	POST /_xpack/sql?format=txt
+	{
+		"query": "SELECT * FROM twitter WHERE user_name = 'newbie'"
+	}
+
+### Match 带评分查询
+	POST /_xpack/sql?format=txt
+	{
+		"query": "SELECT *, SCORE() FROM twitter WHERE match( user_name, 'maxbuff' )"
+	}
+
+	POST /_xpack/sql?format=txt
+	{
+		"query": "SELECT item_title, SCORE() AS score FROM item_list2 WHERE match( item_title, '洗面奶' ) ORDER BY score DESC"
+	}
+
+### Match 指定分析器
+	POST /_xpack/sql?format=txt
+	{
+		"query": "SELECT item_title, SCORE() AS score FROM item_list2 WHERE match( item_title, '洗面奶', 'analyzer=ik_smart' ) ORDER BY score DESC"
+	}
+
+### QUERY 语法
+	QUERY( constant_exp [, options]) 
+
+### QUERY 简单查询
+	POST /_xpack/sql?format=txt
+	{
+		"query": "SELECT *, SCORE() FROM twitter WHERE QUERY('user_name:maxbuff')"
+	}
+
+### QUERY 复杂条件
+	POST /_xpack/sql?format=txt
+	{
+		"query": "SELECT author, name, page_count, SCORE() FROM library WHERE QUERY('_exists_:"author" AND page_count:>200 AND (name:/star.*/ OR name:duna~)')"
+	}
+
+### QUERY 带可选项
+	POST /_xpack/sql?format=txt
+	{
+		"query": "SELECT author, name, SCORE() FROM library WHERE QUERY('dune god', 'default_operator=and;default_field=name')"
+	}
 
 ## 相关链接
 
@@ -183,3 +232,6 @@
 - [理解ElasticSearch的中文分词器【IK】（版本: 1.6.0）](http://blog.csdn.net/lougnib/article/details/50442276)
 - [Chrome插件Sense](http://chrome.google.com/webstore/search/%20Sense?hl=zh-CN)
 - [解决 MySQL 与 Elasticsearch 数据不对称问题](https://my.oschina.net/neochen/blog/1518679)
+- [Full-Text Search Functions](https://www.elastic.co/guide/en/elasticsearch/reference/master/sql-functions-search.html)
+- [查询ElasticSearch：用SQL代替DSL](https://database.51cto.com/art/202009/627459.htm)
+- [ik添加词库](https://blog.csdn.net/weixin_40896800/article/details/99196059)
