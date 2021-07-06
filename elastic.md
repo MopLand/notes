@@ -235,3 +235,4 @@
 - [Full-Text Search Functions](https://www.elastic.co/guide/en/elasticsearch/reference/master/sql-functions-search.html)
 - [查询ElasticSearch：用SQL代替DSL](https://database.51cto.com/art/202009/627459.htm)
 - [ik添加词库](https://blog.csdn.net/weixin_40896800/article/details/99196059)
+- [ElasticSearch 常用的查询过滤语句](https://www.cnblogs.com/ghj1976/p/5293250.html)

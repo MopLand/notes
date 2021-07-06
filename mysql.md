@@ -159,19 +159,19 @@
 	SELECT `datetime`, appid, `version`, COUNT(*) FROM pre_app_statis WHERE appid = 1 AND `datetime` > DATE_SUB(CURDATE(), INTERVAL 7 DAY) GROUP BY `datetime`, `version`;
 
 #### 提现次数大于 2 笔的用户
-	SELECT agent_id, agent_name, `money`, `datetime`, COUNT(*) as stat FROM `pre_agent_trade` WHERE `money` < 0 and `datetime` >= 20160720 group by agent_id HAVING stat > 1;
+	SELECT agent_id, agent_name, `money`, `datetime`, COUNT(*) as stat FROM `pre_agent_trade` WHERE `money` < 0 and `datetime` >= 20160720 GROUP BY agent_id HAVING stat > 1;
 
 #### 查找重复的卡密
 	SELECT agent_id, agent_name, code, COUNT(*) as stat FROM `pre_agent_cdkey` GROUP BY code HAVING stat > 1;
 
 #### 新注册代理付款金额
-	SELECT t.sn, t.id, t.money, c.agent_id, c.agent_name FROM pre_agent_trade as t LEFT JOIN ( SELECT * FROM `pre_agent_cdkey` WHERE trade_id > 0 ORDER BY trade_id ASC group by trade_id ) AS c on t.id = c.trade_id WHERE t.sn != '';
+	SELECT t.sn, t.id, t.money, c.agent_id, c.agent_name FROM pre_agent_trade as t LEFT JOIN ( SELECT * FROM `pre_agent_cdkey` WHERE trade_id > 0 ORDER BY trade_id ASC GROUP BY trade_id ) AS c on t.id = c.trade_id WHERE t.sn != '';
 
 #### 商品搜索页排序显示
-	SELECT `id`, `gid`, `title`, stick, uid, `dateline`, `timeline`, FROM_UNIXTIME( `timeline`, '%Y/%m/%d %T' ) FROM `pre_goods_list` WHERE `status` > 0 ORDER BY stick DESC, timeline DESC limit 80, 40;
+	SELECT `id`, `gid`, `title`, stick, uid, `dateline`, `timeline`, FROM_UNIXTIME( `timeline`, '%Y/%m/%d %T' ) FROM `pre_goods_list` WHERE `status` > 0 ORDER BY stick DESC, timeline DESC LIMIT 80, 40;
 
 #### 代理销售前100
-	SELECT t.agent_id, t.agent_name, l.qq, sum(t.money) as stat FROM `pre_trade_list` as t LEFT JOIN `pre_agent_list` as l on t.agent_id = l.agent_id group by t.agent_id ORDER BY stat DESC limit 100;
+	SELECT t.agent_id, t.agent_name, l.qq, sum(t.money) as stat FROM `pre_trade_list` as t LEFT JOIN `pre_agent_list` as l ON t.agent_id = l.agent_id GROUP BY t.agent_id ORDER BY stat DESC LIMIT 100;
 
 #### 连接多个字段
 	SELECT CONCAT(first_name,' ',last_name) AS full_name FROM `tblname`;
@@ -188,9 +188,9 @@
 #### 指定使用索引
 	SELECT id FROM `tblname` USE INDEX(type) WHERE type = 12345 AND level > 3 ORDER BY id;
 	
-	SELECT * FROM `pre_order_list` USE INDEX(PRIMARY, create_date,settle_date,member_id,tk_status) WHERE `create_date` BETWEEN 20200301 AND 20200331  ORDER BY order_id DESC LIMIT 0,20;
+	SELECT * FROM `pre_order_list` USE INDEX(PRIMARY, create_date,settle_date,member_id,tk_status) WHERE `create_date` BETWEEN 20200301 AND 20200331 ORDER BY order_id DESC LIMIT 0,20;
 	
-	SELECT SUM(money) AS money, COUNT(*) AS amount FROM `pre_order_deduct` USE INDEX(member_id,create_date) WHERE `member_id` = 355052 AND `create_date` BETWEEN 20200301 AND 20200331 AND `freeze` = 0;
+	SELECT SUM(money) AS money, COUNT(*) AS amount FROM `pre_order_deduct` USE INDEX(member_id, create_date) WHERE `member_id` = 355052 AND `create_date` BETWEEN 20200301 AND 20200331 AND `freeze` = 0;
 
 #### 使用全文索引
 	SELECT * FROM articles WHERE MATCH(content_column) AGAINST ('music');
@@ -229,8 +229,16 @@
 #### 按时段统计订单数量和金额
 	SELECT COUNT(*), SUM(pub_share_pre_fee), FROM_UNIXTIME( UNIX_TIMESTAMP( create_time ), '%H' ) AS hour FROM pre_order_shadow WHERE create_date >= 20191010 GROUP BY hour;
 	
-#### 实现资金余额
-	SELECT money, (SELECT SUM(money) FROM `pre_account_detail` WHERE id <= d.id and `member_id` = 10008) AS balance FROM `pre_account_detail` AS d WHERE `member_id` = 10008;
+#### 资金流水余额
+	SELECT money, (SELECT SUM(money) FROM `pre_account_detail` WHERE id <= d.id AND `member_id` = 10008) AS balance FROM `pre_account_detail` AS d WHERE `member_id` = 10008;
+	
+#### 同时拿到第一条和最后一条记录
+	SELECT `test`.* FROM `test` JOIN ( SELECT item, min(id) as min_id, max(id) as max_id FROM `test` GROUP BY ITEM ) as tmp on id = tmp.min_id OR id = tmp.max_id;
+	
+#### 第一条和最后一条之间的差值（注意 > 并且没有第二条记录时值为 NULL，>= 在没有第二条记录时，其实是与自己比较 ）
+	SELECT item, value, (SELECT value FROM `test` WHERE id >= d.id AND item = d.item ORDER BY id DESC LIMIT 1) AS last_value FROM `test` AS d GROUP BY ITEM;
+	
+	SELECT item, value, (SELECT value FROM `test` WHERE id >= d.id AND item = d.item ORDER BY id DESC LIMIT 1) - value AS diff FROM `test` AS d GROUP BY ITEM;
 
 #### 两时间比较
 	SELECT TIMESTAMPDIFF(DAY, '2018-03-20 23:59:00', '2015-03-22 00:00:00');
@@ -258,41 +266,41 @@
 
 #### 格式化时间
 
-	SELECT DATE_FORMAT(NOW(),'%Y') YEAR;
 	# 输出结果：2012
+	SELECT DATE_FORMAT(NOW(),'%Y') YEAR;
 	
-	SELECT DATE_FORMAT(NOW(),'%y') YEAR;
 	# 输出结果：12
+	SELECT DATE_FORMAT(NOW(),'%y') YEAR;
 	
-	SELECT DATE_FORMAT(NOW(),'%m') MONTH;
 	# 输出结果：11
+	SELECT DATE_FORMAT(NOW(),'%m') MONTH;
 	
-	SELECT DATE_FORMAT(NOW(),'%d') DAY;
 	# 输出结果：15
+	SELECT DATE_FORMAT(NOW(),'%d') DAY;
 	
-	SELECT DATE_FORMAT(NOW(),'%T') TIME;
 	# 输出结果：14:44:50
+	SELECT DATE_FORMAT(NOW(),'%T') TIME;
 	
-	SELECT DATE_FORMAT(NOW(),'%Y-%m-%d') DATE;	
 	# 输出结果：2012-11-15
+	SELECT DATE_FORMAT(NOW(),'%Y-%m-%d') DATE;
 	
-	SELECT DATE_FORMAT(NOW(),'%Y-%m-%d-%T') DATETIME;
 	# 输出结果：2012-11-15-14:46:57
+	SELECT DATE_FORMAT(NOW(),'%Y-%m-%d-%T') DATETIME;
 	
-	SELECT FROM_UNIXTIME( 1529640863, '%Y%m%d');
 	# 输出结果：20180622
+	SELECT FROM_UNIXTIME( 1529640863, '%Y%m%d');
 	
-	SELECT CURRENT_DATE - INTERVAL 15 DAY;
 	# 15天前的时间
+	SELECT CURRENT_DATE - INTERVAL 15 DAY;
 	
-	SELECT CURRENT_DATE - INTERVAL 1 MONTH;
 	# 1个月前的时间
+	SELECT CURRENT_DATE - INTERVAL 1 MONTH;
 	
-	SELECT UNIX_TIMESTAMP( CURRENT_DATE - INTERVAL 15 DAY );
 	# 15天前的时间戳
+	SELECT UNIX_TIMESTAMP( CURRENT_DATE - INTERVAL 15 DAY );
 	
-	SELECT DATE_FORMAT( CURRENT_DATE - INTERVAL 15 DAY, '%Y%m%d' );
 	# 15天前的格式化时间
+	SELECT DATE_FORMAT( CURRENT_DATE - INTERVAL 15 DAY, '%Y%m%d' );
 
 ----------
 
@@ -300,6 +308,12 @@
 
 ### 查询语句
 	SELECT * FROM `pre_member_relation` WHERE locked & 2;
+	
+### 所有下级总裁 (90%)拥有升级权限
+	SELECT id, member_id, upgrade_code FROM `pre_member_relation` WHERE `upgrade_code` & 16 = 0 AND `upgrade_code` & 8 LIMIT 10;
+	
+### 所有下级总裁 (80%)拥有升级权限
+	SELECT id, member_id, upgrade_code FROM `pre_member_relation` WHERE `upgrade_code` & 16 AND `upgrade_code` & 8 = 0 LIMIT 10;
 
 ### 增加标志
 	UPDATE `pre_member_relation` SET locked = locked | 4 WHERE locked & 4 = 0;
