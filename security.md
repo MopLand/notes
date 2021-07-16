@@ -80,17 +80,16 @@
 	chmod -R 744 /disk/www/example
 
 ## 安全选项
-	vi /etc/sysctl.conf
-	```
+	# vi /etc/sysctl.conf
+	# 使用 sysctl -p 生效配置
 	net.ipv4.tcp_syncookies = 0    #洪水攻击防范
 	net.ipv4.tcp_wmem = 4096 87380 4161536   #tcp发送缓存区
 	net.ipv4.tcp_rmem = 4096 87380 4161536   #tcp读取缓冲区
-	net.ipv4.tcp_mem = 786432 2097152 2145728   #tcp内存大小  low,pressure,high   (tcp不考虑释放,tcp试图稳定内存值,最高值超过拒绝分配内存)
+	net.ipv4.tcp_mem = 786432 2097152 2145728   #tcp内存大小  low,pressure,high (tcp不考虑释放,tcp试图稳定内存值,最高值超过拒绝分配内存)
 	net.ipv4.ip_local_port_range = 1024 65534  #随机端口范围
 	net.ipv4.tcp_tw_recycle = 1  #tcp回收
 	net.ipv4.tcp_tw_reuse   = 1  #tcp复用
 	net.core.somaxconn   = 65535 #每一个端口最大的监听队列的长度
-	```
 
 ## PHP
 	# 将用户可操作的文件限制在某目录下（使用后性能会下降）

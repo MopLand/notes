@@ -400,8 +400,10 @@
 ### 同时 JOIN 更新多个字段
 	UPDATE `pre_member_upgrade` AS upg JOIN `pre_member_relation` AS rel ON rel.`member_id` = upg.member_id SET upg.source_id = rel.source_id, upg.source_name = rel.source_name WHERE upg.source_id IS NULL;
 
-### 保留用户最新一条记录，其他删除
+### 保留一条记录，删除其他重复数据
 	DELETE FROM `tblname` WHERE id NOT IN( SELECT ids FROM ( SELECT MAX(id) AS ids FROM `tblname` GROUP BY openid ) AS tmp );
+	
+	DELETE FROM `pre_member_beian` WHERE beian_id NOT IN( SELECT MIN(beian_id) AS ids FROM `pre_member_beian` GROUP BY relation_id );
 
 ### 上架已通过审核的商品
 	UPDATE `pre_goods_list` SET status = 1 WHERE gid IN ( SELECT gid FROM `pre_member_goods` WHERE status = 1 );
@@ -1027,3 +1029,4 @@ Collate 校对规则
 - [浅谈分库分表那些事儿](https://mp.weixin.qq.com/s/X6FI9Ci7ZXGDNDCkh2VnNA)
 - [SQL 性能起飞了！](https://mp.weixin.qq.com/s/YbZfp8UXODZ4V55dvRxJRw)
 - [求教SQL流水账余额的方法](https://bbs.csdn.net/topics/391070561)
+- [MySQL 的两个特殊属性 unsigned与 zerofill](https://www.cnblogs.com/Latiny/p/8058209.html)
