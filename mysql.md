@@ -93,7 +93,7 @@
 	SELECT IF (priv=1, admin, guest) AS usertype FROM `tblname` WHERE username = 'joe';
 	
 #### IF NULL 运算
-	SELECT IFNULL(SUM(money), 0) as total, COUNT(*) as stats FROM `tblname` WHERE category = 'referral'；
+	SELECT IFNULL( SUM(money), 0 ) AS total, COUNT(*) AS stats FROM `tblname` WHERE category = 'referral'；
 
 #### GROUP BY 分组查询
 	SELECT name, SUM(price) FROM `tblname` GROUP BY name;
@@ -111,6 +111,8 @@
 	SELECT admin_id, SUM( money ) FROM pre_tasks_list GROUP BY admin_id;
 	
 	SELECT admin_id, SUM( DISTINCT admin_id ) FROM pre_tasks_list GROUP BY admin_id;
+	
+	SELECT admin_id, COUNT(*) AS stats, ( SELECT admin_name FROM `pre_system_admin` AS a WHERE a.admin_id = b.admin_id ) AS admin_name FROM `pre_finance_expend` as b GROUP BY b.admin_id ORDER BY stats DESC;
 
 #### 按状态值统计数量
 	SELECT `status`, COUNT(*) AS stats FROM `pre_taobao_adzone` GROUP BY `status`;
@@ -132,7 +134,7 @@
 	SELECT GROUP_CONCAT(goods_id SEPARATOR ',') AS ids FROM ( SELECT goods_id FROM `pre_goods_list` WHERE `status` = 1 AND `cate_route` IS NULL ORDER BY id DESC LIMIT 40 ) AS tmp;
 
 #### 同时使用 GROUP BY 和 ORDER BY
-	SELECT * FROM ( select id, agent_id, agent_name , sum(money) AS total FROM `pre_agent_trade` WHERE money > 0 AND `status` > 0 GROUP BY agent_id ) as t ORDER BY total DESC LIMIT 10;
+	SELECT * FROM ( select id, agent_id, agent_name , SUM(money) AS total FROM `pre_agent_trade` WHERE money > 0 AND `status` > 0 GROUP BY agent_id ) as t ORDER BY total DESC LIMIT 10;
 
 #### 多个字段 GROUP BY
 	SELECT SUM(total) FROM ( SELECT * FROM `pre_jingdong_deduct` WHERE id > 0 GROUP BY trade_id, sku_id) AS t;
@@ -144,10 +146,10 @@
 	SELECT email, COUNT(email) AS q FROM `emails_table` GROUP BY email HAVING q > 1 ORDER BY q DESC;
 
 #### 销售额前100的代理
-	SELECT t.agent_id, t.agent_name, a.qq, sum(t.money) AS total FROM `pre_agent_trade` as t left join pre_agent_list as a on a.agent_id = t.agent_id WHERE t.money > 0 GROUP BY t.agent_id ORDER BY total DESC LIMIT 100;
+	SELECT t.agent_id, t.agent_name, a.qq, SUM(t.money) AS total FROM `pre_agent_trade` as t left join pre_agent_list as a on a.agent_id = t.agent_id WHERE t.money > 0 GROUP BY t.agent_id ORDER BY total DESC LIMIT 100;
 
 #### 返回得分最高的 20 条记录，每个用户保留一条记录
-	SELECT raw.userid, raw.username, tmp.score, min(time) time FROM (select userid, max(score) score FROM `pre_testing_record` WHERE activity_id = ? GROUP BY userid) tmp JOIN `pre_testing_record` raw ON raw.userid = tmp.userid AND tmp.score = raw.score WHERE activity_id = ? GROUP BY tmp.userid, tmp.score ORDER BY tmp.score DESC, time ASC, raw.record_id ASC LIMIT 20;
+	SELECT raw.userid, raw.username, tmp.score, MIN(time) time FROM (SELECT userid, MAX(score) score FROM `pre_testing_record` WHERE activity_id = ? GROUP BY userid) tmp JOIN `pre_testing_record` raw ON raw.userid = tmp.userid AND tmp.score = raw.score WHERE activity_id = ? GROUP BY tmp.userid, tmp.score ORDER BY tmp.score DESC, time ASC, raw.record_id ASC LIMIT 20;
 
 #### 左连接的表中有多条数据，只取按时间排序最大的一条
 	SELECT c.*, g.goods_name, g.goods_short, g.goods_thumb, g.attr_price FROM `pre_goods_list` AS g INNER JOIN `pre_goods_comment` AS c ON c.goods_id = g.goods_id WHERE g.goods_id > 0 AND g.attr_comment > 0 AND c.comment_id = (SELECT MAX(comment_id) FROM `pre_goods_comment` WHERE goods_id = g.goods_id);
@@ -159,19 +161,19 @@
 	SELECT `datetime`, appid, `version`, COUNT(*) FROM pre_app_statis WHERE appid = 1 AND `datetime` > DATE_SUB(CURDATE(), INTERVAL 7 DAY) GROUP BY `datetime`, `version`;
 
 #### 提现次数大于 2 笔的用户
-	SELECT agent_id, agent_name, `money`, `datetime`, COUNT(*) as stat FROM `pre_agent_trade` WHERE `money` < 0 and `datetime` >= 20160720 GROUP BY agent_id HAVING stat > 1;
+	SELECT agent_id, agent_name, `money`, `datetime`, COUNT(*) AS stat FROM `pre_agent_trade` WHERE `money` < 0 and `datetime` >= 20160720 GROUP BY agent_id HAVING stat > 1;
 
 #### 查找重复的卡密
-	SELECT agent_id, agent_name, code, COUNT(*) as stat FROM `pre_agent_cdkey` GROUP BY code HAVING stat > 1;
+	SELECT agent_id, agent_name, code, COUNT(*) AS stat FROM `pre_agent_cdkey` GROUP BY code HAVING stat > 1;
 
 #### 新注册代理付款金额
-	SELECT t.sn, t.id, t.money, c.agent_id, c.agent_name FROM pre_agent_trade as t LEFT JOIN ( SELECT * FROM `pre_agent_cdkey` WHERE trade_id > 0 ORDER BY trade_id ASC GROUP BY trade_id ) AS c on t.id = c.trade_id WHERE t.sn != '';
+	SELECT t.sn, t.id, t.money, c.agent_id, c.agent_name FROM pre_agent_trade AS t LEFT JOIN ( SELECT * FROM `pre_agent_cdkey` WHERE trade_id > 0 ORDER BY trade_id ASC GROUP BY trade_id ) AS c on t.id = c.trade_id WHERE t.sn != '';
 
 #### 商品搜索页排序显示
 	SELECT `id`, `gid`, `title`, stick, uid, `dateline`, `timeline`, FROM_UNIXTIME( `timeline`, '%Y/%m/%d %T' ) FROM `pre_goods_list` WHERE `status` > 0 ORDER BY stick DESC, timeline DESC LIMIT 80, 40;
 
 #### 代理销售前100
-	SELECT t.agent_id, t.agent_name, l.qq, sum(t.money) as stat FROM `pre_trade_list` as t LEFT JOIN `pre_agent_list` as l ON t.agent_id = l.agent_id GROUP BY t.agent_id ORDER BY stat DESC LIMIT 100;
+	SELECT t.agent_id, t.agent_name, l.qq, sum(t.money) AS stat FROM `pre_trade_list` AS t LEFT JOIN `pre_agent_list` AS l ON t.agent_id = l.agent_id GROUP BY t.agent_id ORDER BY stat DESC LIMIT 100;
 
 #### 连接多个字段
 	SELECT CONCAT(first_name,' ',last_name) AS full_name FROM `tblname`;
@@ -233,7 +235,7 @@
 	SELECT money, (SELECT SUM(money) FROM `pre_account_detail` WHERE id <= d.id AND `member_id` = 10008) AS balance FROM `pre_account_detail` AS d WHERE `member_id` = 10008;
 	
 #### 同时拿到第一条和最后一条记录
-	SELECT `test`.* FROM `test` JOIN ( SELECT item, min(id) as min_id, max(id) as max_id FROM `test` GROUP BY ITEM ) as tmp on id = tmp.min_id OR id = tmp.max_id;
+	SELECT `test`.* FROM `test` JOIN ( SELECT item, min(id) AS min_id, max(id) AS max_id FROM `test` GROUP BY ITEM ) AS tmp on id = tmp.min_id OR id = tmp.max_id;
 	
 #### 第一条和最后一条之间的差值（注意 > 并且没有第二条记录时值为 NULL，>= 在没有第二条记录时，其实是与自己比较 ）
 	SELECT item, value, (SELECT value FROM `test` WHERE id >= d.id AND item = d.item ORDER BY id DESC LIMIT 1) AS last_value FROM `test` AS d GROUP BY ITEM;
@@ -1030,3 +1032,6 @@ Collate 校对规则
 - [SQL 性能起飞了！](https://mp.weixin.qq.com/s/YbZfp8UXODZ4V55dvRxJRw)
 - [求教SQL流水账余额的方法](https://bbs.csdn.net/topics/391070561)
 - [MySQL 的两个特殊属性 unsigned与 zerofill](https://www.cnblogs.com/Latiny/p/8058209.html)
+- [CPU 利用率过高](https://cloud.tencent.com/document/product/236/35416)
+- [内存使用率过高](https://cloud.tencent.com/document/product/236/54792)
+- [慢查询数过高](https://cloud.tencent.com/document/product/236/56258)

@@ -59,6 +59,12 @@
 	
 ### 取 xml 元素内容（CDATA 可有可无）
 	/<appid>(?:\<\!\[CDATA\[)?(.+?)(?:\]\]\>)?<\/appid>/.exec( '<appid><![CDATA[wxd1ba3d0937058e6f]]></appid>' )
+	
+## Editor
+
+### 简化替换判断语句
+	isset\(\$data\) \? \$data\['(\w+)'\] : ''
+	$data['$1'] ?? ''
 
 ## 常用链接
 

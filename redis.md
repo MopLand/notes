@@ -166,3 +166,4 @@
 - [什么是分布式锁](https://www.jianshu.com/p/a1ebab8ce78a)
 - [PHP使用redis中setnx防止大并发下二次写入](https://blog.csdn.net/qq_23564667/article/details/105871657)
 - [Windows Service Documentation](https://raw.githubusercontent.com/MSOpenTech/redis/3.0/Windows%20Service%20Documentation.md)
+- [Redis只能做缓存？太out了！](https://juejin.cn/post/6989108481018036232)
