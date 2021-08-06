@@ -148,10 +148,12 @@
 
 ## 实例操作
 
-### 本地文件
+### Node.js 项目
+
+#### 本地文件
 	cd /disk/app
 
-### Dockerfile
+#### Dockerfile
 	
 	# 指定我们的基础镜像是 node
 	FROM node
@@ -177,31 +179,83 @@
 	# 容器启动时执行的命令，类似 npm run start
 	CMD ["npm", "start"]
 
-### 在当前目录创建镜像
+#### 在当前目录创建镜像
 	docker build -t segment .
 
-### 运行容器
+#### 运行容器
 	docker run -d -p 8888:4500 segment
 
-### 上传镜像
+#### 上传镜像
 
 	# 登录 Docker Hub
 	docker login
 	
 	# 镜像打上tag，namespace 可以指定为你的 Docker Id
-	docker tag <name:tag> <namespace>/<name:tag>
-
 	docker tag segment:1.0 mopland/segment:1.0
 	
 	# 将镜像上传至 docker 的公共仓库
-	docker push <namespace>/<name:tag>
-
 	docker push mopland/segment:1.0
 	
 	# 退出登录
 	docker logout
 
-### 下载镜像
-	docker pull <namespace>/<name:tag>
-	
+### 下载镜像	
 	docker pull mopland/segment:1.0
+	
+### Nginx + PHP 实例
+
+#### Dockerfile
+	FROM centos:latest
+
+	MAINTAINER admin@veryide.com
+	ENV TIME_ZOME Asia/Shanghai
+
+	# 安装必要软件
+	RUN yum install nginx -y
+	RUN yum install php php-fpm php-xml php-curl -y
+	RUN yum install git -y
+
+	# 复制配置文件
+	COPY fastcgi_params /etc/nginx/
+	COPY phpcgi.conf /etc/nginx/default.d/phpcgi.conf
+
+	# 更新配置文件
+	RUN mkdir -p /run/php-fpm
+	RUN sed -i 's@;date.timezone =@date.timezone = Asia/Shanghai@g' /etc/php.ini
+
+	# 从仓库拉代码
+	ARG CACHEBUST=1
+	RUN mkdir /www && cd /www && git clone https://github.com/TouloMin/abc.git --depth 1 "./"
+	RUN mv /www/* /usr/share/nginx/html
+
+	EXPOSE 80
+	CMD php-fpm && nginx -g "daemon off;"
+	
+#### kingcat.sh
+	#!/bin/sh
+	docker build -t kingcat . --build-arg CACHEBUST=$(date +%s)
+	systemctl restart docker
+	docker run -it -d -p 8888:80 kingcat
+	
+#### 推送至 hub
+	docker tag kingcat:v1 mopland/kingcat
+	docker pull mopland/kingcat
+	
+## 常见错误
+
+### Error response from daemon: driver failed programming external connectivity on endpoint
+	systemctl restart docker
+	
+### 清理 none docker 镜像
+	docker rmi -f $(docker images | grep "<none>" | awk "{print \$3}")
+	
+### 清理已经停止运行的 docker 容器
+	docker rm $(docker ps --all -q -f status=exited)
+	
+## 相关链接
+
+- [hub.docker.com](https://hub.docker.com/)
+- [Docker —— 从入门到实践](https://yeasy.gitbook.io/docker_practice/)
+- [Docker容器进入的4种方式](https://www.cnblogs.com/xhyan/p/6593075.html)
+- [如何在Dockerfile中clone 私库](https://blog.csdn.net/qq_28880087/article/details/110441110)
+- [Dockerfile 和 docker-compose.yml的区别](https://www.cnblogs.com/sanduzxcvbnm/p/13186899.html)
