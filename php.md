@@ -75,34 +75,12 @@
 	# 禁止显示php版本的信息
 	expose_php = Off
 	
-	# Cookies 有效期：一天后
-	session.cookie_lifetime = 86400
-	
 	# 修正 Path Info
 	cgi.fix_pathinfo=1
 	
 	# 时区配置
 	[Date]
-	date.timezone = Asia/Shanghai
-	
-	# 禁止显示php版本的信息
-	expose_php = Off
-	
-	# 修改输入变量数量限制（针对大表单）
-	max_input_vars = 3000
-	
-	# 大文件上传（php.ini）
-	post_max_size = 20M
-	upload_max_filesize = 20M
-	
-	# 大文件上传（nginx）
-	client_max_body_size 32M;
-	
-	# Session 有效期
-	session.cookie_lifetime = 172800
-	
-	# Session 自动回收时间
-	session.gc_maxlifetime = 1440
+	date.timezone = Asia/Shanghai	
 
 ## IIS
 	cgi.fix_pathinfo=1

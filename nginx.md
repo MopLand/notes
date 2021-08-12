@@ -130,7 +130,7 @@
 
 ## 配置文件
 
-### conf/nginx.conf
+### /etc/nginx/nginx.conf
 
 	http {
 	
@@ -153,7 +153,7 @@
 	
 	}
 
-### conf/fastcgi_params
+### /etc/nginx/fastcgi_params
 
 	fastcgi_param  REQUEST_URI        $request_uri;
 	fastcgi_param  DOCUMENT_URI       $document_uri;
@@ -164,7 +164,7 @@
 	fastcgi_param  SCRIPT_NAME        $fastcgi_script_name;
 	fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
 
-### rules/gzip.conf
+### /disk/rules/gzip.conf
 
 	# Gzip
 	location ~ .*\.(jpg|gif|png|bmp|js|webp|css)$ {
@@ -176,7 +176,7 @@
 		gzip_types text/plain application/javascript application/x-javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png image/webp;
 	}
 
-### rules/phpcgi.conf
+### /disk/rules/phpcgi.conf
 
 	#location ~ ^(.+\.php)(.*)$ {
 	
@@ -205,7 +205,7 @@
 		
 	#}
 
-### rules/dora_route.conf
+### /disk/rules/dora_route.conf
 
 	# Dora 框架路由规则 
 	if (!-e $request_filename) {
@@ -215,7 +215,7 @@
 		rewrite ^/(.*) /index.php/$1 last;
 	}
 
-### rules/security.conf
+### /disk/rules/security.conf
 	
 	# 禁止GIT或SVN目录输出 
 	location ~ /\.(git|svn) {
@@ -238,7 +238,7 @@
 		add_header "Access-Control-Allow-Origin" "*";
 	}
 
-### sites/*.conf
+### /disk/sites/*.conf
 
 	server {
 		listen 88;
