@@ -255,3 +255,7 @@
 	# 推荐 chown
 	chown nginx /var/lib/php/session
 	chmod 0777 /var/lib/php/session
+
+## 参考链接
+
+- [在CentOS 8上安装PHP、Redis和phpredis](https://blog.csdn.net/allway2/article/details/108758138)

@@ -1005,6 +1005,17 @@ Collate 校对规则
 #### 生成删除所有表语句间接现实清空数据库表
 	SELECT CONCAT('DROP TABLE IF EXISTS `', table_name, '`;') FROM information_schema.tables WHERE table_schema = 'dbname';
 
+#### Table `tbl` doesn't exist && Table `tbl` already exists
+	1. CREATE TABLE `tbl_2`
+	2. Stop Mysql
+	3. Delete tbl.ibd
+	4. Copy `tbl_2.frm` to `tbl.frm`
+	5. Copy `tbl_2.ibd` to `tbl.ibd`
+	6. DROP TABLE `tbl`	
+	7. Delete tbl.ibd
+	8. Rename `tbl_2` to `tbl`
+	
+
 ### 相关链接
 
 - [面试问烂的 MySQL 四种隔离级别](https://mp.weixin.qq.com/s/gkfzOtYWWhMgMgcRB32BoA)
@@ -1035,3 +1046,4 @@ Collate 校对规则
 - [CPU 利用率过高](https://cloud.tencent.com/document/product/236/35416)
 - [内存使用率过高](https://cloud.tencent.com/document/product/236/54792)
 - [慢查询数过高](https://cloud.tencent.com/document/product/236/56258)
+- [表属性设置为 NULL，你可能要面临很多麻烦](https://my.oschina.net/itbbfx/blog/5267953)

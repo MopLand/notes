@@ -3,6 +3,7 @@
 ## Docker 安装
 
 	# 使用 YUM 安装
+	yum update
 	yum install docker
 
 	# 启动

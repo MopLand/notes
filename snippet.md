@@ -80,6 +80,9 @@
 
 	echo '<table class="table table-striped">'. $thead . $tbody .'</table>';
 	
+### 数组值全部转数字
+	$count = array_map( function( $ele ){ return $ele + 0; }, $count );
+	
 ### 修正 64位系统 JSON_BIGINT_AS_STRING 无效的问题
 	/**
 	 * 修正 64位系统 JSON_BIGINT_AS_STRING 无效的问题
