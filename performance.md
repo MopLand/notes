@@ -138,7 +138,28 @@
 	<N>代表数字参数，支持国际单位 (1k, 1M, 1G)
 	<T>代表时间参数，支持时间单位 (2s, 2m, 2h)
 
----
+## PHP 优化
+
+### 大文件上传
+	
+	# /etc/php.ini
+	post_max_size = 20M
+	upload_max_filesize = 20M
+
+	# /etc/nginx/nginx.conf
+	client_max_body_size 32M;
+
+### 大表单提交
+
+	# /etc/php.ini
+	max_input_vars = 3000
+
+### Session 控制
+	# Session 有效期
+	session.cookie_lifetime = 172800
+	
+	# Session 自动回收时间
+	session.gc_maxlifetime = 1440
 
 ## PHP-FPM 优化
 
@@ -181,23 +202,11 @@
 	pm.max_spare_servers = 1024
 	pm.max_requests = 10240
 	rlimit_files = 65535
-
-### 大文件上传
-	
-	# php-fpm.ini
-	post_max_size = 20M
-	upload_max_filesize = 20M
-
-	# nginx.conf
-	client_max_body_size 32M;
-
 ### 定位慢请求
 	
-	# www.conf
+	# /etc/php-fpm.d/www.conf
 	request_slowlog_timeout = 5s
-	slowlog = /var/log/php-fpm/www-slow.log	
-
----
+	slowlog = /var/log/php-fpm/www-slow.log
 
 ## Nginx
 
