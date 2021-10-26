@@ -344,7 +344,7 @@
 			
 			proxy_buffers   32 256k;
 			expires			7d;
-		}		
+		}
 	}
 	
 	# 代理任意资源
@@ -447,7 +447,7 @@
 			add_header Access-Control-Allow-Origin *;
 			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 			proxy_read_timeout 150;
-	        proxy_pass http://127.0.0.1:3000;    
+	        proxy_pass http://127.0.0.1:3000;
 	    } 
 	}
 	
@@ -458,12 +458,12 @@
 		
 		location ~ ^(.+\.php)(.*)$ {
 			fastcgi_split_path_info ^(.+\.php)(.*)$;
-			fastcgi_param PATH_INFO $fastcgi_path_info;			
-			fastcgi_pass 127.0.0.1:9000;			
+			fastcgi_param PATH_INFO $fastcgi_path_info;
+			fastcgi_pass 127.0.0.1:9000;
 			fastcgi_read_timeout 60;
 			fastcgi_connect_timeout 10;
-			fastcgi_index index.php;			
-			include fastcgi_params;			
+			fastcgi_index index.php;
+			include fastcgi_params;
 		}
 	}
 
@@ -688,7 +688,7 @@
 			if ($http_x_client_proto = "http") {
 				rewrite ^(.*)$  https://$host$1 permanent;
 			}
-		}	
+		}
 	}
 
 ### SSL 配置
@@ -786,7 +786,7 @@
 			add_header Access-Control-Allow-Origin *;
 			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 			proxy_pass http://127.0.0.1:3600;
-		}		
+		}
 	}
 
 ### 目录规则匹配
@@ -811,7 +811,7 @@
 		
 		set $sub_domain "";
 		if ($host ~* (.*)\.mirror\.example\.com) {
-			set $sub_domain $1;		
+			set $sub_domain $1;
 		}
 		
 		location ~ ^(.+\.php)(.*)$ {
@@ -866,6 +866,33 @@
 		}
 	
 	}
+
+### CNAME 使用套壳域名
+	
+	server {
+		listen 80;
+		server_name proxy.baohe.test clean.baohe.test;
+		root /disk/www/domain.shz.com;
+		index index.htm index.html index.php;
+		
+		location ~ ^(.+\.php)(.*)$ {
+
+			include ../rules/phpcgi.conf;
+
+			set $real_host $http_host;
+			set $fake_host "";
+
+			if ($http_host = 'speed.baohe.test') {
+				set $real_host "proxy.baohe.test";
+				set $fake_host $http_host;
+			}
+
+			fastcgi_param HTTP_HOST $real_host;
+			fastcgi_param FAKE_HOST $fake_host;
+
+		}
+
+	}
 	
 ### 前后端共用同一域名
 	
@@ -882,7 +909,7 @@
 		}
 		
 		# 后端 PHP
-		location ~ /backend {			
+		location ~ /backend {
 			rewrite ^/backend/(.*) /index.php/$1 break;
 			include ../rules/phpcgi.conf;
 		}
