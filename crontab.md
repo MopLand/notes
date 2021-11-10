@@ -50,7 +50,7 @@
 
 ## 实际示例
 
-	#项目自动更新（每天9:00 - 22:00，间隔5分钟一次，输出标准错误）
+	# 项目自动更新（每天9:00 - 22:00，间隔5分钟一次，输出标准错误）
 	*/10 9-22 * * * /disk/shell/gitpull.sh > /var/log/gitpull.log 2>&1
 	
 	# Cron 任务调度，每分钟执行
@@ -82,6 +82,9 @@
 	
 	# 商品每日自动结算（每天 23:50 执行一次）
 	50 23 * * * curl http://api.example.com/cron/days > /dev/null 2>&1
+	
+	# 日志文件自动压缩（每周执行一次）
+	7 7 * * 7 /disk/shell/ziplogs.sh > /var/log/ziplogs.log 2>&1
 	
 	# 项目自动更新（每天9:00 - 22:00，每10分钟执行一次）
 	*/10 9-22 * * * /disk/shell/gitpull.sh > /var/log/gitpull.log

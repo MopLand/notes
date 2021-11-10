@@ -350,3 +350,4 @@
 - [Linux iostat 命令详解](https://www.cnblogs.com/ftl1012/p/iostat.html)
 - [资源监控工具 glances](https://www.jianshu.com/p/639581a96512)
 - [PHP -fpm 服务器内存占用陡坡式上涨，请问如何彻底解决？](https://www.v2ex.com/t/727028)
+- [高性能利器：CDN我建议你好好学一下！](https://segmentfault.com/a/1190000040643120)

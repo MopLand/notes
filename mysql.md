@@ -1047,3 +1047,4 @@ Collate 校对规则
 - [内存使用率过高](https://cloud.tencent.com/document/product/236/54792)
 - [慢查询数过高](https://cloud.tencent.com/document/product/236/56258)
 - [表属性设置为 NULL，你可能要面临很多麻烦](https://my.oschina.net/itbbfx/blog/5267953)
+- [你分库分表的姿势对么？——详谈水平分库分表](https://segmentfault.com/a/1190000040858391)
