@@ -98,6 +98,9 @@
 	# 配置文件 /etc/php-fpm.d/www.conf 中的 user 和 group 参数建议与 nginx 保持一致
 	echo '172.16.16.16:/ /disk/www/assets.baohe.com nfs  vers=4 0 0' >> /etc/fstab
 	
+	# 卸载目录
+	umount /disk/www/assets.baohe.com
+	
 ### 文档说明
 	https://cloud.tencent.com/document/product/582/11523
 

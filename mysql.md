@@ -196,6 +196,9 @@
 
 #### 使用全文索引
 	SELECT * FROM articles WHERE MATCH(content_column) AGAINST ('music');
+	
+#### 查找以某字符开头的记录，LOCATE
+	SELECT * FROM `pre_gateway_traced` WHERE `status` = 1 AND LOCATE( `action`, '/api/' ) = 1 ORDER BY id DESC
 
 #### 严格比较两个 NULL 值是否相等
 	SELECT * FROM `tbl_a` A LEFT JOIN `tbl_b` B ON A.ID = B.ID WHERE A.column <=> B.column;
@@ -462,6 +465,10 @@
 
 ### 备份表不存在时，复制表结构
 	CREATE TABLE IF NOT EXISTS `pre_goods_backup` LIKE `pre_goods_list`;
+	
+### 完全复制表（带完整结构和数据）
+	CREATE TABLE `pre_service_version` LIKE `pre_gateway_version`;
+	INSERT INTO `pre_service_version` SELECT * FROM `pre_gateway_version`;
 
 ### 创建数据表
 	CREATE TABLE `tblname` (
