@@ -133,6 +133,16 @@
 		
 	}
 	
+### 搜索关键词高亮显示
+
+	//先找到标签内文本
+	$matches = StrExt::match( $html, '/>(.*?)'.$query.'(.*?)</i', 0, TRUE );
+
+	//再进行逐一替换
+	foreach( $matches as $mat ){
+		$html = str_replace( $mat, str_replace( $query, '<span class="bright">'.$query.'</span>', $mat ), $html );
+	}
+	
 ## HTML
 	
 ## JavaScript

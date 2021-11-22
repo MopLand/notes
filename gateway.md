@@ -41,8 +41,9 @@
 	@navbar 导航状态，默认显示 visible || 隐藏 hidden
 	@signed 签名验证, 默认严格 strict || 松散 loosed
 	@access 访问限制，默认允许 allowed || 验证 limited || 关闭 closed
-	@method  请求方式，GET / POST / GET&POST
-	@param  定义参数，type name summary {options}
+	@method 请求方式，GET / POST / GET&POST
+	@input 输入参数，type name summary {options}
+	@param 请求参数，type name summary {options}
 	@field 响应参数，type name value summary
 	@patch 变更记录，date author summary
 	@notice 描述说明
@@ -208,7 +209,7 @@
 		 * @signed 签名验证, 默认严格 strict || 松散 loosed
 		 * @cancel jingdong/giftList
 		 * @method GET
-		 * @input string type 产品类型
+		 * @input string type 产品类型 {default=home}
 		 * @param integer uid 用户ID
 		 * @param number money 金额限定
 		 * @param pagenum page 当前页码
