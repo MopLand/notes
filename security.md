@@ -242,3 +242,6 @@
 - [PHP 远程代码执行漏洞复现（CVE-2019-11043）【反弹shell成功】](http://blog.leanote.com/post/snowming/9da184ef24bd)
 - [干货|CVE-2019-11043: PHP-FPM在Nginx特定配置下任意代码执行漏洞分析](https://blog.csdn.net/jdcdev_/article/details/103066483)
 - [常见的Web攻击手段，拿捏了！](https://segmentfault.com/a/1190000040517973)
+- [【防火墙技术连载12】强叔侃墙 攻击防范篇 应用层攻击及防御](https://forum.huawei.com/enterprise/zh/thread-223517.html)
+- [【防火墙技术连载10】强叔侃墙 攻击防范篇 流量型攻击之SYN Flood及防御](https://forum.huawei.com/enterprise/zh/thread-214141.html)
+- [【防火墙技术连载11】强叔侃墙 攻击防范篇 流量型攻击之UDP Flood及防御](https://forum.huawei.com/enterprise/zh/thread-217549.html)
