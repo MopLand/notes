@@ -32,6 +32,7 @@
 	@expire 页面过期时间，0 || second
 	@locked 执行加锁时间，0 || second
 	@replay 请求重放，默认允许 true || 禁止重放 false
+	@iprate IP 速度限制，默认打开 on || 关闭限制 off
 	@action 入口地址，通常与 Action 同名
 	@crumbs 关联地址，导航条 Action 名称
 	@cloned 复制配置，从其他 Action 引用并合并配置

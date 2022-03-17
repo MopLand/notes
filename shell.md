@@ -164,3 +164,4 @@
 - [Linux学习笔记 -- 为 Shell 传递参数](https://www.cnblogs.com/atuotuo/p/6431289.html)
 - [linux shell脚本通过参数名传递参数值](https://www.cnblogs.com/rwxwsblog/p/5668254.html)
 - [Linux学习——Shell语法](https://juejin.im/post/5ce8f030518825338614124e)
+- [9 个实用 shell 脚本，建议收藏！](https://segmentfault.com/a/1190000041440679)

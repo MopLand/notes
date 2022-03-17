@@ -6,6 +6,10 @@
 
 [MarkdownPad - MarkDown 格式编辑器](http://markdownpad.com/)
 
+### 代理抓包
+
+[Charles Web Debugging Proxy](https://www.charlesproxy.com/)
+
 ### 编辑器
 
 [Notepad2 - 轻量级单文件编辑器](http://www.flos-freeware.ch/notepad2.html)
@@ -27,6 +31,10 @@
 [TortoiseSVN](https://tortoisesvn.net/downloads.zh.html)
 
 ## 终端工具
+
+### Tabby 跨平台终端（Windows/Mac）
+
+[A terminal for the modern age](https://tabby.sh/)
 
 ### iTerm2 终端模拟器（Mac）
 
