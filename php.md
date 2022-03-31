@@ -237,3 +237,5 @@
 ## 参考链接
 
 - [在CentOS 8上安装PHP、Redis和phpredis](https://blog.csdn.net/allway2/article/details/108758138)
+- [PHP Session可能会引起并发问题](https://www.cnblogs.com/Alight/p/4310174.html)
+- [PHP session并发操作及session读写锁](https://my.oschina.net/BearCatYN/blog/485318)
