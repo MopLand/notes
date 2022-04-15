@@ -156,3 +156,4 @@
 - [bat命令入门与高级技巧详解](https://www.jb51.net/article/97204.htm)
 - [为nginx创建windows服务自启动](https://www.cnblogs.com/JayK/p/3429795.html)
 - [更强力的Windows Service Wrapper工具 -- WinSW](https://my.oschina.net/pierrecai/blog/895336)
+- [使用ANSICON修正ANSI颜色转义序列，ansicon.exe -i 安装](https://github.com/adoxa/ansicon/releases)

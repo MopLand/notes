@@ -273,15 +273,123 @@
 
 ## 高级用法
 
-### 通过判断响应参数是否缓存
-	@cache 600
-	@sense valued
+### 通过判断响应参数是否缓存	
+	/**
+	 * @label 测试方法
+	 * @action test
+	 * @cache 600
+	 * @sense result.path.valued
+	 * @return json
+	 */
+	public function testAction(){
+	
+	}
 
 ### 复制其他 Action 参数配置
-	@label 拼多多
-    @action pinduoduo
-    @cloned index
+	/**
+     * @label 淘宝
+     * @action index
+     * @param string q 关键词 {filter=\Library\StrExt::removeEmoji}
+     * @param string s 条件 {optional=d.buyer_id,m.member_name,m.invite_code,l.trade_id,l.item_title,l.item_id}
+     * @param integer status 状态
+     * @param integer role 角色
+     * @param string start 开始日期 {regexp=/^([\d\-]+)$/}
+     * @param string final 结束日期 {regexp=/^([\d\-]+)$/}
+     * @param string range 日期筛选类型
+     * @param string promo 免单活动
+	 * @active low
+     * @access allowed
+     */
 
-### 定义特殊权限开关
-	@switch	modify_role 调整等级
- 	@switch	modify_phone 修改手机号
+	/**
+     * @label 拼多多
+     * @action pinduoduo
+     * @cloned index
+     */	 
+	public function defaultAction( $act = NULL ) {
+	
+	}
+	 
+### 定义特殊权限开关（定义在 class 层）	
+	/**
+	 * 用户管理
+	 * @name	用户
+	 * @weight	11
+	 * @manual	hidden
+	 * @switch	modify_role 调整等级
+	 * @switch	modify_phone 修改手机号
+	 */
+
+### 使用 @format 格式化响应数据
+	/**
+     * @label 混合查询（含分页）
+     * @action query
+     * @param string q				搜索关键词
+     * @param integer supid			大分类ID
+     * @param integer subid			小分类ID
+     * @param integer page			页码，默认 1
+     * @param string fmt 格式
+     * @format \App\Proxy\Model\Format::tbItem
+     * @return json
+     */
+    function queryAction( ) {
+		
+		$model = new \App\Proxy\Model\Search();
+		$result = $model->dispatch( $_GET, Request::getHttpHeader('QUERY_STRING') );
+		
+		return $result;
+
+	}
+
+### 调用其他控制器 Action，使用 setArgs() 方法传入参数
+	/**
+     * @label 首页千万补贴
+     * @action millions
+	 * @param integer page_no 页码，默认 1
+	 * @param integer page_size 每页大小，默认 20
+     * @return json
+     */
+    function millionsAction(){
+
+        $page_no    = $this->arg('page_no', 1 );
+		$page_size  = $this->arg('page_size', 20 );
+
+        $mod = new \App\Proxy\Controller\Pddapi;
+
+        $ret = $mod->setArgs( [
+            'page'		=> $page_no,
+            'limit'		=> $page_size,
+            'act_ids'   => 10851,
+            'flag'      => 'homepage'
+        ])->activityAction();
+
+        return $ret;
+    }
+	
+### 使用 @tester 在 “开发” 中生成快捷方式，使用 @badge 输出标识
+	/**
+     * @label 推广链接
+	 * @badge API
+     * @action url
+	 * @tester true
+     * @access limited
+     */
+    public function urlAction(){
+		
+        $url = Request::getPost('url');
+        $member_id = Request::getPost('member_id');
+        $chainType = Request::getPost('chainType');
+        $couponUrl = Request::getPost('couponUrl');
+
+        $result = [];
+
+        if( $url && $member_id ){
+
+            $model = new \App\Proxy\Model\JdUnion();
+            $model->setAccountConfig( $member_id );
+
+            $result = $model->subUnionidPromotion( $url, $member_id, $couponUrl, '', '', $chainType );
+        }
+
+        $this->assign( 'url', $result );
+    }
