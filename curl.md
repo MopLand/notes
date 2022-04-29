@@ -177,7 +177,7 @@
 
 ## 常见问题
 
-### cURL error 28: Operation timed out after 5000 milliseconds with 0 out of 0 bytes received
+### cURL error 28: Operation timed out after 5000 milliseconds with 0 out of -1 bytes received
 	先排除是网络问题导致的超时，比如外网带宽到达上限，导致不能正常接收数据
 
 ## 相关链接

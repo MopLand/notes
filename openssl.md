@@ -46,11 +46,14 @@
 
 #### 通配符证书
 
-	# 执行脚本，使用 DNS 验证
+	# 执行脚本，手动 DNS 验证
 	certbot --server https://acme-v02.api.letsencrypt.org/directory -d "*.veryide.net" --manual --preferred-challenges dns-01 certonly
 
 	# 配置域名 TXT 记录
 	_acme-challenge.veryide.net
+	
+	# 全自动化 DNS 验证
+	certbot --server https://acme-v02.api.letsencrypt.org/directory -d "*.taokebaohe.com" --manual --preferred-challenges dns-01 certonly --manual-auth-hook /disk/shell/certbot-auth-dnspod.sh --deploy-hook /disk/shell/certbot-deploy.sh
 
 ### 续约证书
 
@@ -66,10 +69,13 @@
 ### 定时更新脚本
 
 	# 每周一凌晨4点30自动更新证书，更新成功就自动重启 Nginx 服务
-	30 4 * * 1 certbot renew --deploy-hook "systemctl restart nginx" --quiet > /dev/null 2>&1 &
+	30 3 * * 1 certbot renew --deploy-hook "systemctl restart nginx" --quiet > /dev/null 2>&1 &
 
 	# 每周一凌晨4点30自动更新证书，更新成功就执行 Shell 脚本
-	30 4 * * 1 certbot renew --deploy-hook /disk/shell/certbot-deploy.sh --quiet > /dev/null 2>&1 &
+	30 3 * * 1 certbot renew --deploy-hook /disk/shell/certbot-deploy.sh --quiet > /dev/null 2>&1 &
+	
+	# 每周一凌晨4点30自动更新证书，更新成功就执行 Shell 脚本
+	30 3 * * 3 certbot renew --manual-auth-hook /disk/shell/certbot-auth-dnspod.sh --deploy-hook /disk/shell/certbot-deploy.sh --quiet > /dev/null 2>&1 &
 	
 ### 单域名文件验证
 	certbot certonly --email admin@veryide.com --agree-tos --webroot -w /disk/www/ssl.veryide.net -d ssl.veryide.net --manual-auth-hook /disk/shell/certbot-auth-file.sh
@@ -93,6 +99,12 @@
 		ssl_certificate /disk/certs/example.crt;
 		ssl_certificate_key /disk/certs/.cert/example.key;
 	}
+
+## 常见错误
+
+### SSLError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed
+	yum install ca-certificates openssl
+
 
 ## 参考资料
 - [Let’s Encrypt 提供，有效期 90 天](https://www.sslforfree.com/)
