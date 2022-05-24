@@ -1035,6 +1035,7 @@ Collate 校对规则
 - [ON SCHEDULE EVERY 1 MONTH](http://www.java2s.com/Code/SQL/Event/ONSCHEDULEEVERY1MONTH.htm)
 - [MySql常用30种SQL查询语句优化方法](https://segmentfault.com/a/1190000013935099)
 - [MySQL 性能优化神器 Explain 使用分析](https://segmentfault.com/a/1190000008131735)
+- [SQL优化万能公式：5 大步骤 + 10 个案例](https://mp.weixin.qq.com/s/xfQLLKvXcEVsmk49BUqnGw)
 - [腾讯云 CDB for MySQL 使用规范指南](https://cloud.tencent.com/document/product/236/13390)
 - [DCDB开发指南](https://cloud.tencent.com/document/product/557/7714)
 - [mysql5.7系列修改root默认密码](https://www.cnblogs.com/activiti/p/7810166.html)

@@ -104,6 +104,10 @@
 
 ### SSLError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed
 	yum install ca-certificates openssl
+	
+### PHP SSL operation failed with code 1. OpenSSL Error messages: SSL routines:ssl3_get_server_certificate:certificate verify failed
+	cd /disk/certs/ && wget https://curl.haxx.se/ca/cacert.pem --no-check-certificate -O cacert.pem
+	openssl.cafile=/disk/certs/cacert.pem
 
 
 ## 参考资料

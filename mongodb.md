@@ -80,3 +80,8 @@
 	mongo --port 27027
 	use admin
 	db.runCommand({logRotate:1})
+
+### 相关链接
+
+- [MongoDB 中文手册](https://mongodb.net.cn/manual/)
+- [MongoDB 支持的数据类型](https://www.modb.pro/db/185549)
