@@ -217,7 +217,7 @@
 		 * @param sorting extra 筛选排序 {optional=b.id,a.fans,a.income,b.income_yester,b.income_recent,b.income_month,a.logined_time; per=asc}
 		 * @param mobile phone 手机号码 {required=1}
 		 * @param string lists 文件清单 {posted=1}
-		 * @param string field 搜索类型 {optional=trade_id,item_id}
+		 * @param string field 搜索类型 {optional=trade_id,item_id; default=trade_id}
 		 * @param string start 开始日期 {regexp=/^([\d\-]+)$/}
 		 * @param string final 结束日期 {regexp=/^([\d\-]+)$/}
 		 * @param json object 数据对象

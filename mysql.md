@@ -389,6 +389,9 @@
 
 ### 在0或1之间切换
 	UPDATE `tblname` SET field = 1 - field;
+	
+### 字段内容替换
+	UPDATE `tblname` SET screen = REPLACE( screen, 'mopland.com', 'guodongbaohe.com' );
 
 ### 带查询的更新
 	UPDATE pre_tasks_list SET payout_quantity =( SELECT COUNT(*) FROM pre_tasks_order WHERE pre_tasks_order.status = 1 AND pre_tasks_list.id = pre_tasks_order.tasks_id );
