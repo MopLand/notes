@@ -228,27 +228,27 @@
 	
 ## Imagick
 
-### 安装 pecl 依赖
+### 1.1 安装 pecl 依赖
 [https://windows.php.net/downloads/pecl/deps/](https://windows.php.net/downloads/pecl/deps/)
 	
 	选择合适的版本进行安装，类似：
 	ImageMagick-7.1.0-18-vc15-x64.zip
 	ImageMagick-7.1.0-18-vc15-x86.zip
 	
-### 新增环境变量 path
+### 1.2 新增环境变量 path
 	D:\ImageMagick\bin
 	
-### pdf 文件处理需要用到 Ghostscript
+### 2.1 pdf 文件处理需要用到 Ghostscript
 [https://ghostscript.com/releases/gsdnld.html](https://ghostscript.com/releases/gsdnld.html)
 	
 	选择合适的版本进行安装，类似：
 	Ghostscript 9.56.1 for Windows
 	Ghostscript 9.56.1 for Linux
 	
-### 新增环境变量 path
+### 2.2 新增环境变量 path
 	C:\Program Files (x86)\gs\gs9.56.1\bin
 	
-### 安装 php 扩展
+### 3.1 安装 php 扩展
 [https://pecl.php.net/package/imagick/](https://pecl.php.net/package/imagick/)
 	
 	选择合适的版本进行安装，类似：	
@@ -257,14 +257,14 @@
 	8.0 Non Thread Safe (NTS) x86
 	8.0 Thread Safe (TS) x86
 	
-### 配置 php.ini
+### 3.2 配置 php.ini
 	extension=imagick
 	
-### 复制文件到 ext/
+### 3.3 复制文件到 ext/
 	php_imagick.dll
 	php_imagick.pdb
 	
-### 复制其他文件到 /
+### 3.4 复制其他文件到 /
 	*.dll
 	*.pdb
 	
