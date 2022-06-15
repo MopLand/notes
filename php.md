@@ -229,7 +229,7 @@
 ## Imagick
 
 ### 安装 pecl 依赖
-(https://windows.php.net/downloads/pecl/deps/)[https://windows.php.net/downloads/pecl/deps/]
+[https://windows.php.net/downloads/pecl/deps/](https://windows.php.net/downloads/pecl/deps/)
 	
 	选择合适的版本进行安装，类似：
 	ImageMagick-7.1.0-18-vc15-x64.zip
@@ -239,7 +239,7 @@
 	D:\ImageMagick\bin
 	
 ### pdf 文件处理需要用到 Ghostscript
-(https://ghostscript.com/releases/gsdnld.html)[https://ghostscript.com/releases/gsdnld.html]
+[https://ghostscript.com/releases/gsdnld.html](https://ghostscript.com/releases/gsdnld.html)
 	
 	选择合适的版本进行安装，类似：
 	Ghostscript 9.56.1 for Windows
@@ -249,7 +249,7 @@
 	C:\Program Files (x86)\gs\gs9.56.1\bin
 	
 ### 安装 php 扩展
-(https://pecl.php.net/package/imagick/)[https://pecl.php.net/package/imagick/]
+[https://pecl.php.net/package/imagick/](https://pecl.php.net/package/imagick/)
 	
 	选择合适的版本进行安装，类似：	
 	8.0 Non Thread Safe (NTS) x64
