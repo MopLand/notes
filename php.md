@@ -268,6 +268,9 @@
 	*.dll
 	*.pdb
 	
+### 4 重启服务或机器
+	非常重要！
+	
 ## 常见错误
 
 ### 无法保存登录状态（session 不能写入）Session expired, please login again.
