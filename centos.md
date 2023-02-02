@@ -246,6 +246,9 @@
 4. 进行 MariaDB 引导设置	
 	
 	mysql_secure_installation
+	
+5. 使用命令行更改 root 密码
+	mysqladmin -uroot -poldpwd password newpwd
 
 ## CentOS 7 安装 Mysql
 

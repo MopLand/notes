@@ -273,6 +273,9 @@
 	
 ## 常见错误
 
+### PHP 8.2 OpenSSL support	disabled (install ext/openssl)
+	复制 libssl-3.dll 和 libcrypto-3.dll 到 apache/bin
+
 ### 无法保存登录状态（session 不能写入）Session expired, please login again.
 	
 	# 推荐 chown
