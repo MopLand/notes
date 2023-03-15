@@ -20,6 +20,9 @@
 
 ### pyOpenSSL 冲突
 
+	# 更新 CA 证书	
+	yum -y update ca-certificates
+
 	# 删除原有安装
 	yum remove certbot && pip uninstall pyOpenSSL
 
@@ -28,10 +31,10 @@
 	yum install -y openssl-devel
 
 	# 安装 certbot
-	yum install certbot
+	yum install -y certbot
 
 	# 安装 pyOpenSSL
-	pip install pyOpenSSL
+	pip install -y pyOpenSSL
 
 ### 生成域名证书
 
@@ -65,6 +68,12 @@
 
 	# 更新完后，执行钩子脚本
 	certbot renew --deploy-hook /disk/shell/certbot-deploy.sh
+	
+### 撤销证书
+	certbot revoke --cert-path /etc/letsencrypt/archive/lanpixia.com/cert1.pem
+	
+### 删除证书
+	certbot delete --cert-name lanpixia.com
 
 ### 定时更新脚本
 
@@ -105,6 +114,9 @@
 ### SSLError: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed
 	yum install ca-certificates openssl
 	
+### TypeError: __str__ returned non-string (type Error)
+	升级 Python 3.x 以上版本，或者安装 python2-certbot 版本（yum install python2-certbot），亦或者需要更新 CA 证书
+	
 ### PHP SSL operation failed with code 1. OpenSSL Error messages: SSL routines:ssl3_get_server_certificate:certificate verify failed
 	cd /disk/certs/ && wget https://curl.haxx.se/ca/cacert.pem --no-check-certificate -O cacert.pem
 	openssl.cafile=/disk/certs/cacert.pem
@@ -117,3 +129,4 @@
 - [Certbot 申请的 https 证书续期报错的解决方案](https://learnku.com/articles/16996/certbot-application-for-https-certificate-renewal-error-reporting-solution)
 - [使用Certbot获取免费泛域名(通配符)证书](https://www.jianshu.com/p/1eb7060c5ede)
 - [Certbot DNS Authenticator For DNSPod](https://github.com/al-one/certbot-auth-dnspod/)
+- [Certbot 更改证书的域](https://www.wangan.com/docs/1252)

@@ -83,6 +83,25 @@
 
 ### 文件位置
 	/etc/redis.conf
+	
+#### 淘汰策略 maxmemory-policy
+
+一共有7种淘汰策略，1种拒绝策略：
+
+	针对设置过期时间的键值对：即使缓存没有写满，这些数据如果过期了，也会被删除。
+	除。当然，如果它的过期时间到了但未被策略选中，同样也会被删除。
+	volatile-random：从设置了过期时间的键值对中，进行随机删除
+	volatile-ttl：从设置了过期时间的键值对中，根据过期时间的先后进行删除，越早过期的越先被删除
+	volatile-lru：从设置了过期时间的键值对中，使用LRU算法筛选，
+	volatile-lfu：从设置了过期时间的键值对中，使用LFU算法筛选，在 LRU算法的基础上，同时考虑了数据的访问时效性和数据的访问次数
+	
+	所有键值对
+	allkeys-random：从所有键值对中，随机选择并删除数据；
+	allkeys-lru：从所有键值对中，使用LRU算法筛选，
+	allkeys-lfu：从所有键值对中，使用LFU算法筛选，	
+	noevction：不进行数据淘汰。一旦缓存被写满了，再有写请求来时，Redis不再提供服务，而是直接返回错误。
+	
+	如果一个键值对被删除策略选中了，即使它的过期时间还没到，也需要被删。		
 
 ### 参数说明
 
@@ -167,3 +186,4 @@
 - [PHP使用redis中setnx防止大并发下二次写入](https://blog.csdn.net/qq_23564667/article/details/105871657)
 - [Windows Service Documentation](https://raw.githubusercontent.com/MSOpenTech/redis/3.0/Windows%20Service%20Documentation.md)
 - [Redis只能做缓存？太out了！](https://juejin.cn/post/6989108481018036232)
+- [Redis 缓存回收的7种策略volatile设置过期时间及allkeys所有数据范围内](https://blog.csdn.net/Extraordinarylife/article/details/127344560)
