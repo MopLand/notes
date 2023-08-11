@@ -207,6 +207,9 @@
 
 #### 中文字符排序
 	SELECT * FROM `tblname` ORDER BY CONVERT(vender_abbrev USING gbk) ASC;
+	
+#### 使用子查询结果来排序
+	SELECT sub.*, ( SELECT status FROM `pre_weixin_stick` WHERE sub.`id` = `source_id` AND `member_id` = 10008 ) AS weight FROM `pre_weixin_source` AS sub WHERE sub.`category` = 'groups' ORDER BY weight DESC, sub.`sort` DESC;
 
 #### WHERE IN 同时保持排序（IN 适合于外表数据量大而内表数据小的情况）
 	SELECT * FROM `tblname` WHERE id IN(5,2,6,8,12,1) ORDER BY FIELD(id,5,2,6,8,12,1);

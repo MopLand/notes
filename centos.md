@@ -359,3 +359,4 @@
 
 - [systemd.service 中文手册](http://www.jinbuguo.com/systemd/systemd.service.html)
 - [AWS EC2启动Centos实例以及设置root密码登录](https://blog.csdn.net/hhhzua/article/details/79452875)
+- [CentOS 7安装配置Shadowsocks客户端](https://zhuanlan.zhihu.com/p/514126016)
