@@ -175,5 +175,6 @@
 - [Build and (re)start go web apps after saving/creating/deleting source files.](https://github.com/gravityblast/fresh)
 - [Very simple compile daemon for Go](https://github.com/githubnemo/CompileDaemon)
 - [golang程序在windows上，注册为服务](https://blog.csdn.net/yang8023tao/article/details/53332984)
+- [万字长文解读 pkg.go.dev 的设计和实现](https://mp.weixin.qq.com/s/btX53JVCgfOfxDy2ynQa_A)
 
 

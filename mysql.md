@@ -106,6 +106,9 @@
 	
 #### 截取部分字符串，查询超长文本会显著提高效率
 	SELECT event_id, taking_time, memory_usage, SUBSTR(result, 1, 200) as result FROM `pre_cron_event`;
+	
+#### 字符串出现次数，将出现的字符串给替换成了空，然后得出长度差
+	SELECT SUM( LENGTH( extend ) - LENGTH( REPLACE( extend, ':', '' ) ) ) FROM `pre_weixin_effect` WHERE `created_date` = 20231016 AND `platform` = 'taobao';
 
 #### 分组查询并去重复
 	SELECT admin_id, SUM( money ) FROM pre_tasks_list GROUP BY admin_id;
@@ -236,6 +239,9 @@
 
 #### 按时段统计订单数量和金额
 	SELECT COUNT(*), SUM(pub_share_pre_fee), FROM_UNIXTIME( UNIX_TIMESTAMP( create_time ), '%H' ) AS hour FROM pre_order_shadow WHERE create_date >= 20191010 GROUP BY hour;
+	
+#### with rollup 分组统计数据的基础上再进行统计汇总
+	SELECT coalesce(name, '总金额') name, SUM(money) as money FROM order_diy GROUP BY name WITH ROLLUP;
 	
 #### 资金流水余额
 	SELECT money, (SELECT SUM(money) FROM `pre_account_detail` WHERE id <= d.id AND `member_id` = 10008) AS balance FROM `pre_account_detail` AS d WHERE `member_id` = 10008;
@@ -828,6 +834,20 @@ Collate 校对规则
 
 ### 按季度拆分大数据表，参考 backup_order
 	7月备份 1~3 月，10月备份 4~6 月，1月备份 7~9 月，4月备份 10~12 月
+	
+### 设计数据表的建议
+	表名、列名长度不超过 16
+	每个字段都必须有 NOT NULL DEFAULT ''， 如果是 int 则 default 0
+	主键必须为 int/bigint 类型
+	如果是 int 类型，且不会存负数，则标记为 UNSIGNED INT
+	如果 int 类型是 10 以下的几个可枚举值，则使用 TINYINT 类型
+	varchar 长度小于 3000
+	text 字段个数不超过 3 个
+	每个字段增加 COMMENT 注释，说明字段用途
+	索引不能有重复
+	索引个数不能大于 5 个（包括主键）
+	索引字段必须为 not null，并且有 default 值
+	请不要使用 MySQL 保留字
 
 ## 配置说明
 
@@ -1062,3 +1082,4 @@ Collate 校对规则
 - [慢查询数过高](https://cloud.tencent.com/document/product/236/56258)
 - [表属性设置为 NULL，你可能要面临很多麻烦](https://my.oschina.net/itbbfx/blog/5267953)
 - [你分库分表的姿势对么？——详谈水平分库分表](https://segmentfault.com/a/1190000040858391)
+- [分享10个高级sql写法](https://juejin.cn/post/7209625823580766264)

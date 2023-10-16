@@ -15,6 +15,12 @@
 	fs.file-max = 200001
 	fs.nr_open  = 200001
 	
+	# 用户的文件监视器（inotify）实例的数量
+	fs.inotify.max_user_watches = 81920
+	
+	# 生效改动
+	sudo sysctl -p --system
+	
 ## limit 资源查询
 
 	# 查看系统用户所有限制值
@@ -351,3 +357,4 @@
 - [资源监控工具 glances](https://www.jianshu.com/p/639581a96512)
 - [PHP -fpm 服务器内存占用陡坡式上涨，请问如何彻底解决？](https://www.v2ex.com/t/727028)
 - [高性能利器：CDN我建议你好好学一下！](https://segmentfault.com/a/1190000040643120)
+- [Linux使用systemctl启动服务报错: Error:No space left on dev](https://www.ucloud.cn/yun/128112.html)
