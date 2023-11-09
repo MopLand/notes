@@ -29,6 +29,8 @@
 	@cross  跨域访问，true || false
 	@cache  缓存响应数据，0 || second
 	@sense  是否缓存开关，key 来自 return 数据，支持路径表达式（ab.cd.ef）
+	@check	是否缓存预检，function
+	@target 重定向标识
 	@expire 页面过期时间，0 || second
 	@locked 执行加锁时间，0 || second
 	@replay 请求重放，默认允许 true || 禁止重放 false
@@ -273,7 +275,7 @@
 
 ## 高级用法
 
-### 通过判断响应参数是否缓存	
+### 通过判断响应参数是否缓存
 	/**
 	 * @label 测试方法
 	 * @action test
@@ -282,6 +284,22 @@
 	 * @return json
 	 */
 	public function testAction(){
+	
+	}
+
+### 自定义方法预判断是否缓存
+	/**
+	 * @label 测试方法
+	 * @action precheck
+	 * @cache 600
+	 * @sense result.path.valued
+	 * @check \App\Proxy\Model\Member::detect
+	 * @return json
+	 */
+	public function precheckAction(){
+	
+		//获得判断结果：NULL 未检查, TRUE 通过检查, FALSE 未通过
+		$allow = $this->result();
 	
 	}
 
@@ -310,7 +328,7 @@
 	
 	}
 	 
-### 定义特殊权限开关（定义在 class 层）	
+### 定义特殊权限开关（定义在 class 层）
 	/**
 	 * 用户管理
 	 * @name	用户
