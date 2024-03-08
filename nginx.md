@@ -7,6 +7,12 @@
 
 ### 查看版本
 	nginx -v
+	
+### 完整配置
+	nginx -T
+	
+### 平滑重启
+	nginx -s reload
 
 ### 配置 PHP.ini
 	cgi.fix_pathinfo=1
@@ -1035,6 +1041,10 @@
 	yum remove nginx-mod*
 	yum install nginx-module-*
 
+#### [alert] worker_connections are not enough while connecting to upstream
+	worker_connections 10240;
+	# 同时注意配置 Linux 最大打开文件数，ulimit -a 位于 /etc/security/limits.conf
+
 ### Nginx 内置变量
 
 	$args                    #请求中的参数值
@@ -1112,4 +1122,6 @@
 - [NGINX mod_zip 扩展实现边打包边下载 zip 文件，PHP 实现以及途中踩过的坑](https://www.iuxiao.com/d/28)
 - [实践：Nginx的mod_zip模块安装和使用](https://www.leion.co/2018/03/03/Nginx-mod_zip/)
 - [How to Install PHP 8 on CentOS 8 / RHEL 8](https://www.linuxtechi.com/install-php-8-centos-8-rhel-8/)
+- [Nginx 工作机制&参数设置](https://blog.csdn.net/weixin_60766221/article/details/127462231)
+- [Nginx性能调优实战](https://zhuanlan.zhihu.com/p/567754434)
 	

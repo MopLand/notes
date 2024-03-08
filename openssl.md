@@ -36,6 +36,9 @@
 	# 安装 pyOpenSSL
 	pip install -y pyOpenSSL
 
+	# 新版本软链接
+	rm /usr/bin/python && ln -s /usr/bin/python3 /usr/bin/python
+
 ### 生成域名证书
 
 #### 单个域名
