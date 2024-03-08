@@ -39,9 +39,10 @@
 	</VirtualHost>
 	
 	# 配置别名
-	<VirtualHost *>
-		ServerName server.domain.com
-		ServerAlias server server2.domain.com server2
+	<VirtualHost admin.baohe.test:80>
+		DocumentRoot "/Users/Lay/Works/Baohe/run"
+		ServerName admin.baohe.test
+		ServerAlias app.baohe.test proxy.baohe.test agent.baohe.test gw.baohe.test
 	</VirtualHost>
 	
 ### 虚拟主机
