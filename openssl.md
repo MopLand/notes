@@ -80,14 +80,14 @@
 
 ### 定时更新脚本
 
-	# 每周一凌晨4点30自动更新证书，更新成功就自动重启 Nginx 服务
+	# 每周一凌晨3点30自动更新证书，更新成功就自动重启 Nginx 服务
 	30 3 * * 1 certbot renew --deploy-hook "systemctl restart nginx" --quiet > /dev/null 2>&1 &
 
-	# 每周一凌晨4点30自动更新证书，更新成功就执行 Shell 脚本
+	# 每周一凌晨3点30自动更新证书，更新成功就执行 Shell 脚本
 	30 3 * * 1 certbot renew --deploy-hook /disk/shell/certbot-deploy.sh --quiet > /dev/null 2>&1 &
 	
-	# 每周一凌晨4点30自动更新证书，更新成功就执行 Shell 脚本
-	30 3 * * 3 certbot renew --manual-auth-hook /disk/shell/certbot-auth-dnspod.sh --deploy-hook /disk/shell/certbot-deploy.sh --quiet > /dev/null 2>&1 &
+	# 每周一凌晨3点30自动更新证书，更新成功就执行 Shell 脚本
+	30 3 * * 1 certbot renew --manual-auth-hook /disk/shell/certbot-auth-dnspod.sh --deploy-hook /disk/shell/certbot-deploy.sh --quiet > /dev/null 2>&1 &
 	
 ### 单域名文件验证
 	certbot certonly --email admin@veryide.com --agree-tos --webroot -w /disk/www/ssl.veryide.net -d ssl.veryide.net --manual-auth-hook /disk/shell/certbot-auth-file.sh
