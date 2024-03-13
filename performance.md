@@ -8,15 +8,16 @@
 	ulimit -n 100001
 
 	vi /etc/security/limits.conf
-	* hard nofile 100001
-	* soft nofile 100002
+	* hard nofile 131070
+	* soft nofile 131070
 
 	vi /etc/sysctl.conf
-	fs.file-max = 200001
-	fs.nr_open  = 200001
+	fs.file-max = 1513772
+	fs.nr_open  = 1513772
+	net.ipv4.tcp_tw_reuse = 1
 	
 	# 用户的文件监视器（inotify）实例的数量
-	fs.inotify.max_user_watches = 81920
+	fs.inotify.max_user_watches = 113002
 	
 	# 生效改动
 	sudo sysctl -p --system
@@ -358,3 +359,5 @@
 - [PHP -fpm 服务器内存占用陡坡式上涨，请问如何彻底解决？](https://www.v2ex.com/t/727028)
 - [高性能利器：CDN我建议你好好学一下！](https://segmentfault.com/a/1190000040643120)
 - [Linux使用systemctl启动服务报错: Error:No space left on dev](https://www.ucloud.cn/yun/128112.html)
+- [fs.inotify.max_user_watches默认值太小，导致too many open files](https://www.cnblogs.com/caidingyu/p/10436560.html)
+- [设置Linux打开文件句柄/proc/sys/fs/file-max和ulimit -n的区别](https://blog.csdn.net/sunny05296/article/details/54952009/)
