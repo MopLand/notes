@@ -121,8 +121,11 @@ ln -s /usr/libexec/platform-python3.6 /usr/bin/python
 
 ## 其他
 
-### 附件文件所有者变更
+### 变更文件所有者
 chown -R nginx:nginx /disk/www/assets.baohe.com
+
+### 按特定用户变更
+find /disk/www/assets.baohe.com -user 993 -exec chown nginx:nginx {} \;
 
 ### 各个项目拉取
 git clone --depth 1 git@github.com:MopLand/Startup.git "/disk/www/startup"
@@ -138,6 +141,3 @@ git clone --depth 1 git@git.oschina.net:bangbang/JellyBox_CMS.git "/disk/www/cms
 ###参考链接
 - [如何在 CentOS 8 / RHEL 8 系统上安装 PHP 8 ?](https://zhuanlan.zhihu.com/p/615971837)
 - [CentOS8安装PHP83](https://blog.csdn.net/tomjk/article/details/134073569)
-
-
-

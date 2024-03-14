@@ -185,10 +185,10 @@
 	# 动态方式下的起始 php-fpm 进程数量
 	pm.start_servers
 	
-	# 动态方式下的最小 php-fpm 进程数
+	# 动态方式下的最小空闲进程数（清理空闲进程后的保留数量）
 	pm.min_spare_servers
 	
-	# 动态方式下的最大 php-fpm 进程数量
+	# 动态方式下的最大空闲进程数（当空闲进程达到此值时清理）
 	pm.max_spare_servers
 
 	# 设置每个子进程能处理的最大请求数，达到数量后自动重启该进程
@@ -200,15 +200,18 @@
 	# 如果pm设置为 dynamic，那么 pm.max_children 参数失效，后面3个参数生效。
 	# 系统会在 php-fpm 运行开始 的时候启动 pm.start_servers 个 php-fpm 进程，
 	# 然后根据系统的需求动态在 pm.min_spare_servers 和 pm.max_spare_servers 之间调整 php-fpm 进程数
+	# pm.start_servers 必须不小于 pm.min_spare_servers 且不大于 pm.max_spare_servers
+	# pm.min_spare_servers => pm.start_servers <= pm.max_spare_servers
 	
 ### 8G内存参考
 	pm = dynamic
 	pm.max_children = 1024
-	pm.start_servers = 32
+	pm.start_servers = 64
 	pm.min_spare_servers = 32
-	pm.max_spare_servers = 1024
-	pm.max_requests = 10240
+	pm.max_spare_servers = 512
+	pm.max_requests = 1024
 	rlimit_files = 65535
+	
 ### 定位慢请求
 	
 	# /etc/php-fpm.d/www.conf
