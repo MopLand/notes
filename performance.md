@@ -12,8 +12,14 @@
 	* soft nofile 131070
 
 	vi /etc/sysctl.conf
+
+	# 系统允许打开的最大文件句柄数
 	fs.file-max = 1513772
+
+	# 单个程序所能打开的最大文件句柄数
 	fs.nr_open  = 1513772
+
+	# 启用TIME-WAIT套接字的快速重用
 	net.ipv4.tcp_tw_reuse = 1
 	
 	# 用户的文件监视器（inotify）实例的数量
@@ -21,11 +27,26 @@
 	
 	# 生效改动
 	sudo sysctl -p --system
+
+## Nginx 配置优化
+	
+	查看系统的最大打开文件数： ulimit -a | grep "open files"
+	查看 nginx 的 worker process 情况 ps -ef | grep nginx
+
+	系统的最大打开文件数 >= worker_connections * worker_process
+	根据系统的最大打开文件数来调整，worker_connections 进程连接数量要小于等于系统的最大打开文件数
+	worker_connections 进程连接数量真实数量 = worker_connections * worker_process
 	
 ## limit 资源查询
 
-	# 查看系统用户所有限制值
+	# 查看系统用户级别限制值
 	ulimit -a
+
+	# 查看系统用户级别 open file 文件符号限制数
+	ulimit -n
+
+	# 可以运行的最大并发进程数
+	ulimit -u
 	
 	# 查看当前系统打开的文件数量
 	lsof | wc -l
@@ -34,6 +55,9 @@
 	lsof -p pid | wc -l
 	
 	# 查看系统总限制打开文件的最大数量
+	cat /proc/sys/fs/file-max
+	
+	# 查看单个程序所能打开的最大文件句柄数
 	cat /proc/sys/fs/file-max
 
 ----------
