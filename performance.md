@@ -23,7 +23,10 @@
 	net.ipv4.tcp_tw_reuse = 1
 	
 	# 用户的文件监视器（inotify）实例的数量
-	fs.inotify.max_user_watches = 113002
+	fs.inotify.max_user_watches = 204800
+
+	# 每个用户能够创建的inotify实例的最大数量的参数
+	fs.inotify.max_user_instances = 512
 	
 	# 生效改动
 	sudo sysctl -p --system
@@ -58,7 +61,7 @@
 	cat /proc/sys/fs/file-max
 	
 	# 查看单个程序所能打开的最大文件句柄数
-	cat /proc/sys/fs/file-max
+	cat /proc/sys/fs/nr_open
 
 ----------
 
@@ -388,3 +391,4 @@
 - [Linux使用systemctl启动服务报错: Error:No space left on dev](https://www.ucloud.cn/yun/128112.html)
 - [fs.inotify.max_user_watches默认值太小，导致too many open files](https://www.cnblogs.com/caidingyu/p/10436560.html)
 - [设置Linux打开文件句柄/proc/sys/fs/file-max和ulimit -n的区别](https://blog.csdn.net/sunny05296/article/details/54952009/)
+- [网站请求异常502 php-fpm.sock failed (11: Resource temporarily unavailable) while connecting to upstream](https://blog.csdn.net/nbaqq2010/article/details/128115158)
