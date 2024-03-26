@@ -1083,3 +1083,4 @@ Collate 校对规则
 - [表属性设置为 NULL，你可能要面临很多麻烦](https://my.oschina.net/itbbfx/blog/5267953)
 - [你分库分表的姿势对么？——详谈水平分库分表](https://segmentfault.com/a/1190000040858391)
 - [分享10个高级sql写法](https://juejin.cn/post/7209625823580766264)
+- [MySQL正则表达式REGEXP使用详解](https://www.jb51.net/article/263052.htm)

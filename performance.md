@@ -8,8 +8,8 @@
 	ulimit -n 100001
 
 	vi /etc/security/limits.conf
-	* hard nofile 131070
-	* soft nofile 131070
+	* hard nofile 240800
+	* soft nofile 240800
 
 	vi /etc/sysctl.conf
 
@@ -22,11 +22,14 @@
 	# 启用TIME-WAIT套接字的快速重用
 	net.ipv4.tcp_tw_reuse = 1
 	
+	# 设置TCP连接的最大排队数量
+	net.core.somaxconn = 65536
+	
 	# 用户的文件监视器（inotify）实例的数量
-	fs.inotify.max_user_watches = 204800
+	fs.inotify.max_user_watches = 409600
 
 	# 每个用户能够创建的inotify实例的最大数量的参数
-	fs.inotify.max_user_instances = 512
+	fs.inotify.max_user_instances = 1024
 	
 	# 生效改动
 	sudo sysctl -p --system
@@ -189,6 +192,7 @@
 	max_input_vars = 3000
 
 ### Session 控制
+
 	# Session 有效期
 	session.cookie_lifetime = 172800
 	
@@ -246,6 +250,16 @@
 	slowlog = /var/log/php-fpm/www-slow.log
 
 ## Nginx
+
+### 配置优化
+
+	# 设置 worker 进程的最大文件打开数限制
+	worker_rlimit_nofile 204800;
+	
+	http {
+		# 开启 sendfile 系统调用
+		sendfile            on;
+	}
 
 ### timeout 和 buffers 配置，常引起 504 错误，位于 nginx.conf
 
@@ -392,3 +406,5 @@
 - [fs.inotify.max_user_watches默认值太小，导致too many open files](https://www.cnblogs.com/caidingyu/p/10436560.html)
 - [设置Linux打开文件句柄/proc/sys/fs/file-max和ulimit -n的区别](https://blog.csdn.net/sunny05296/article/details/54952009/)
 - [网站请求异常502 php-fpm.sock failed (11: Resource temporarily unavailable) while connecting to upstream](https://blog.csdn.net/nbaqq2010/article/details/128115158)
+- [nginx提示：Toomanyopenfiles解决办法](https://www.dbmng.com/art-1521.html)
+- [nginx反向代理worker_rlimit_nofile和worker_connections配置](https://www.cnblogs.com/yangwen0228/p/16970547.html)
