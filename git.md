@@ -55,9 +55,13 @@
 
 ## 生产环境定时拉取项目
 
-### cron 脚本
-	#项目自动更新（每天9:00 - 22:00，每10分钟执行一次）
+### crontab 脚本
+
+	# 项目自动更新（每天9:00 - 22:00，每10分钟执行一次）
 	*/10 9-22 * * * /disk/shell/gitpull.sh > /var/log/gitpull.log
+	
+	# 主动拉取带 .gitlock 的项目（最好安排在机器重启之前）
+	25 04 * * * git --git-dir=/disk/www/Messager/.git --work-tree=/disk/www/Messager/ pull
 
 ### sh 执行权限
 	chmod +x /disk/shell/gitpull.sh
