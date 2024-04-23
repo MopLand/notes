@@ -1,5 +1,108 @@
 # 团队协作
 
+## V2ray
+
+### 安装命令
+	bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
+
+### 配置文件
+	# cat /usr/local/etc/v2ray/config.json
+
+	{
+		"$schema": "https://github.com/EHfive/v2ray-jsonschema/raw/main/v4-config.schema.json",
+		"log": {
+			"loglevel": "info",
+			"access": "/var/log/v2ray/access.log",
+			"error": "/var/log/v2ray/error.log"
+		},
+		"inbounds": [
+			{
+			"port": 8000,
+			"listen": "127.0.0.1",
+			"protocol": "vmess",
+			"settings": {
+				"clients": [
+				{
+					"id": "be5cefcb-****-****-****-6d3c649411a2",
+					"alterId": 0
+				}
+				]
+			},
+			"streamSettings": {
+				"network": "ws",
+				"wsSettings": {
+				"path": "/ws",
+				"headers": {
+					"Host": "hk.example.com"
+				}
+				}
+			}
+			}
+		],
+		"outbounds": [
+			{
+			"protocol": "freedom",
+			"settings": {}
+			}
+		]
+	}
+
+### Nginx 站点
+	server {
+		listen 80;
+		listen [::]:80;
+		listen 443 ssl http2;
+		listen [::]:443 ssl http2;
+
+		server_name hk.example.com;
+		index index.html index.htm;
+		root /disk/www/go.example.com;
+
+		access_log off;
+		ssl_certificate /disk/certs/hk.example.com.crt;
+		ssl_certificate_key /disk/certs/hk.example.com.key;
+
+		location /ws {
+			# WebSocket协商失败时返回404
+			if ($http_upgrade != "websocket") {
+				return 404;
+			}
+
+			proxy_redirect off;
+			proxy_pass http://127.0.0.1:8000;
+			proxy_http_version 1.1;
+
+			proxy_set_header Upgrade $http_upgrade;
+			proxy_set_header Connection "upgrade";
+			proxy_set_header Host $host;
+
+			proxy_set_header X-Real-IP $remote_addr;
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		}
+
+		location ~ .*\.(gif|jpg|jpeg|png|bmp|swf|flv|mp4|ico)$ {
+			expires 30d;
+			access_log off;
+		}
+		
+		location ~ .*\.(js|css)?$ {
+			expires 7d;
+			access_log off;
+		}
+		
+		location ~ /(\.user\.ini|\.ht|\.git|\.svn|\.project|LICENSE|README\.md) {
+			deny all;
+		}
+		
+		location /.well-known {
+			allow all;
+		}
+	}
+
+### 启动服务
+	systemctl enable v2ray
+	systemctl start v2ray
+
 ## 开发工具
 
 ### 写作工具
