@@ -111,6 +111,17 @@
 		ssl_certificate /disk/certs/example.crt;
 		ssl_certificate_key /disk/certs/.cert/example.key;
 	}
+	
+## Apahce 证书配置
+
+	<VirtualHost app.baohe.test:443>
+		DocumentRoot "E:\Works\Baohe\run"
+		ServerName app.baohe.test		
+		# HTTPS 支持
+		SSLEngine on
+		SSLCertificateFile "E:/EasyPHP/certs/example.test.pem"
+		SSLCertificateKeyFile "E:/EasyPHP/certs/example.test-key.pem"
+	</VirtualHost>
 
 ## 常见错误
 
@@ -133,3 +144,6 @@
 - [使用Certbot获取免费泛域名(通配符)证书](https://www.jianshu.com/p/1eb7060c5ede)
 - [Certbot DNS Authenticator For DNSPod](https://github.com/al-one/certbot-auth-dnspod/)
 - [Certbot 更改证书的域](https://www.wangan.com/docs/1252)
+- [A simple zero-config tool to make locally trusted development certificates with any names you'd like.](https://github.com/FiloSottile/mkcert)
+- [使用mkcert工具生成受信任的SSL证书，解决局域网本地https访问问题](https://cloud.tencent.com/developer/article/2191830)
+- [用 mkcert 為 Apache 建立 vhost 的 SSL 安全連線](https://zhung.com.tw/article/%e7%94%a8mkcert%e7%82%baapache%e5%bb%ba%e7%ab%8bvhost%e7%9a%84ssl%e5%ae%89%e5%85%a8%e9%80%a3%e7%b7%9a/)

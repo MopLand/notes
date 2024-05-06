@@ -236,6 +236,8 @@
 
 #### 使用正则匹配
 	SELECT * FROM `pre_wechat_account` WHERE 'www.example.com' REGEXP domain;
+	
+	SELECT COUNT(*) FROM `pre_account_withdraw` WHERE `method` = 'bankcard' AND `rawdata` REGEXP '"ip":"([0-9]+)\.([0-9]+)\.([0-9]+)"';
 
 #### 按时段统计订单数量和金额
 	SELECT COUNT(*), SUM(pub_share_pre_fee), FROM_UNIXTIME( UNIX_TIMESTAMP( create_time ), '%H' ) AS hour FROM pre_order_shadow WHERE create_date >= 20191010 GROUP BY hour;
@@ -395,6 +397,8 @@
 
 ### 带条件更新
 	UPDATE `tblname` SET leader = IF( id in (1,2), 1, 0) WHERE gid = 1 LIMIT 10;
+	
+	UPDATE `pre_weixin_list` SET `lookids` = IF(lookids='wxid_r3b7jimzc5bz12', 'wxid_ig5bgx8ydlbp22', 'wxid_r3b7jimzc5bz12') WHERE FIND_IN_SET( lookids, 'wxid_r3b7jimzc5bz12,wxid_ig5bgx8ydlbp22' );
 
 ### 在0或1之间切换
 	UPDATE `tblname` SET field = 1 - field;
