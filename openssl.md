@@ -101,9 +101,27 @@
 	91302,effb4ff11b869b26d99cbe086f8china
 	
 	# certbot 指定手动验证钩子
-	certbot renew --manual-auth-hook /disk/shell/certbot-auth-dnspod.sh --deploy-hook /disk/shell/certbot-deploy.sh	
+	certbot renew --manual-auth-hook /disk/shell/certbot-auth-dnspod.sh --deploy-hook /disk/shell/certbot-deploy.sh
 
-## Nginx 证书配置
+## mkcert 本地证书
+
+### 工具下载
+	https://github.com/FiloSottile/mkcert
+
+### 安装 CA 证书
+	./mkcert -install
+
+### 生成本地证书
+	./mkcert baohe.test "*.baohe.test" localhost 127.0.0.1 ::1
+
+### 信任 CA 证书
+
+	# 将 rootCA.pem 改名为 rootCA.crt，双击安装证书，选择 “受信任的根证书颁发机构”
+	./mkcert  -CAROOT
+
+## 部署证书
+
+### Nginx 证书配置
 
 	server {
 		listen 443;
@@ -112,11 +130,15 @@
 		ssl_certificate_key /disk/certs/.cert/example.key;
 	}
 	
-## Apahce 证书配置
+### Apahce 证书配置
+
+	#注意需要监听 443 端口，以及启用 ssl 模块
+	#Listen 443
+	#LoadModule ssl_module modules/mod_ssl.so
 
 	<VirtualHost app.baohe.test:443>
 		DocumentRoot "E:\Works\Baohe\run"
-		ServerName app.baohe.test		
+		ServerName app.baohe.test
 		# HTTPS 支持
 		SSLEngine on
 		SSLCertificateFile "E:/EasyPHP/certs/example.test.pem"
