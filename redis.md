@@ -3,6 +3,9 @@
 ## Windows
 
 ### 安装
+
+[https://github.com/redis-windows/redis-windows/releases](https://github.com/redis-windows/redis-windows/releases)
+
 [https://github.com/MicrosoftArchive/redis/releases](https://github.com/MicrosoftArchive/redis/releases)
 
 ### 启动
@@ -30,6 +33,12 @@
 > 根据 phpinfo > Architecture & PHP Extension Build 下载对应版本
 
 [http://pecl.php.net/package/redis](http://pecl.php.net/package/redis)
+
+### Redis 最新编译下载
+
+[https://github.com/phpredis/phpredis/actions/workflows/ci.yml](https://github.com/phpredis/phpredis/actions/workflows/ci.yml)
+
+> 找到最新执行成功的 workflow，点开后即可看到 Artifacts
 
 ### igbinary 扩展下载
 
