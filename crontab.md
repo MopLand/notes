@@ -50,8 +50,11 @@
 
 ## 实际示例
 
-	# 项目自动更新（每天9:00 - 22:00，间隔5分钟一次，输出标准错误）
-	*/10 9-22 * * * /disk/shell/gitpull.sh > /var/log/gitpull.log 2>&1
+	# 项目自动更新（每天9:00 - 22:00，每10分钟执行一次）
+	*/5 9-22 * * * /disk/shell/gitpull.sh > /var/log/gitpull.log
+	
+	# 自动优化自检（每天执行一次）
+	03 03 * * * /disk/shell/auto-test.sh > /var/log/auto-test.log 2>&1
 	
 	# Cron 任务调度，每分钟执行
 	* * * * * php /disk/www/worker.com/index.php /cron/cron/run

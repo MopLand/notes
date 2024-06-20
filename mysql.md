@@ -448,6 +448,9 @@
 	REPLACE INTO `tblname`(id, dr) VALUES (1,'2'),(2,'3'),('n','y');
 	
 ### INSERT INTO
+	INSERT INTO `tblname`(id, dr) VALUES (1,'2'),(2,'3'),…('x','y');
+	
+### INSERT INTO 重复键冲突处理
 	INSERT INTO `tblname`(id, dr) VALUES (1,'2'),(2,'3'),…('x','y') ON DUPLICATE KEY UPDATE dr = VALUES(dr);
 
 ### WHEN x THEN y
@@ -1052,6 +1055,10 @@ Collate 校对规则
 	7. Delete tbl.ibd
 	8. Rename `tbl_2` to `tbl`
 	
+#### 使用 ON DUPLICATE KEY UPDATE 解决 Deadlock found when trying to get lock; try restarting transaction 报错
+	INSERT INTO `pre_weixin_effect` (`package`, `method`, `platform`, `item_id`, `item_suffix`, `sends_num`, `extend`, `source`, `created_time`, `created_date`)
+	VALUES(package, method_, platform_, item_id, @suffix, count, extra, @source, created_time, @created)
+	ON DUPLICATE KEY UPDATE `sends_num` = `sends_num` + count, `write_num` = `write_num` + 1, `updated_time` = UNIX_TIMESTAMP(), `extend` = IF( LOCATE( @source, `extend` ) = 0, CONCAT( SUBSTRING_INDEX( `extend`, '}', 1 ), ',', SUBSTRING( extra, 2 ) ), `extend` );	
 
 ### 相关链接
 
@@ -1088,3 +1095,5 @@ Collate 校对规则
 - [你分库分表的姿势对么？——详谈水平分库分表](https://segmentfault.com/a/1190000040858391)
 - [分享10个高级sql写法](https://juejin.cn/post/7209625823580766264)
 - [MySQL正则表达式REGEXP使用详解](https://www.jb51.net/article/263052.htm)
+- [mysql insert 时出现Deadlock死锁场景分析](https://blog.csdn.net/huangdi1309/article/details/105663466)
+- [Mysql on duplicate key update用法及优缺点](https://www.cnblogs.com/better-farther-world2099/articles/11737376.html)

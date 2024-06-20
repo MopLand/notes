@@ -335,8 +335,8 @@
 	# 代理任意资源
 	server {
 		listen 80;
-		server_name proxy.zhfile.com;
-		access_log off;
+		server_name proxy.zhfile.com;	
+		access_log off;	
 		location / {
 			resolver 1.1.1.1 8.8.8.8;
 			
@@ -381,6 +381,7 @@
 		listen 80;
 		server_name proxy.zhfile.com;
 		access_log off;
+		error_log  /var/log/nginx/proxy.zhfile.com-error.log;
 	
 		# 淘宝图片
 		location ~* "imgextra" {
@@ -393,9 +394,9 @@
 			expires         7d;
 		}
 		
-		# 微信图片
-		location ~* "(qpic|mmsns)" {
-			resolver 114.114.114.114 8.8.8.8;
+		# 微信图片（禁用 ipv6 解析）
+		location ~* "(qpic|mmsns|wxsns|qq\.com)" {
+			resolver 119.29.29.29 8.8.8.8 ipv6=off valid=60s;
 			
 			proxy_set_header referer "https://mp.weixin.qq.com/";
 			proxy_cache imgcache;
@@ -417,7 +418,20 @@
 			expires			7d;
 		}
 		
-		# 其他主图
+		# 特殊图片（使用 ImgHttp 处理）
+		location ~* "(qpic|mmsns|baohe)" {
+		
+			# PATH_INFO 支持
+			include E:/EasyPHP/rules/phpcgi.conf;
+			
+			if (!-e $request_filename) {
+				rewrite ^/(.*) /imghttp.php/$1 break;
+			}
+			
+			expires 7d;
+		}
+		
+		# 商品主图
 		location ~* "goods/(\d+)" {
 			resolver 1.1.1.1 8.8.8.8;
 			
@@ -429,10 +443,15 @@
 			proxy_cache imgcache;
 			proxy_cache_valid 301 302 24h;
 			
-			proxy_pass https://jellybox.mopland.com/robot/goodspic/$item/$size;
+			proxy_pass https://api.example.com/getThumb?item_id=$item&size=$size;
 			
 			proxy_buffers   64 256k;
 			expires			7d;
+		}
+		
+		# 其他资源
+		location / {	
+			return $scheme://$request_uri;
 		}
 		
 	}
@@ -491,15 +510,15 @@
 		server_name  2;
 		location / {
 	
-			#设置主机头和客户端真实地址，以便服务器获取客户端真实IP
+			# 设置主机头和客户端真实地址，以便服务器获取客户端真实IP
 			proxy_set_header Host $host;
 			proxy_set_header X-Real-IP $remote_addr;
 			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 	
-			#禁用缓存
+			# 禁用缓存
 			proxy_buffering off;
 	
-			#反向代理的地址
+			# 反向代理的地址
 			proxy_pass http://backend;
 	
 		}
@@ -548,6 +567,7 @@
 #### 5. url_hash
 
 	# 与ip_hash类似，但是按照访问url的hash结果来分配请求，使得每个url定向到同一个后端服务器，主要应用于后端服务器为缓存时的场景下
+	# 其中，hash_method 为使用的hash算法，需要注意的是：此时，server 语句中不能加 weight 等参数
 	upstream backend {
 		server 192.168.1.101;
 		server 192.168.1.102;
@@ -555,7 +575,36 @@
 		hash $request_uri;
 		hash_method crc32;
 	}
-	# 其中，hash_method为使用的hash算法，需要注意的是：此时，server语句中不能加weight等参数
+	
+	
+#### 6. 自定义
+
+	map $arg_instance $backed {
+		~*1$	group_1;
+		~*2$	group_2;
+		default	standby;
+	}
+	 
+	upstream group_1 {
+		server 192.168.1.1:8080 weight=1 max_fails=1 fail_timeout=30s;
+	}
+	 
+	upstream group_2 {
+		server 192.168.1.2:8080 weight=1 max_fails=1 fail_timeout=30s;
+	}
+	 
+	upstream standby {
+		server 192.168.1.0:8080 weight=1 max_fails=1 fail_timeout=30s;
+	}
+	 
+	server {
+		listen 80;
+		server_name example.com;	 
+		location / {
+			proxy_pass http://$backed;
+			proxy_set_header X-Forwarded-For $remote_addr;
+		}	
+	}
 
 ### upstream 设备状态值
 
@@ -1124,4 +1173,4 @@
 - [How to Install PHP 8 on CentOS 8 / RHEL 8](https://www.linuxtechi.com/install-php-8-centos-8-rhel-8/)
 - [Nginx 工作机制&参数设置](https://blog.csdn.net/weixin_60766221/article/details/127462231)
 - [Nginx性能调优实战](https://zhuanlan.zhihu.com/p/567754434)
-	
+- [nginx日志报错 443 failed (101: Network is unreachable) while connecting to upstream](https://blog.csdn.net/qq_36588424/article/details/126592288)
