@@ -1174,3 +1174,4 @@
 - [Nginx 工作机制&参数设置](https://blog.csdn.net/weixin_60766221/article/details/127462231)
 - [Nginx性能调优实战](https://zhuanlan.zhihu.com/p/567754434)
 - [nginx日志报错 443 failed (101: Network is unreachable) while connecting to upstream](https://blog.csdn.net/qq_36588424/article/details/126592288)
+- [nginx无网络启动失败——proxy_pass域名DNS解析出错](https://www.cnblogs.com/crxis/p/11341092.html)
