@@ -422,7 +422,7 @@
 		location ~* "(qpic|mmsns|baohe)" {
 		
 			# PATH_INFO 支持
-			include E:/EasyPHP/rules/phpcgi.conf;
+			include /disk/rules/phpcgi.conf;
 			
 			if (!-e $request_filename) {
 				rewrite ^/(.*) /imghttp.php/$1 break;
@@ -755,7 +755,7 @@
 		root /disk/www/example.com;
 		index index.htm index.html index.php;
 		
-		#SSL 证书
+		# SSL 证书
 		ssl_certificate /disk/certs/example.com.crt;
 		ssl_certificate_key /disk/certs/example.com.key;
 	
@@ -1093,6 +1093,10 @@
 #### [alert] worker_connections are not enough while connecting to upstream
 	worker_connections 10240;
 	# 同时注意配置 Linux 最大打开文件数，ulimit -a 位于 /etc/security/limits.conf
+	
+#### connect() to [240e:97c:2f:3000::41]:80 failed (101: Network is unreachable) while connecting to upstream
+	resolver 119.29.29.29 8.8.8.8 valid=60s ipv6=off;
+	# 禁用 DNS 解析 ipv6 地址
 
 ### Nginx 内置变量
 
@@ -1174,4 +1178,5 @@
 - [Nginx 工作机制&参数设置](https://blog.csdn.net/weixin_60766221/article/details/127462231)
 - [Nginx性能调优实战](https://zhuanlan.zhihu.com/p/567754434)
 - [nginx日志报错 443 failed (101: Network is unreachable) while connecting to upstream](https://blog.csdn.net/qq_36588424/article/details/126592288)
+- [利用nginx实现分流](https://www.cnblogs.com/myyan/p/5813308.html)
 - [nginx无网络启动失败——proxy_pass域名DNS解析出错](https://www.cnblogs.com/crxis/p/11341092.html)

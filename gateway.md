@@ -31,6 +31,7 @@
 	@sense  是否缓存开关，key 来自 return 数据，支持路径表达式（ab.cd.ef）
 	@check	是否缓存预检，function
 	@target 重定向标识
+	@header 请求头声明
 	@expire 页面过期时间，0 || second
 	@locked 执行加锁时间，0 || second
 	@replay 请求重放，默认允许 true || 禁止重放 false
@@ -209,7 +210,8 @@
 		 * @replay 请求重放，默认允许 true || 禁止重放 false
 		 * @active 活跃级别，一般服务 normal || 低频服务 low
 		 * @access 访问限制，默认允许 allowed || 验证 limited || 关闭 closed
-		 * @signed 签名验证, 默认严格 strict || 松散 loosed
+		 * @signed 签名验证, 默认严格 strict || 松散 loosed		 
+		 * @header userid
 		 * @remove jingdong/giftList
 		 * @method GET
 		 * @input string type 产品类型 {default=home}
