@@ -1080,6 +1080,32 @@
 	echo Stopping PHP FastCGI...
 	taskkill /F /IM php-cgi.exe > nul
 	exit
+
+### 解决 PHP-CGI 模式下，无法发起本地 CURL 请求的问题
+
+	# Nginx 中定义多个监听端口
+	upstream phpcgi {
+		server 127.0.0.1:9000;
+		server 127.0.0.1:9001;
+		server 127.0.0.1:9002;
+		server 127.0.0.1:9003;
+	}
+
+	server{
+		fastcgi_pass phpcgi;
+	}
+
+	# 实现 php-cgi.bat 脚本
+	D:/EasyPHP/RunHiddenConsole.exe "D:/EasyPHP/eds-binaries/php/php83/php-cgi.exe" -b 127.0.0.1:9000
+	D:/EasyPHP/RunHiddenConsole.exe "D:/EasyPHP/eds-binaries/php/php83/php-cgi.exe" -b 127.0.0.1:9001
+	D:/EasyPHP/RunHiddenConsole.exe "D:/EasyPHP/eds-binaries/php/php83/php-cgi.exe" -b 127.0.0.1:9002
+	D:/EasyPHP/RunHiddenConsole.exe "D:/EasyPHP/eds-binaries/php/php83/php-cgi.exe" -b 127.0.0.1:9003
+
+	# 或者在 EasyPHP 中实现，位于 X:\EasyPHP\eds-binaries\httpserver\nginx*\eds-app-*.php
+	exec('eds-app-launch "' . dirname(dirname(__DIR__)) . '\php\\' . $conf_httpserver['php_folder'] . '\php-cgi.exe" -b 127.0.0.1:9000');
+	exec('eds-app-launch "' . dirname(dirname(__DIR__)) . '\php\\' . $conf_httpserver['php_folder'] . '\php-cgi.exe" -b 127.0.0.1:9001');
+	exec('eds-app-launch "' . dirname(dirname(__DIR__)) . '\php\\' . $conf_httpserver['php_folder'] . '\php-cgi.exe" -b 127.0.0.1:9002');
+	exec('eds-app-launch "' . dirname(dirname(__DIR__)) . '\php\\' . $conf_httpserver['php_folder'] . '\php-cgi.exe" -b 127.0.0.1:9003');
 	
 ### 常见问题
 
@@ -1175,3 +1201,5 @@
 - [Nginx性能调优实战](https://zhuanlan.zhihu.com/p/567754434)
 - [nginx日志报错 443 failed (101: Network is unreachable) while connecting to upstream](https://blog.csdn.net/qq_36588424/article/details/126592288)
 - [nginx无网络启动失败——proxy_pass域名DNS解析出错](https://www.cnblogs.com/crxis/p/11341092.html)
+- [用宝塔windows面板建站时nginx+php并发阻塞（用curl请求本地文件无限超时）问题解决方法，提高性能](https://www.think3.cc/?id=11)
+- [nginx curl php配置,PHP+Nginx环境下curl访问本地超时](https://blog.csdn.net/weixin_42676876/article/details/115166630)
