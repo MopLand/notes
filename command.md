@@ -329,6 +329,19 @@
 
 	-w  ：行号栏位的占用的位数。
 	-p 在逻辑定界符处不重新开始计算。
+	
+### 使用 sed 命令处理文本
+	sed [options] 'command' [file(s)]	
+	-e: 允许对多个编辑命令进行脚本化。
+	-f: 从文件中读取编辑命令。
+	-i: 直接编辑文件，而不是输出到标准输出。
+	-n: 不打印模式空间的内容，除非指定了打印命令。
+
+	sed -i 's/group = apache/group = nginx/g' /etc/php-fpm.d/www.conf
+	
+	sed -i 's/;date.timezone =/date.timezone = Asia\/Shanghai/g' /etc/php.ini
+	
+	sed -i -z 's/http {.*}/http { \n    # Launch File\n    include \/disk\/rules\/launch.conf;\n}/g' /etc/nginx/nginx.conf && cat /etc/nginx/nginx.conf
 
 ## 用户管理
 
@@ -514,5 +527,5 @@
 - [Linux系统修改已有用户(组)的uid和gid](http://blog.itpub.net/29734436/viewspace-2218707/)
 - [修改用户ID和用户组ID](https://blog.csdn.net/kongxx/article/details/84674068)
 - [Linux中修改用户UID和组GID的方法](https://blog.csdn.net/train006l/article/details/79007483)
-
-	
+- [linux命令总结sed命令详解](https://www.cnblogs.com/ginvip/p/6376049.html)
+- [GNU sed live editor](https://sed.js.org/)
