@@ -138,7 +138,7 @@ chown -R nginx:nginx /disk/www/baohe.com
 	git clone --depth 1 git@git.oschina.net:bangbang/JellyBox_CMS.git "/disk/www/cms.baohe.com"
 
 ### 自动添加至 Git 安全目录
-find /disk/www -maxdepth 2 -name '.git' -type d -exec bash -c 'git config --global --add safe.directory ${0%/.git}' {} \;
+	find /disk/www -maxdepth 2 -name '.git' -type d -exec bash -c 'git config --global --add safe.directory ${0%/.git}' {} \;
 
 ###参考链接
 - [如何在 CentOS 8 / RHEL 8 系统上安装 PHP 8 ?](https://zhuanlan.zhihu.com/p/615971837)
