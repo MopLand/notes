@@ -33,20 +33,25 @@
 			...			
 		cache								# 公共缓存
 			ipdata.dat						# IP 位置库
+			nginx							# Nginx 缓存
 			...			
 		rules								# Nginx 规则
-			blocked.conf					
-			mirror.conf
+			instance.conf					# 服务器实例
+			launch.conf						# 启动配置项
+			phpcgi.conf						# PHP 处理程序
+			auth_request.conf				# PHP 文件访问授权验证
+			dora_route.conf					# Dora 路由规则
+			security.conf					# Dora 安全规则
 			...			
 		sites								# 站点配置
 			default.conf					# 默认站点
 			...
 		shell								# 自动化脚本
+			install.sh						# 系统初始化：Nginx、PHP 和 Nodejs 安装
+			auto-test.sh					# 自动化任务：日志清理、缓存清理、证书更新、配置同步
 			gitpull.sh						# Git 同步脚本
-			memcached.sh					# Memcached 重启
 			backup.sh						# 数据库备份
 			fdisk.sh						# 数据盘初始化
-			autoclean.sh					# 缓存目录清理
 			backup.sh						# 数据库备份
 			blockip.sh						# 访问频率过高IP自动Ban
 			certbot-deploy.sh				# CertBot SSL 证书更新和部署
@@ -55,8 +60,10 @@
 			compress.sh						# 图片批量压缩
 			...
 		www									# 站点目录
-			default							# 默认站点
-			upgrade							# 升级站点
+			instance						# 实例标识
+			startup/default					# 默认站点
+			startup/upgrade					# 升级站点
+			startup/coming					# 准备站点
 			...
 		log									# 日志目录
 			access.log						# Nginx 访问日志
@@ -145,6 +152,7 @@
 	
 	user  nginx;
 	worker_processes  auto;
+	worker_rlimit_nofile 204800;
 
 	error_log  /var/log/nginx/error.log warn;
 	pid        /var/run/nginx.pid;
@@ -154,38 +162,10 @@
 	}
 
 	http {
-		include       /etc/nginx/mime.types;
-		default_type  application/octet-stream;
-
-		# main 日志格式增加主机信息
-		log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-						  '$status $body_bytes_sent "$http_referer" '
-						  '"$http_user_agent" "$http_x_forwarded_for" "$http_host"';
-
-		# mirror 镜像服务，增加 APPID 标识
-		log_format  mirror  '$remote_addr - $remote_user [$time_local] "$request" '
-						  '$status $body_bytes_sent "$http_referer" '
-						  '"$http_user_agent" "$http_x_forwarded_for" "$http_APPID"';
-
-		# iponly 仅 IP 格式日志
-		log_format  iponly  '$remote_addr';
-
-		access_log  /var/log/nginx/access.log  main;
 		
-		# 服务器标识，内网 IP 后两段
-		add_header Node "0.3" "always";
+		# Launch File
+		include /disk/rules/launch.conf;
 		
-		# CVE-2017-7529
-		max_ranges 1;
-
-		sendfile        on;
-		#tcp_nopush     on;
-
-		keepalive_timeout  65;
-
-		#gzip  on;
-
-		include /disk/sites/*.conf;
 	}
 
 
@@ -196,7 +176,7 @@
 		listen       88 default_server;
 		listen       [::]:88 default_server;
 		server_name  _;
-		root         /disk/www/default;
+		root         /disk/www/startup/welcome;
 		include phpcgi.conf;
 	
 		location / {
@@ -214,13 +194,8 @@
 			include fastcgi_params;
 		}
 	
-		error_page 404 /404.html;
-			location = /40x.html {
-		}
-	
-		error_page 500 502 503 504 /50x.html;
-			location = /50x.html {
-		}
+		include /disk/rules/auth_request.conf;
+		include /disk/rules/security.conf;
 	}
 
 ## PHP-FPM

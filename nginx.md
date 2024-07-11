@@ -1208,3 +1208,4 @@
 - [nginx无网络启动失败——proxy_pass域名DNS解析出错](https://www.cnblogs.com/crxis/p/11341092.html)
 - [用宝塔windows面板建站时nginx+php并发阻塞（用curl请求本地文件无限超时）问题解决方法，提高性能](https://www.think3.cc/?id=11)
 - [nginx curl php配置,PHP+Nginx环境下curl访问本地超时](https://blog.csdn.net/weixin_42676876/article/details/115166630)
+- [shell 脚本之一键部署安装 Nginx](https://www.cnblogs.com/edisonfish/p/17278111.html)
