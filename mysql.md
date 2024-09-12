@@ -424,7 +424,7 @@
 ### 保留一条记录，删除其他重复数据
 	DELETE FROM `tblname` WHERE id NOT IN( SELECT ids FROM ( SELECT MAX(id) AS ids FROM `tblname` GROUP BY openid ) AS tmp );
 	
-	DELETE FROM `pre_member_beian` WHERE beian_id NOT IN( SELECT MIN(beian_id) AS ids FROM `pre_member_beian` GROUP BY relation_id );
+	DELETE FROM `pre_member_config` WHERE id NOT IN( SELECT ids FROM ( SELECT MIN(id) AS ids FROM `pre_member_config` GROUP BY member_id ) AS tmp );
 
 ### 上架已通过审核的商品
 	UPDATE `pre_goods_list` SET status = 1 WHERE gid IN ( SELECT gid FROM `pre_member_goods` WHERE status = 1 );

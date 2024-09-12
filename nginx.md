@@ -1002,6 +1002,8 @@
 		location ^~ /backend/ {
 		
 			valid_referers server_names;
+		
+			default_type application/json;
 			
 			if ($invalid_referer) {
 				return 406 '"{ "status" : "-406", "result" : "Invalid request source" }"';
