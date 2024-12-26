@@ -42,24 +42,24 @@
 ### 生成域名证书
 
 #### 单个域名
-	certbot certonly --email admin@veryide.com --agree-tos --webroot -w /disk/www/ssl.veryide.net -d ssl.veryide.net
+	certbot certonly --email admin@veryide.com --agree-tos --webroot -w /disk/www/ssl.example.com -d ssl.example.com
 
 #### 多个域名
-	certbot certonly --email admin@veryide.com --agree-tos --webroot -w /disk/www/veryide.net -d veryide.net -d www.veryide.net -w /disk/www/veryide.com -d veryide.com -d www.veryide.com
+	certbot certonly --email admin@veryide.com --agree-tos --webroot -w /disk/www/example.com -d example.com -d www.example.com -w /disk/www/veryide.com -d veryide.com -d www.veryide.com
 	
-#### 证书目录
-	/etc/letsencrypt/live/
+#### 证书目录	
+	ls -l /etc/letsencrypt/live/
 
 #### 通配符证书
 
 	# 执行脚本，手动 DNS 验证
-	certbot --server https://acme-v02.api.letsencrypt.org/directory -d "*.veryide.net" --manual --preferred-challenges dns-01 certonly
+	certbot --server https://acme-v02.api.letsencrypt.org/directory -d "example.com" -d "*.example.com" --manual --preferred-challenges dns-01 certonly
 
 	# 配置域名 TXT 记录
-	_acme-challenge.veryide.net
+	_acme-challenge.example.com
 	
 	# 全自动化 DNS 验证
-	certbot --server https://acme-v02.api.letsencrypt.org/directory -d "*.taokebaohe.com" --manual --preferred-challenges dns-01 certonly --manual-auth-hook /disk/shell/certbot-auth-dnspod.sh --deploy-hook /disk/shell/certbot-deploy.sh
+	certbot --server https://acme-v02.api.letsencrypt.org/directory -d "example.com" -d "*.example.com" --manual --preferred-challenges dns-01 certonly --manual-auth-hook /disk/shell/certbot-auth-dnspod.sh --deploy-hook /disk/shell/certbot-deploy.sh
 
 ### 续约证书
 
@@ -90,7 +90,7 @@
 	30 3 * * 1 certbot renew --manual-auth-hook /disk/shell/certbot-auth-dnspod.sh --deploy-hook /disk/shell/certbot-deploy.sh --quiet > /dev/null 2>&1 &
 	
 ### 单域名文件验证
-	certbot certonly --email admin@veryide.com --agree-tos --webroot -w /disk/www/ssl.veryide.net -d ssl.veryide.net --manual-auth-hook /disk/shell/certbot-auth-file.sh
+	certbot certonly --email admin@example.com --agree-tos --webroot -w /disk/www/ssl.example.com -d ssl.example.com --manual-auth-hook /disk/shell/certbot-auth-file.sh
 	
 ### DNSPOD 解析认证
 
