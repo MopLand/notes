@@ -304,14 +304,17 @@
 	# 通过进程名查看进程信息
 	ps -ef | grep memcached
 
+	# 根据进程PID查看进程信息
+	ps -ef | grep 13049
+
 	# 通过端口号查找进程 PID
 	netstat -nap | grep 8080
 
 	# 查看被占用端口的 PID
 	lsof -i:443
-
-	# 根据进程PID查看进程信息
-	ps -ef | grep 13049
+	
+	# 监控所有进程的 I/O 情况（每2秒）
+	pidstat -d 2 > /disk/www/Messager/logs/pid.log
 
 	# 查看进程完整信息
 	ll /proc/13049
