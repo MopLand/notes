@@ -34,6 +34,9 @@
 	
 ### 一行命令中执行多个命令
 	echo foo & echo bar
+	
+### 检测DNS域名解析(TXT)配置
+	nslookup -qt=txt _acme-challenge.example.com
 
 ## 注册为 Windows 服务
 
