@@ -1,16 +1,104 @@
 # Mac
 
-## Brew
+## 使用 Brew 安装 PHP 开发环境
 
-### 安装 Brew
-	/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+### 1. 安装 Homebrew
 
-### 使用 Brew
-	brew install wget
+` Homebrew是一个包管理器，用于安装软件和工具。如果您的Mac上还没有安装Homebrew，请按照以下步骤进行安装：`
+
+	# 使用 gitee 脚本安装（推荐）
+	/bin/zsh -c "$(curl -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh)"
+
+	# 使用官方脚本安装
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+### 2. 关闭自带的 appche
+	sudo launchctl unload -w /System/Library/LaunchDaemons/org.apache.httpd.plist
+
+### 3. 安装 PHP
+	brew install php
+
+### 4. 安装 Apache
+	brew install httpd
+
+### 5. 安装 Redis
+	# 使用Homebrew 安装Redis，安装完成后，Redis将默认运行在6379端口：
+	brew install redis
+
+### 6. 安装PECL
+	# PECL是PHP扩展和工具的集合。如果您的Mac上还没有安装PECL，请按照以下步骤进行安装：
+	brew install pecl
+
+### 7. 安装 composer 扩展
+
+	php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+	php -r "if (hash_file('sha384', 'composer-setup.php') === 'dac665fdc30fdd8ec78b38b9800061b4150413ff2e3b6f88543c636f7cd84f6db9189d43a81e5503cda447da73c7e5b6') { echo 'Installer verified'.PHP_EOL; } else { echo 'Installer corrupt'.PHP_EOL; unlink('composer-setup.php'); exit(1); }"
+	php composer-setup.php
+	php -r "unlink('composer-setup.php');"
+	sudo mv composer.phar /usr/local/bin/composer
+
+### 8. 安装 phpredis 扩展
+	pecl install redis
+
+### 9. 配置PHP
+
+`创建 /opt/homebrew/etc/httpd/extra/httpd-php.conf 文件，并添加以下内容：`
+
+	LoadModule php_module /opt/homebrew/opt/php/lib/httpd/modules/libphp.so
+
+	<FilesMatch \.php$>
+		SetHandler application/x-httpd-php
+	</FilesMatch>
+
+## 5. 安装 MySQL
+
+	# 安装MySQL
+	brew install mysql
+
+	# 启动MySQL服务：
+	brew services start mysql
+
+	# 更新 MySQL 密码
+	ALTER USER 'root'@'localhost' IDENTIFIED BY 'your_password';
+
+### PHP 测试页面
+	<?php
+	$redis = new Redis();
+	$redis->connect('127.0.0.1', 6379);
+	echo "Redis server is running";
+	phpinfo();
+
+### 常用命令
+	brew services start php
+	brew services stop php
+	brew services restart php
+
+	brew services start httpd
+	brew services stop httpd
+	brew services restart httpd
+
+	brew services start redis
+	brew services stop redis
+	brew services restart redis
+
+	brew services start mysql
+	brew services stop mysql
+	brew services restart mysql
+
+	# 如果你不想要 / 不需要后台服务，你可以直接运行
+	/opt/homebrew/opt/php/sbin/php-fpm --nodaemonize
+
+### 常用目录
+	/opt/homebrew/etc/apache/
+	/opt/homebrew/etc/php/8.4/
+	/opt/homebrew/opt/mysql/
 
 ### 安装常用工具
 	xcode-select --install
+	brew install wget
 	brew install autoconf automake libtool
+
+------------------------------
 	
 ## 更新 Git
 	
@@ -26,6 +114,8 @@
 ### 查看 Git 版本
 	git --version
 
+------------------------------
+
 ## XAMPP - PHP集成开发环境
 
 ### 安装 XAMPP
@@ -39,6 +129,8 @@
 ### 安装 Redis 服务
 	brew install redis
 	brew services start redis
+
+------------------------------
 	
 ## Mac 调优
 
@@ -52,7 +144,7 @@
 
 ### NTFS 格式支持
 
-	# 安装 Tuxera NTFS	
+	# Tuxera NTFS	
 [Tuxera NTFS 安装包下载](https://share.weiyun.com/5QqqT4V)
 
 	# Mounty for NTFS
@@ -81,6 +173,8 @@
 	Control => Command
 	Command => Control
 
+------------------------------
+
 ## 快捷键
 
 ### 切换输入法
@@ -105,3 +199,8 @@
 - [mac设置shell脚本开机自启动](https://www.cnblogs.com/dongfangzan/p/5976791.html)
 - [简单的Mac设置ChromeF5刷新F12打开控制台](https://www.jianshu.com/p/1d7545bb585e)
 - [XAMPP - Macos 上的 PHP 集成开发环境](https://www.apachefriends.org/)
+- [https://getcomposer.org/download/](https://getcomposer.org/download/)
+- [程序员 Homebrew 使用指北](https://sspai.com/post/56009#!#)
+- [MAC 安装 Homebrew (使用国内镜像源)](https://www.cnblogs.com/Nestar/p/18074872)
+- [mac 13 系统下安装配置 apache php (更新20230511)](https://blog.csdn.net/qq_28993251/article/details/116160956)
+- [Mac环境下轻松配置Redis PHP扩展：一步到位的安装指南](https://www.oryoy.com/news/mac-huan-jing-xia-qing-song-pei-zhi-redis-php-kuo-zhan-yi-bu-dao-wei-de-an-zhuang-zhi-nan.html)
