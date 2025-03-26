@@ -52,14 +52,14 @@
 
 #### 通配符证书
 
-	# 执行脚本，手动 DNS 验证
-	certbot --server https://acme-v02.api.letsencrypt.org/directory -d "example.com" -d "*.example.com" --manual --preferred-challenges dns-01 certonly
+	# 手动 DNS 验证（单证书多域名）
+	certbot certonly --server https://acme-v02.api.letsencrypt.org/directory -d "example.com" -d "*.example.com" --manual --preferred-challenges dns-01
 
 	# 配置域名 TXT 记录
 	_acme-challenge.example.com
 	
 	# 全自动化 DNS 验证
-	certbot --server https://acme-v02.api.letsencrypt.org/directory -d "example.com" -d "*.example.com" --manual --preferred-challenges dns-01 certonly --manual-auth-hook /disk/shell/certbot-auth-dnspod.sh --deploy-hook /disk/shell/certbot-deploy.sh
+	certbot certonly --server https://acme-v02.api.letsencrypt.org/directory -d "example.com" -d "*.example.com" --manual --preferred-challenges dns-01 --manual-auth-hook /disk/shell/certbot-auth-dnspod.sh --deploy-hook /disk/shell/certbot-deploy.sh
 
 ### 续约证书
 
