@@ -96,8 +96,11 @@
 	# 安装的同时，将信息写入package.json中
 	npm install <name> --save
 	
-	# 会引导你创建一个package.json文件，包括名称、版本、作者这些信息等
-	npm init
+	# 严格按照 package-lock.json 进行安装
+	npm ci
+	
+	# 执行 package.json 里 scripts 字段所定义的脚本
+	npm run <script-name>
 	
 	# 移除依赖包
 	npm remove <name>
@@ -107,6 +110,9 @@
 	
 	# 列出当前安装的了所有包
 	npm ls
+	
+	# 会引导你创建一个package.json文件，包括名称、版本、作者这些信息等
+	npm init
 	
 	# 查看当前包的安装路径
 	npm root

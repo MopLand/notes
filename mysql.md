@@ -255,6 +255,15 @@
 	SELECT item, value, (SELECT value FROM `test` WHERE id >= d.id AND item = d.item ORDER BY id DESC LIMIT 1) AS last_value FROM `test` AS d GROUP BY ITEM;
 	
 	SELECT item, value, (SELECT value FROM `test` WHERE id >= d.id AND item = d.item ORDER BY id DESC LIMIT 1) - value AS diff FROM `test` AS d GROUP BY ITEM;
+	
+#### 多个月份前100合并再去重（每个子查询用括号包裹，确保ORDER BY只作用于当前子查询的LIMIT）
+	SELECT member_id FROM (
+	  (SELECT DISTINCT member_id FROM `pre_ranking_income` WHERE `month` = 202507 ORDER BY `total` DESC LIMIT 100)
+	  UNION
+	  (SELECT DISTINCT member_id FROM `pre_ranking_income` WHERE `month` = 202508 ORDER BY `total` DESC LIMIT 100)
+	  UNION
+	  (SELECT DISTINCT member_id FROM `pre_ranking_income` WHERE `month` = 202509 ORDER BY `total` DESC LIMIT 100)
+	) AS tmp
 
 #### 两时间比较
 	SELECT TIMESTAMPDIFF(DAY, '2018-03-20 23:59:00', '2015-03-22 00:00:00');
