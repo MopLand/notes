@@ -41,6 +41,7 @@
 	@cloned 复制配置，从其他 Action 引用并合并配置
 	@tester 测试方法，默认不是 false || 启用 true
 	@remove 弃用标记，默认不是 false || 弃用 true || 迁移 path（支持 :mod 标记）
+	@before 可用期限，Ymd 格式，在此时间前可访问
 	@manual 文档状态，默认可见 visible || 隐藏 hidden
 	@navbar 导航状态，默认显示 visible || 隐藏 hidden
 	@signed 签名验证, 默认严格 strict || 松散 loosed
@@ -350,6 +351,23 @@
      * @param integer page			页码，默认 1
      * @param string fmt 格式
      * @format \App\Proxy\Model\Format::tbItem
+     * @return json
+     */
+    function queryAction( ) {
+		
+		$model = new \App\Proxy\Model\Search();
+		$result = $model->dispatch( $_GET, Request::getHttpHeader('QUERY_STRING') );
+		
+		return $result;
+
+	}
+
+### 使用 @remove 和 @before 限制接口使用期限
+	/**
+     * @label 混合查询
+     * @action query
+     * @remove weixin/transfer
+     * @before 2025-09-09
      * @return json
      */
     function queryAction( ) {
