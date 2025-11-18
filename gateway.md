@@ -35,7 +35,7 @@
 	@expire 页面过期时间，0 || second
 	@locked 执行加锁时间，0 || second
 	@replay 请求重放，默认允许 true || 禁止重放 false
-	@iprate IP 速度限制，默认打开 on || 关闭限制 off
+	@iprate IP 速度限制，默认打开 on || 关闭限制 off || 每分钟限制 [int]
 	@action 入口地址，通常与 Action 同名
 	@crumbs 关联地址，导航条 Action 名称
 	@cloned 复制配置，从其他 Action 引用并合并配置
@@ -377,6 +377,47 @@
 		
 		return $result;
 
+	}
+	
+### 使用 @replay 和 @iprate 限制接口请求频率
+	/**
+	 * @label 支付账户信息检测
+	 * @action checkAccount
+	 * @replay false
+	 * @iprate 5
+	 * @param string  realname   姓名	   {required=1}
+	 * @param string  alipay	 支付宝	 {required=1}
+	 * @param string  id_card	身份证	 {required=1}
+	 * @param string  mobile	手机号
+	 * @param integer member_id  用户ID
+	 * @param string version	App版本号
+	 * @access allowed
+	 * @return json
+	 */
+	public function checkAccountAction(){
+
+		$realname   = $this->arg( 'realname' );
+		$alipay		= $this->arg( 'alipay' );
+		$mobile		= $this->arg( 'mobile' );
+		$id_card	= $this->arg( 'id_card' );
+		$member_id  = $this->arg( 'member_id');
+		$version	= $this->arg( 'version' );
+
+		$struct = array(
+			'realname'  => $realname,
+			'alipay'	=> $alipay,
+			'id_card'   => strtoupper( $id_card ),
+		);
+
+		if( $mobile ){
+			$struct['mobile'] = $mobile;
+		}
+
+		$object = new \App\Proxy\Model\Account();
+
+		$ret = $object->checkAccount( $struct, $member_id );
+
+		return $ret;
 	}
 
 ### 调用其他控制器 Action，使用 setArgs() 方法传入参数

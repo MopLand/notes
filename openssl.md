@@ -60,6 +60,9 @@
 	
 	# 全自动化 DNS 验证
 	certbot certonly --server https://acme-v02.api.letsencrypt.org/directory -d "example.com" -d "*.example.com" --manual --preferred-challenges dns-01 --manual-auth-hook /disk/shell/certbot-auth-dnspod.sh --deploy-hook /disk/shell/certbot-deploy.sh
+	
+	# 全自动化 DNS 验证（二级泛域名）
+	certbot certonly --server https://acme-v02.api.letsencrypt.org/directory -d "*.example.com" -d "*.sub.example.com" --manual --preferred-challenges dns-01 --manual-auth-hook /disk/shell/certbot-auth-dns.sh --deploy-hook /disk/shell/certbot-deploy.sh
 
 ### 续约证书
 
