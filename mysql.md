@@ -468,6 +468,20 @@
 		WHEN 2 THEN 4
 		WHEN 3 THEN 5
 	END WHERE id IN (1,2,3);
+	
+----------
+
+## 状态位
+
+### 查询
+	SELECT * FROM `pre_weixin_list` WHERE `tag` & 64 AND ( district not like '%广东%' AND district not like '%湖北%' ) limit 100;
+
+### 添加
+	UPDATE `pre_weixin_list` SET tag = tag | 64 WHERE (`tag` & 64) = 0;
+
+### 删除
+	UPDATE `pre_weixin_list` SET tag = tag & (~128) WHERE `tag` & 128;
+	UPDATE `pre_weixin_list` SET tag = tag & (~64) WHERE `tag` & 64 AND ( district not like '%广东%' AND district not like '%湖北%' );
 
 ----------
 

@@ -66,7 +66,7 @@
 
 ### 续约证书
 
-	# 不保存任何证书到磁盘
+	# 测试（模拟证书续期流程）
 	certbot renew --dry-run
 
 	# 强制更新，有次数限制
@@ -80,6 +80,14 @@
 	
 ### 删除证书
 	certbot delete --cert-name lanpixia.com
+	
+### 迁移证书
+
+	# 旧服务器
+	tar -zcvf letsencrypt.tar.gz /etc/letsencrypt
+
+	# 新服务器（忽略已存在文件）
+	tar -zxvpf letsencrypt.tar.gz -C / --skip-old-files
 
 ### 定时更新脚本
 
